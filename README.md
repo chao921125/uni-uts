@@ -1,22 +1,79 @@
-# 该项目使用的UI
-1. 微信内置的
-2. [vant v1.10.23](https://github.com/youzan/vant-weapp)
-3. [uni-ui v1.4.27](https://github.com/dcloudio/uni-ui)
-4. [uviewui 未用](https://uviewui.com/)
-5. [ucharts 图表 收费 未用](https://www.ucharts.cn/v2/#/)
+This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
 
-# 注意事项
-###### vant 样式修改方式：1、行内；2、标签加名称，内容额外使用view等内置组件；3、添加 ::v-deep 修改
-###### pages/demo 目录下页面需要手动添加path访问，并且部分引用文件需要自行修改对应的正确的目录
-###### pages/components 目录下页面需要手动引用，针对性引用，并非所有页面都适合
-###### uni-modules 目录下文件无需引用直接使用，此类组件封装注意兼容性
-###### components 根目录下这个目录存放的是公共的组件，和uni-modules类似，但是需要自行引用
+# Getting Started
 
-# 适配暗黑模式，还未测试
-https://developers.weixin.qq.com/miniprogram/dev/framework/ability/darkmode.html
-1、小程序和H5一定要用UNI的判断隔断，同时配置好代理
-2、调试小程序的时候一定将请求地址修改为IPV4，即非127.0.0.1和localhost的地址
+>**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
 
-# APP 离线打包
-###### [APK](https://nativesupport.dcloud.net.cn/AppDocs/download/android.html)
-###### [IOS](https://nativesupport.dcloud.net.cn/AppDocs/download/ios.html)
+## Step 1: Start the Metro Server
+
+First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
+
+To start Metro, run the following command from the _root_ of your React Native project:
+
+```bash
+# using npm
+npm start
+
+# OR using Yarn
+yarn start
+```
+
+## Step 2: Start your Application
+
+Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _root_ of your React Native project. Run the following command to start your _Android_ or _iOS_ app:
+
+### For Android
+
+```bash
+# using npm
+npm run android
+
+# OR using Yarn
+yarn android
+```
+
+### For iOS
+
+```bash
+# using npm
+npm run ios
+
+# OR using Yarn
+yarn ios
+```
+
+If everything is set up _correctly_, you should see your new app running in your _Android Emulator_ or _iOS Simulator_ shortly provided you have set up your emulator/simulator correctly.
+
+This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
+
+## Step 3: Modifying your App
+
+Now that you have successfully run the app, let's modify it.
+
+1. Open `App.tsx` in your text editor of choice and edit some lines.
+2. For **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Developer Menu** (<kbd>Ctrl</kbd> + <kbd>M</kbd> (on Window and Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (on macOS)) to see your changes!
+
+   For **iOS**: Hit <kbd>Cmd ⌘</kbd> + <kbd>R</kbd> in your iOS Simulator to reload the app and see your changes!
+
+## Congratulations! :tada:
+
+You've successfully run and modified your React Native App. :partying_face:
+
+### Now what?
+
+- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
+- If you're curious to learn more about React Native, check out the [Introduction to React Native](https://reactnative.dev/docs/getting-started).
+
+# Troubleshooting
+
+If you can't get this to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
+
+# Learn More
+
+To learn more about React Native, take a look at the following resources:
+
+- [React Native Website](https://reactnative.dev) - learn more about React Native.
+- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
+- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
+- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
+- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
