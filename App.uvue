@@ -1,5 +1,5 @@
-<script lang="uts">
-import { state, setLifeCycleNum } from '@/store/index.uts'
+<script lang="ts">
+import { state, setLifeCycleNum } from './store/index.uts'
 
 let firstBackTime = 0
 export default {
@@ -8,16 +8,14 @@ export default {
     setLifeCycleNum(state.lifeCycleNum + 1000)
     console.log('App Launch')
 
-    // 页面性能分析
-    // const performance = uni.getPerformance()
-    // const observer1: PerformanceObserver = performance.createObserver(
-    //   (entryList: PerformanceObserverEntryList) => {
-    //     console.log('observer1:entryList.getEntries()' +JSON.stringify(entryList.getEntries()))
-    //   }
-    // )
-    // observer1.observe({
-    //   entryTypes: ['render', 'navigation'],
-    // } as PerformanceObserverOptions)
+    const performance = uni.getPerformance()
+    const observer: PerformanceObserver = performance.createObserver((entryList: PerformanceObserverEntryList) => {
+      console.log('observer:entryList.getEntries()')
+      console.log(entryList.getEntries())
+    })
+    observer.observe({
+      entryTypes: ['render', 'navigation'],
+    } as PerformanceObserverOptions)
   },
   onShow: function () {
     // 自动化测试
@@ -47,55 +45,95 @@ export default {
       uni.exit()
     }
   },
-  onExit(){
-		console.log('App Exit')
-	},
-  methods: {
-    increasetLifeCycleNum() {
-      setLifeCycleNum(state.lifeCycleNum + 100)
-      console.log('App increasetLifeCycleNum')
-    }
-  }
+  onExit() {
+    console.log('App Exit')
+  },
 }
 </script>
 
 <style>
-/*每个页面公共css */
-@import "./common/uni.css";
+/* @font-face {
+    font-family: uniicons;
+    font-weight: normal;
+    font-style: normal;
+    src: url('./static/fonts/uni.ttf') format('truetype');
+  } */
 
-/* #ifdef H5 */
-@media screen and (min-width: 768px) {
-  body {
-    overflow-y: scroll;
-  }
+.page {
+  padding: 15px;
 }
 
-/* 顶栏通栏样式 */
-/* .uni-top-window {
-  	    left: 0;
-  	    right: 0;
-  	} */
-
-uni-page-body {
-  background-color: #f5f5f5 !important;
-  min-height: 100% !important;
-  height: auto !important;
+.uni-panel {
+  margin-bottom: 12px;
 }
 
-.uni-top-window uni-tabbar .uni-tabbar {
-  background-color: #fff !important;
-}
-
-.uni-app--showleftwindow .hideOnPc {
-  display: none !important;
-}
-
-.uni-row {
+.uni-panel-h {
+  background-color: #ffffff;
   flex-direction: row;
-}
-.uni-column {
-  flex-direction: column;
+  align-items: center;
+  padding: 12px;
 }
 
-/* #endif */
+.uni-panel-h-on {
+  background-color: #f0f0f0;
+}
+
+.uni-panel-text {
+  color: #000000;
+  font-size: 14px;
+  font-weight: normal;
+}
+
+.uni-panel-icon-on {
+  transform: rotate(180deg);
+}
+
+.uni-navigate-item {
+  flex-direction: row;
+  align-items: center;
+  background-color: #ffffff;
+  border-top-style: solid;
+  border-top-color: #f0f0f0;
+  border-top-width: 1px;
+  padding: 12px;
+  justify-content: space-between;
+}
+
+.uni-navigate-item:active {
+  background-color: #f8f8f8;
+}
+
+.uni-navigate-text {
+  color: #000000;
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+.uni-navigate-icon {
+  margin-left: 15px;
+  color: #999999;
+  font-size: 14px;
+  font-weight: normal;
+}
+
+.text-disabled {
+  color: #a0a0a0;
+}
+
+.list-item-text {
+  line-height: 36px;
+}
+
+.split-title {
+  margin: 20px 0 5px;
+  padding: 5px 0;
+  border-bottom: 1px solid #dfdfdf;
+}
+
+.btn-view {
+  margin: 10px 0;
+  padding: 10px;
+  border: 1px solid #dfdfdf;
+  border-radius: 3px;
+}
 </style>

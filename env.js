@@ -28,10 +28,14 @@ module.exports = {
             "executablePath": ""
         },
         "uni-app-x": {
-            "version": "/Applications/HBuilderX-Alpha.app/Contents/HBuilderX/plugins/uniappx-launcher/base/version.txt",
+            "version": "/Applications/HBuilderX-Alpha-dev.app/Contents/HBuilderX/plugins/uniappx-launcher/base/version.txt",
             "android": {
                 "id": "emulator-5554",
-                "executablePath": "/Applications/HBuilderX-Alpha.app/Contents/HBuilderX/plugins/uniappx-launcher/base/android_base.apk"
+                "executablePath": "/Applications/HBuilderX-Alpha-dev.app/Contents/HBuilderX/plugins/uniappx-launcher/base/android_base.apk"
+            },
+            "ios": {
+                "id": "4186FFD3-B26F-4817-ABB2-C025F2F35344",
+                "executablePath": "/Applications/HBuilderX-Alpha-dev.app/Contents/HBuilderX/plugins/uniappx-launcher/base/Pandora_simulator.app"
             }
         }
     }

@@ -1,908 +1,267 @@
 {
-  "pages": [
-    //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
-    {
-      "path": "pages/tabBar/component",
+  "pages": [{
+      "path": "pages/index",
       "style": {
-        "navigationBarTitleText": "内置组件",
-        "backgroundColor": "#F8F8F8"
+        "navigationBarTitleText": "hello uvue"
       }
     },
     {
-      "path": "pages/component/view/view",
+      "path": "pages/directive/v-bind/v-bind",
       "style": {
-        "navigationBarTitleText": "view"
+        "navigationBarTitleText": "v-bind"
       }
     },
     {
-      "path": "pages/component/view/view-draw",
+      "path": "pages/directive/v-bind/v-bind-class",
       "style": {
-        "navigationBarTitleText": "DrawableContext"
+        "navigationBarTitleText": "v-bind-class"
       }
     },
     {
-      "path": "pages/component/scroll-view/scroll-view",
+      "path": "pages/directive/v-bind/v-bind-style",
       "style": {
-        "navigationBarTitleText": "scroll-view"
+        "navigationBarTitleText": "v-bind-style"
       }
     },
     {
-      "path": "pages/component/text/text",
+      "path": "pages/directive/v-bind/v-bind-props",
       "style": {
-        "navigationBarTitleText": "text"
+        "navigationBarTitleText": "v-bind-props"
+      }
+    },
+    // {
+    //   "path": "pages/directive/v-bind/v-bind-attribute",
+    //   "style": {
+    //     "navigationBarTitleText": "v-bind-attribute"
+    //   }
+    // },
+    {
+      "path": "pages/directive/v-for/v-for",
+      "style": {
+        "navigationBarTitleText": "v-for"
       }
     },
     {
-      "path": "pages/component/text/text-props",
+      "path": "pages/directive/v-for/v-for-item-click",
       "style": {
-        "navigationBarTitleText": "text-props"
+        "navigationBarTitleText": "v-for-item-click"
       }
     },
     {
-      "path": "pages/component/progress/progress",
+      "path": "pages/directive/v-for/v-for-item-v-if",
       "style": {
-        "navigationBarTitleText": "progress"
+        "navigationBarTitleText": "v-for-item-v-if"
       }
     },
     {
-      "path": "pages/component/button/button",
+      "path": "pages/directive/v-for/v-for-item-v-show",
       "style": {
-        "navigationBarTitleText": "button"
+        "navigationBarTitleText": "v-for-item-v-show"
       }
     },
     {
-      "path": "pages/component/radio/radio",
+      "path": "pages/directive/v-for/v-for-v-for",
       "style": {
-        "navigationBarTitleText": "radio"
+        "navigationBarTitleText": "v-for-v-for"
       }
     },
     {
-      "path": "pages/component/rich-text/rich-text",
+      "path": "pages/directive/v-if/v-if",
       "style": {
-        "navigationBarTitleText": "rich-text"
+        "navigationBarTitleText": "v-if"
       }
     },
     {
-      "path": "pages/component/rich-text/rich-text-tags",
+      "path": "pages/directive/v-model/v-model",
       "style": {
-        "navigationBarTitleText": "rich-text-tags"
+        "navigationBarTitleText": "v-model"
       }
     },
     {
-      "path": "pages/component/rich-text/rich-text-complex",
+      "path": "pages/directive/v-on/v-on",
       "style": {
-        "navigationBarTitleText": "rich-text-complex"
+        "navigationBarTitleText": "v-on"
       }
     },
     {
-      "path": "pages/component/checkbox/checkbox",
+      "path": "pages/directive/v-once/v-once",
       "style": {
-        "navigationBarTitleText": "checkbox"
+        "navigationBarTitleText": "v-once"
       }
     },
     {
-      "path": "pages/component/input/input",
+      "path": "pages/directive/v-show/v-show",
       "style": {
-        "navigationBarTitleText": "input"
+        "navigationBarTitleText": "v-show"
       }
     },
     {
-      "path": "pages/component/textarea/textarea",
+      "path": "pages/directive/v-slot/v-slot",
       "style": {
-        "navigationBarTitleText": "textarea"
+        "navigationBarTitleText": "v-slot"
       }
     },
     {
-      "path": "pages/component/slider/slider",
+      "path": "pages/lifecycle/page/page",
       "style": {
-        "navigationBarTitleText": "slider"
-      }
-    },
-    {
-      "path": "pages/component/picker-view/picker-view",
-      "style": {
-        "navigationBarTitleText": "picker-view"
-      }
-    },
-    {
-      "path": "pages/component/slider-100/slider-100",
-      "style": {
-        "navigationBarTitleText": "slider x 100"
-      }
-    },
-    {
-      "path": "pages/component/switch/switch",
-      "style": {
-        "navigationBarTitleText": "switch"
-      }
-    },
-    {
-      "path": "pages/component/swiper/swiper",
-      "style": {
-        "navigationBarTitleText": "swiper"
-      }
-    },
-    {
-      "path": "pages/component/image/image",
-      "style": {
-        "navigationBarTitleText": "image"
-      }
-    },
-    {
-      "path": "pages/component/image/image-format",
-      "style": {
-        "navigationBarTitleText": "image-format"
-      }
-    },
-    {
-      "path": "pages/component/image/image-mode",
-      "style": {
-        "navigationBarTitleText": "image-mode"
-      }
-    },
-    {
-      "path": "pages/component/image/image-path",
-      "style": {
-        "navigationBarTitleText": "image-path"
-      }
-    },
-    {
-      "path": "pages/component/image/image-large",
-      "style": {
-        "navigationBarTitleText": "大图测试"
-      }
-    },
-    {
-      "path": "pages/component/video/video",
-      "style": {
-        "navigationBarTitleText": "video"
-      }
-    },
-    {
-      "path": "pages/component/web-view/web-view",
-      "style": {
-        "navigationBarTitleText": "web-view"
-      }
-    },
-    {
-      "path": "pages/component/web-view-local/web-view-local",
-      "style": {
-        "navigationBarTitleText": "web-view-local"
-      }
-    },
-    {
-      "path": "pages/component/navigator/navigator",
-      "style": {
-        "navigationBarTitleText": "navigator"
-      }
-    },
-    {
-      "path": "pages/component/navigator/navigate",
-      "style": {
-        "navigationBarTitleText": "navigatePage"
-      }
-    },
-    {
-      "path": "pages/component/navigator/redirect",
-      "style": {
-        "navigationBarTitleText": "redirectPage"
-      }
-    },
-    {
-      "path": "pages/component/general-attribute/general-attribute",
-      "style": {
-        "navigationBarTitleText": "general-attribute"
-      }
-    },
-    {
-      "path": "pages/component/general-event/general-event",
-      "style": {
-        "navigationBarTitleText": "general-event"
-      }
-    },
-    {
-      "path": "pages/tabBar/API",
-      "style": {
-        "navigationBarTitleText": "接口",
-        "backgroundColor": "#F8F8F8"
-      }
-    },
-    {
-      "path": "pages/API/get-app/get-app",
-      "style": {
-        "navigationBarTitleText": "getApp"
-      }
-    },
-    {
-      "path": "pages/API/exit/exit",
-      "style": {
-        "navigationBarTitleText": "exit"
-      }
-    },
-    {
-      "path": "pages/API/get-current-pages/get-current-pages",
-      "style": {
-        "navigationBarTitleText": "getCurrentPages"
-      }
-    },
-    {
-      "path": "pages/API/get-launch-options-sync/get-launch-options-sync",
-      "style": {
-        "navigationBarTitleText": "getLaunchOptionsSync"
-      }
-    },
-    {
-      "path": "pages/API/navigator/navigator",
-      "style": {
-        "navigationBarTitleText": "页面跳转"
-      }
-    },
-    {
-      "path": "pages/API/set-navigation-bar-color/set-navigation-bar-color",
-      "style": {
-        "navigationBarTitleText": "设置导航条颜色"
-      }
-    },
-    {
-      "path": "pages/API/navigator/new-page/new-page-1",
-      "style": {
-        "navigationBarTitleText": "新页面-1"
-      }
-    },
-    {
-      "path": "pages/API/navigator/new-page/new-page-2",
-      "style": {
-        "navigationBarTitleText": "新页面-2",
+        "navigationBarTitleText": "page-lifecycle",
         "enablePullDownRefresh": true
       }
     },
     {
-      "path": "pages/API/pull-down-refresh/pull-down-refresh",
+      "path": "pages/lifecycle/component/component",
       "style": {
-        "navigationBarTitleText": "页面级下拉刷新",
-        "enablePullDownRefresh": true
+        "navigationBarTitleText": "component-lifecycle"
       }
     },
     {
-      "path": "pages/API/nodes-info/nodes-info",
+      "path": "pages/component-instance/data/data",
       "style": {
-        "navigationBarTitleText": "查询节点信息的对象"
+        "navigationBarTitleText": "$data"
       }
     },
     {
-      "path": "pages/API/storage/storage",
+      "path": "pages/component-instance/props/props",
       "style": {
-        "navigationBarTitleText": "数据存储"
+        "navigationBarTitleText": "$props"
       }
     },
     {
-      "path": "pages/API/action-sheet/action-sheet",
+      "path": "pages/component-instance/el/el",
       "style": {
-        "navigationBarTitleText": "操作菜单"
+        "navigationBarTitleText": "$el"
       }
     },
     {
-      "path": "pages/API/modal/modal",
+      "path": "pages/component-instance/options/options",
       "style": {
-        "navigationBarTitleText": "模态弹窗"
+        "navigationBarTitleText": "$options"
       }
     },
     {
-      "path": "pages/API/show-loading/show-loading",
+      "path": "pages/component-instance/parent/parent",
       "style": {
-        "navigationBarTitleText": "加载提示框"
+        "navigationBarTitleText": "$parent"
       }
     },
     {
-      "path": "pages/API/toast/toast",
+      "path": "pages/component-instance/root/root",
       "style": {
-        "navigationBarTitleText": "消息提示框"
+        "navigationBarTitleText": "$root"
       }
     },
     {
-      "path": "pages/API/load-font-face/load-font-face",
+      "path": "pages/component-instance/slots/slots",
       "style": {
-        "navigationBarTitleText": "动态加载字体"
+        "navigationBarTitleText": "$slots"
       }
     },
     {
-      "path": "pages/API/load-font-face/load-font-face-child",
+      "path": "pages/component-instance/refs/refs",
       "style": {
-        "navigationBarTitleText": "动态加载字体-子页面"
+        "navigationBarTitleText": "$refs"
       }
     },
     {
-      "path": "pages/API/get-location/get-location",
+      "path": "pages/component-instance/attrs/attrs",
       "style": {
-        "navigationBarTitleText": "获取定位"
+        "navigationBarTitleText": "$attrs"
       }
     },
     {
-      "path": "pages/tabBar/CSS",
+      "path": "pages/component-instance/watch-function/watch-function",
       "style": {
-        "navigationBarTitleText": "CSS",
-        "backgroundColor": "#F8F8F8"
+        "navigationBarTitleText": "$watch()"
       }
     },
     {
-      "path": "pages/CSS/background/background-color",
+      "path": "pages/component-instance/emit-function/emit-function",
       "style": {
-        "navigationBarTitleText": "background-color"
+        "navigationBarTitleText": "$emit()"
       }
     },
     {
-      "path": "pages/CSS/background/background-image",
+      "path": "pages/component-instance/forceUpdate-function/forceUpdate-function",
       "style": {
-        "navigationBarTitleText": "background-image"
+        "navigationBarTitleText": "$forceUpdate()"
       }
     },
     {
-      "path": "pages/CSS/border/border-color",
+      "path": "pages/component-instance/nextTick-function/nextTick-function",
       "style": {
-        "navigationBarTitleText": "border-color"
+        "navigationBarTitleText": "$nextTick()"
       }
     },
     {
-      "path": "pages/CSS/border/border-radius",
+      "path": "pages/state/data/data",
       "style": {
-        "navigationBarTitleText": "border-radius"
+        "navigationBarTitleText": "data",
+        "enablePullDownRefresh": false
       }
     },
     {
-      "path": "pages/CSS/border/border-style",
+      "path": "pages/state/methods/methods",
       "style": {
-        "navigationBarTitleText": "border-style"
+        "navigationBarTitleText": "",
+        "enablePullDownRefresh": false
       }
-    },
-    {
-      "path": "pages/CSS/border/border-width",
-      "style": {
-        "navigationBarTitleText": "border-width"
-      }
-    },
-    {
-      "path": "pages/CSS/border/border",
-      "style": {
-        "navigationBarTitleText": "border"
-      }
-    },
-    {
-      "path": "pages/CSS/box-shadow/box-shadow",
-      "style": {
-        "navigationBarTitleText": "box-shadow"
-      }
-    },
-    {
-      "path": "pages/CSS/display/flex",
-      "style": {
-        "navigationBarTitleText": "display:flex"
-      }
-    },
-    {
-      "path": "pages/CSS/display/none",
-      "style": {
-        "navigationBarTitleText": "display:none"
-      }
-    },
-    {
-      "path": "pages/CSS/flex/align-content",
-      "style": {
-        "navigationBarTitleText": "align-content"
-      }
-    },
-    {
-      "path": "pages/CSS/flex/align-items",
-      "style": {
-        "navigationBarTitleText": "align-items"
-      }
-    },
-    {
-      "path": "pages/CSS/flex/flex-basis",
-      "style": {
-        "navigationBarTitleText": "flex-basis"
-      }
-    },
-    {
-      "path": "pages/CSS/flex/flex-direction",
-      "style": {
-        "navigationBarTitleText": "flex-direction"
-      }
-    },
-    {
-      "path": "pages/CSS/flex/flex-flow",
-      "style": {
-        "navigationBarTitleText": "flex-flow"
-      }
-    },
-    {
-      "path": "pages/CSS/flex/flex-grow",
-      "style": {
-        "navigationBarTitleText": "flex-grow"
-      }
-    },
-    {
-      "path": "pages/CSS/flex/flex-shrink",
-      "style": {
-        "navigationBarTitleText": "flex-shrink"
-      }
-    },
-    {
-      "path": "pages/CSS/flex/flex",
-      "style": {
-        "navigationBarTitleText": "flex"
-      }
-    },
-    {
-      "path": "pages/CSS/flex/justify-content",
-      "style": {
-        "navigationBarTitleText": "justify-content"
-      }
-    },
-    {
-      "path": "pages/CSS/layout/height",
-      "style": {
-        "navigationBarTitleText": "height"
-      }
-    },
-    {
-      "path": "pages/CSS/layout/max-height",
-      "style": {
-        "navigationBarTitleText": "max-height"
-      }
-    },
-    {
-      "path": "pages/CSS/layout/max-width",
-      "style": {
-        "navigationBarTitleText": "max-width"
-      }
-    },
-    {
-      "path": "pages/CSS/layout/min-height",
-      "style": {
-        "navigationBarTitleText": "min-height"
-      }
-    },
-    {
-      "path": "pages/CSS/layout/min-width",
-      "style": {
-        "navigationBarTitleText": "min-width"
-      }
-    },
-    {
-      "path": "pages/CSS/layout/position",
-      "style": {
-        "navigationBarTitleText": "position"
-      }
-    },
-    {
-      "path": "pages/CSS/layout/width",
-      "style": {
-        "navigationBarTitleText": "width"
-      }
-    },
-    {
-      "path": "pages/CSS/layout/visibility",
-      "style": {
-        "navigationBarTitleText": "visibility"
-      }
-    },
-    {
-      "path": "pages/CSS/margin/margin-bottom",
-      "style": {
-        "navigationBarTitleText": "margin-bottom"
-      }
-    },
-    {
-      "path": "pages/CSS/margin/margin-left",
-      "style": {
-        "navigationBarTitleText": "margin-left"
-      }
-    },
-    {
-      "path": "pages/CSS/margin/margin-right",
-      "style": {
-        "navigationBarTitleText": "margin-right"
-      }
-    },
-    {
-      "path": "pages/CSS/margin/margin-top",
-      "style": {
-        "navigationBarTitleText": "margin-top"
-      }
-    },
-    {
-      "path": "pages/CSS/margin/margin",
-      "style": {
-        "navigationBarTitleText": "margin"
-      }
-    },
-    {
-      "path": "pages/CSS/padding/padding-bottom",
-      "style": {
-        "navigationBarTitleText": "padding-bottom"
-      }
-    },
-    {
-      "path": "pages/CSS/padding/padding-left",
-      "style": {
-        "navigationBarTitleText": "padding-left"
-      }
-    },
-    {
-      "path": "pages/CSS/padding/padding-right",
-      "style": {
-        "navigationBarTitleText": "padding-right"
-      }
-    },
-    {
-      "path": "pages/CSS/padding/padding-top",
-      "style": {
-        "navigationBarTitleText": "padding-top"
-      }
-    },
-    {
-      "path": "pages/CSS/padding/padding",
-      "style": {
-        "navigationBarTitleText": "padding"
-      }
-    },
-    {
-      "path": "pages/CSS/text/color",
-      "style": {
-        "navigationBarTitleText": "color"
-      }
-    },
-    {
-      "path": "pages/CSS/text/font-family",
-      "style": {
-        "navigationBarTitleText": "font-family"
-      }
-    },
-    {
-      "path": "pages/CSS/text/font-size",
-      "style": {
-        "navigationBarTitleText": "font-size"
-      }
-    },
-    {
-      "path": "pages/CSS/text/font-style",
-      "style": {
-        "navigationBarTitleText": "font-style"
-      }
-    },
-    {
-      "path": "pages/CSS/text/font-weight",
-      "style": {
-        "navigationBarTitleText": "font-weight"
-      }
-    },
-    {
-      "path": "pages/CSS/text/letter-spacing",
-      "style": {
-        "navigationBarTitleText": "letter-spacing"
-      }
-    },
-    {
-      "path": "pages/CSS/text/line-height",
-      "style": {
-        "navigationBarTitleText": "line-height"
-      }
-    },
-    {
-      "path": "pages/CSS/text/text-align",
-      "style": {
-        "navigationBarTitleText": "text-align"
-      }
-    },
-    {
-      "path": "pages/CSS/text/text-overflow",
-      "style": {
-        "navigationBarTitleText": "text-overflow"
-      }
-    },
-    {
-      "path": "pages/CSS/text/text-decoration-line",
-      "style": {
-        "navigationBarTitleText": "text-decoration-line"
-      }
-    },
-    {
-      "path": "pages/CSS/transition/transition",
-      "style": {
-        "navigationBarTitleText": "Transition"
-      }
-    },
-    {
-      "path": "pages/CSS/transform/translate",
-      "style": {
-        "navigationBarTitleText": "Translate"
-      }
-    },
-    {
-      "path": "pages/CSS/transform/scale",
-      "style": {
-        "navigationBarTitleText": "Scale"
-      }
-    },
-    {
-      "path": "pages/CSS/transform/rotate",
-      "style": {
-        "navigationBarTitleText": "Rotate"
-      }
-    },
-    {
-      "path": "pages/API/request/request",
-      "style": {
-        "navigationBarTitleText": ""
-      }
-    },
-    {
-      "path": "pages/API/upload-file/upload-file",
-      "style": {
-        "navigationBarTitleText": ""
-      }
-    },
-    {
-      "path": "pages/API/download-file/download-file",
-      "style": {
-        "navigationBarTitleText": ""
-      }
-    },
-    {
-      "path": "pages/API/websocket-socketTask/websocket-socketTask",
-      "style": {
-        "navigationBarTitleText": ""
-      }
-    },
-    {
-      "path": "pages/API/websocket-global/websocket-global",
-      "style": {
-        "navigationBarTitleText": ""
-      }
-    },
-    {
-      "path": "pages/API/get-system-info/get-system-info",
-      "style": {
-        "navigationBarTitleText": ""
-      }
-    },
-    {
-      "path": "pages/API/get-device-info/get-device-info",
-      "style": {
-        "navigationBarTitleText": ""
-      }
-    },
-    {
-      "path": "pages/API/get-app-base-info/get-app-base-info",
-      "style": {
-        "navigationBarTitleText": ""
-      }
-    },
-    {
-      "path": "pages/API/get-system-setting/get-system-setting",
-      "style": {
-        "navigationBarTitleText": ""
-      }
-    },
-    {
-      "path": "pages/API/get-app-authorize-setting/get-app-authorize-setting",
-      "style": {
-        "navigationBarTitleText": ""
-      }
-    },
-    {
-      "path": "pages/API/preview-image/preview-image",
-      "style": {
-        "navigationBarTitleText": "图片预览"
-      }
-    },
-    {
-      "path": "pages/API/save-image-to-album/save-image-to-album",
-      "style": {
-        "navigationBarTitleText": "保存图片到相册"
-      }
-    },
-    {
-      "path": "pages/component/scroll-view/scroll-view-refresher",
-      "style": {
-        "navigationBarTitleText": "scroll-view-refresher"
-      }
-    },
-    {
-      "path": "pages/component/list-news/list",
+    }, {
+      "path": "pages/state/props/props",
       "style": {
-        "navigationBarTitleText": "列表到详情示例"
+        "navigationBarTitleText": "",
+        "enablePullDownRefresh": false
       }
-    },
-    {
-      "path": "pages/API/get-network-type/get-network-type",
-      "style": {
-        "navigationBarTitleText": ""
-      }
-    },
-    {
-      "path": "pages/component/list-news/detail/detail",
-      "style": {
-        "navigationBarTitleText": "详情示例"
-      }
-    },
-    {
-      "path": "pages/API/page-scroll-to/page-scroll-to",
-      "style": {
-        "navigationBarTitleText": "pageScrollTo"
-      }
-    },
-    {
-      "path": "pages/API/event-bus/event-bus",
-      "style": {
-        "navigationBarTitleText": "event-bus"
-      }
-    },
-    {
-      "path": "pages/template/drop-card/drop-card",
-      "style": {
-        "navigationBarTitleText": "drop-card"
-      }
-    },
-    {
-      "path": "pages/tabBar/template",
-      "style": {
-        "navigationBarTitleText": "模板"
-      }
-    },
-    {
-      "path": "pages/component/long-list/long-list",
-      "style": {
-        "navigationBarTitleText": "长列表示例"
-      }
-    },
-    {
-      "path": "pages/component/long-list/detail/detail",
-      "style": {
-        "navigationBarTitleText": "详情示例"
-      }
-    },
-    {
-      "path": "pages/template/swiper-list/swiper-list",
-      "style": {
-        "navigationBarTitleText": "swiper-list"
-      }
-    },
-    {
-      "path": "pages/template/swiper-vertical-video/swiper-vertical-video",
-      "style": {
-        "navigationStyle": "custom"
-      }
-    },
-    {
-      "path": "pages/template/scroll-sticky/scroll-sticky",
-      "style": {
-        "navigationBarTitleText": "滚动吸顶"
-      }
-    },
-    {
-      "path": "pages/API/get-battery-info/get-battery-info",
-      "style": {
-        "navigationBarTitleText": "电量"
-      }
-    },
-    {
-      "path": "pages/CSS/border/complex-border/complex-border",
-      "style": {
-        "navigationBarTitleText": "border属性组合示例"
-      }
-    },
-    {
-      "path": "pages/template/scroll-fold-nav/scroll-fold-nav",
-      "style": {
-        "navigationStyle": "custom",
-        "navigationBarTextStyle": "black"
-      }
-    },
-    {
-      "path": "pages/template/calendar/calendar",
-      "style": {
-        "navigationBarTitleText": "日历"
-      }
-    },
-    {
-      "path": "pages/template/custom-refresher/custom-refresher",
-      "style": {
-        "navigationBarTitleText": "自定义下拉刷新"
-      }
-    },
-    {
-      "path": "pages/API/get-window-info/get-window-info",
-      "style": {
-        "navigationBarTitleText": ""
-      }
-    },
-    {
-      "path": "pages/template/half-screen/half-screen",
+    }, {
+      "path": "pages/state/computed/computed",
       "style": {
-        "navigationBarTitleText": "半屏弹窗"
+        "navigationBarTitleText": "",
+        "enablePullDownRefresh": false
       }
-    },
-    {
-      "path": "pages/template/long-list/long-list",
-      "style": {
-        "navigationBarTitleText": "复杂长列表"
-      }
-    },
-    {
-      "path": "pages/component/list-view/list-view",
-      "style": {
-        "navigationBarTitleText": "list-view"
-      }
-    },
-    {
-      "path": "pages/component/scroll-view/scroll-view-props",
+    }, {
+      "path": "pages/state/watch/watch",
       "style": {
-        "navigationBarTitleText": "非下拉刷新的scroll-view属性示例"
+        "navigationBarTitleText": "",
+        "enablePullDownRefresh": false
       }
     },
     {
-      "path": "pages/component/scroll-view/scroll-view-refresher-props",
+      "path": "pages/rendering/slots/slots",
       "style": {
-        "navigationBarTitleText": "下拉刷新的scroll-view属性示例"
+        "navigationBarTitleText": "slots",
+        "enablePullDownRefresh": false
       }
     },
     {
-      "path": "pages/component/scroll-view/scroll-view-custom-refresher-props",
+      "path": "pages/rendering/template/template",
       "style": {
-        "navigationBarTitleText": "自定义下拉刷新的scroll-view属性示例"
+        "navigationBarTitleText": "template",
+        "enablePullDownRefresh": false
       }
     },
     {
-      "path": "pages/template/pull-zoom-image/pull-zoom-image",
+      "path": "pages/examples/nested-component-communication/nested-component-communication",
       "style": {
-        "enablePullDownRefresh": false,
-        "navigationStyle": "custom"
+        "navigationBarTitleText": "嵌套组件通信",
+        "enablePullDownRefresh": false
       }
     }
   ],
   "globalStyle": {
     "pageOrientation": "portrait",
-    "navigationBarTitleText": "Hello uniapp x",
+    "navigationBarTitleText": "Hello UVUE",
     "navigationBarTextStyle": "white",
     "navigationBarBackgroundColor": "#007AFF",
-    "backgroundColor": "#efeff4",
-    "backgroundColorTop": "#F4F5F6",
-    "backgroundColorBottom": "#F4F5F6"
-  },
-  "tabBar": {
-    "color": "#7A7E83",
-    "selectedColor": "#007AFF",
-    "borderStyle": "black",
     "backgroundColor": "#F8F8F8",
-    "list": [{
-        "pagePath": "pages/tabBar/component",
-        "iconPath": "static/component.png",
-        "selectedIconPath": "static/componentHL.png",
-        "text": "内置组件"
-      },
-      {
-        "pagePath": "pages/tabBar/API",
-        "iconPath": "static/api.png",
-        "selectedIconPath": "static/apiHL.png",
-        "text": "接口"
-      },
-      {
-        "pagePath": "pages/tabBar/CSS",
-        "iconPath": "static/css.png",
-        "selectedIconPath": "static/cssHL.png",
-        "text": "CSS"
-      },
-      {
-        "pagePath": "pages/tabBar/template",
-        "iconPath": "static/template.png",
-        "selectedIconPath": "static/templateHL.png",
-        "text": "模板"
-      }
-    ]
+    "backgroundColorTop": "#F4F5F6",
+    "backgroundColorBottom": "#F4F5F6",
+    "h5": {
+      "maxWidth": 1190,
+      "navigationBarTextStyle": "black",
+      "navigationBarBackgroundColor": "#F1F1F1"
+    }
   },
-  "condition": {
-    //模式配置，仅开发期间生效
+  "uniIdRouter": {},
+  "condition": { //模式配置，仅开发期间生效
     "current": 0, //当前激活的模式(list 的索引项)
     "list": [{
       "name": "", //模式名称
