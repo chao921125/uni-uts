@@ -1,48 +1,120 @@
 <script lang="uts">
-  import { state, setLifeCycleNum, setAppLaunchPath, setAppShowPath } from './store/index.uts'
+  import { state, setLifeCycleNum } from '@/store/index.uts'
 
+  // #ifdef APP-ANDROID
   let firstBackTime = 0
+  // #endif
   export default {
-    // #ifndef APP-ANDROID
-    mixins: [
-      {
-        data() {
-          return {
-            appMixinDataMsg: 'App.uvue mixin data msg'
-          }
-        }
-      }],
-    // #endif
-    onLaunch: function (options) {
-      console.log(options)
+    globalData: {
+      str: 'default globalData str',
+      num: 0,
+      bool: false,
+      obj: {
+        str: 'default globalData obj str',
+        num: 0,
+        bool: false,
+      },
+      null: null as string | null,
+      arr: [] as number[],
+      mySet: new Set<string>(),
+      myMap: new Map<string, any>(),
+      func: () : string => {
+        return 'globalData func'
+      },
+      launchOptions: {
+        path: '',
+      } as OnLaunchOptions,
+      onShowOption: {
+        path: ''
+      } as OnShowOptions
+    },
+    onLaunch: function (res : OnLaunchOptions) {
+
+      this.globalData.launchOptions = res
+
       // 自动化测试
       setLifeCycleNum(state.lifeCycleNum + 1000)
-      setAppLaunchPath(options.path)
       console.log('App Launch')
-      // #ifdef UNI-APP-X && APP-ANDROID
-      const performance = uni.getPerformance()
-      const observer : PerformanceObserver = performance.createObserver((entryList : PerformanceObserverEntryList) => {
-        console.log('observer:entryList.getEntries()')
-        console.log(entryList.getEntries())
+
+      // 页面性能分析
+      // const performance = uni.getPerformance()
+      // const observer1: PerformanceObserver = performance.createObserver(
+      //   (entryList: PerformanceObserverEntryList) => {
+      //     console.log('observer1:entryList.getEntries()' +JSON.stringify(entryList.getEntries()))
+      //   }
+      // )
+      // observer1.observe({
+      //   entryTypes: ['render', 'navigation'],
+      // } as PerformanceObserverOptions)
+      // 统计上报 - 应用启动
+      // #ifdef APP-ANDROID || APP-IOS || WEB || MP-WEIXIN
+      uni.report({
+      	name: 'uni-app-launch',
+      	options: res,
+      	success(res_data) {
+      		console.log(res_data);
+      	}, fail(err) {
+      		console.log(err);
+      	}
       })
-      observer.observe({
-        entryTypes: ['render', 'navigation'],
-      } as PerformanceObserverOptions)
+      // #endif
+      // #ifdef APP
+      if (process.env.NODE_ENV !== 'development') { //真机运行可以注释此条件
+        uni.getPrivacySetting({
+          success(res1){
+             if(res1.needAuthorization){
+               uni.openDialogPage({
+                 url: '/pages/component/button/privacy',
+               })
+             }
+          }
+        })
+      }
       // #endif
     },
-    onShow: function (options) {
+    onShow: function (res : OnShowOptions) {
+      this.globalData.onShowOption = res
+
+      // 处理scheme或通用链接直达
+      let url = this.getRedirectUrl(res.appScheme, res.appLink);
+      if (null != url) {
+        uni.navigateTo({
+          url: url
+        })
+      }
+
       // 自动化测试
       setLifeCycleNum(state.lifeCycleNum + 100)
-      setAppShowPath(options.path)
-      if(this.globalPropertiesStr === 'default string'){
-        setLifeCycleNum(state.lifeCycleNum + 10)
-      }
       console.log('App Show')
+
+      // #ifdef APP-ANDROID || APP-IOS || WEB || MP-WEIXIN
+      // 统计上报 - 应用显示
+      uni.report({
+      	name: 'uni-app-show',
+      	success(res_data) {
+      		console.log(res_data);
+      	}, fail(err) {
+      		console.log(err);
+      	}
+      })
+      // #endif
     },
     onHide: function () {
       // 自动化测试
       setLifeCycleNum(state.lifeCycleNum - 100)
       console.log('App Hide')
+
+      // #ifdef APP-ANDROID || APP-IOS || WEB || MP-WEIXIN
+      // 统计上报 - 应用进入后台
+      uni.report({
+      	name: 'uni-app-hide',
+      	success(res) {
+      		console.log(res);
+      	}, fail(err) {
+      		console.log(err);
+      	}
+      })
+      // #endif
     },
     // #ifdef APP-ANDROID
     onLastPageBackPress: function () {
@@ -67,58 +139,75 @@
       console.log('App Exit')
     },
     // #endif
-    onError: function(error: any) {
-      console.log('App Error', error)
-      setLifeCycleNum(state.lifeCycleNum + 100)
+    onError(err : any) {
+      // console.log('App onError', err)
+      // #ifdef APP-ANDROID || APP-IOS || WEB || MP-WEIXIN
+    	// 统计上报 - 应用发生错误
+    	uni.report({
+    		name: 'uni-app-error',
+    		options: err,
+    		success(res) {
+    			console.log(res);
+    		}, fail(err) {
+    			console.log(err);
+    		}
+    	})
+      // #endif
     },
     methods: {
-      checkLaunchPath() : boolean {
-        const HOME_PATH = 'pages/index/index'
-        if (state.appLaunchPath != HOME_PATH) {
-          return false
-        }
-        if (state.appShowPath != HOME_PATH) {
-          return false
-        }
-        return true
+      increasetLifeCycleNum() {
+        setLifeCycleNum(state.lifeCycleNum + 100)
+        console.log('App increasetLifeCycleNum')
       },
-      // #ifndef APP-ANDROID
-      checkAppMixin() : boolean {
-        if(this.globalMixinDataMsg1 != '通过 defineMixin 定义全局 mixin data') {
-          return false
+      getRedirectUrl(scheme : string | null, ulink : string | null) : string | null {
+        //解析scheme或universal link启动直达页面：
+        //scheme格式：uniappx://redirect/pages/component/view/view?key=value  //其中redirect后为页面路径
+        //universal link格式：https://uniappx.dcloud.net.cn/ulink/redirect.html?url=%2Fpages%2Fcomponent%2Fview%2Fview%3Fkey%3Dvalue  //通用链接路径需固定，?后面的url参数为直达页面路径，注意url字段值需做url编码（可使用encodeURIComponent方法）
+        let url : string | null = null;
+        if (null != scheme && scheme.length > 0) {
+          const PATHPRE = 'redirect';
+          let parts : string | null = null;
+          let pos = scheme.search('//');
+          if (pos > 0) {
+            parts = scheme.substring(pos + 2);
+          }
+          if (null != parts && parts.startsWith(PATHPRE)) {
+            url = parts.substring(PATHPRE.length);
+          }
+        } else if (null != ulink && ulink.length > 0) {
+          const PATH = 'ulink/redirect.html';
+          let parts = ulink.split('?');
+          if (parts.length > 1 && parts[0].endsWith(PATH) && parts[1].length > 0) {
+            parts[1].split('&').forEach((e) => {
+              let params = e.split('=');
+              if (params.length > 1 && params[0].length > 0 && params[1].length > 0) {
+                if ('url' == params[0]) {
+                  if (null == url) {
+                    url = decodeURIComponent(params[1]);
+                  }
+                }
+              }
+            });
+          }
         }
-        if(this.appMixinDataMsg != 'App.uvue mixin data msg') {
-          return false
-        }
-        return true
+        return url;
       }
-      // #endif
     }
   }
 </script>
 
 <style>
-  @import './styles/common.css';
+  /*每个页面公共css */
+  @import "./common/uni.css";
 
-  .list-item-text {
-    line-height: 36px;
+  /* #ifdef WEB */
+  .uni-top-window uni-tabbar .uni-tabbar {
+    background-color: #fff !important;
   }
-
-  .split-title {
-    margin: 20px 0 5px;
-    padding: 5px 0;
-    border-bottom: 1px solid #dfdfdf;
+  /* #endif */
+  /* #ifdef MP-WEIXIN */
+  page {
+    background-color: #efeff4;
   }
-
-  .btn-view {
-    margin: 10px 0;
-    padding: 10px;
-    border: 1px solid #dfdfdf;
-    border-radius: 3px;
-  }
-</style>
-<style>
-.text-red{
-  color: red;
-}
+  /* #endif */
 </style>
