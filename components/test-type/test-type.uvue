@@ -1,20 +1,14 @@
 <template>
-	<view>
-		test-type
-	</view>
+	<view> test-type </view>
 </template>
 
 <script>
-	export default {
-		name:"test-type",
-		data() {
-			return {
-				
-			};
-		}
-	}
+export default {
+	name: "test-type",
+	data() {
+		return {};
+	},
+};
 </script>
 
-<style>
-
-</style>
+<style></style>
