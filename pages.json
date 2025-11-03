@@ -1,936 +1,162 @@
 {
-	"pages": [{
-			"path": "pages/index/index",
-			"style": {
-				"navigationBarTitleText": "hello uvue"
-			}
-		},
-		{
-			"path": "pages/app-instance/component/component",
-			"style": {
-				"navigationBarTitleText": "app.component"
-			}
-		},
-		{
-			"path": "pages/app-instance/globalProperties/globalProperties-options",
-			"style": {
-				"navigationBarTitleText": "app.globalProperties"
-			}
-		},
-		{
-			"path": "pages/app-instance/globalProperties/globalProperties-composition",
-			"style": {
-				"navigationBarTitleText": "app.globalProperties"
-			}
-		},
-		{
-			"path": "pages/app-instance/use/use-options",
-			"style": {
-				"navigationBarTitleText": "app.use"
-			}
-		},
-		{
-			"path": "pages/app-instance/use/use-composition",
-			"style": {
-				"navigationBarTitleText": "app.use"
-			}
-		},
-		{
-			"path": "pages/component-instance/attrs/attrs-options",
-			"style": {
-				"navigationBarTitleText": "$attrs"
-			}
-		},
-		{
-			"path": "pages/component-instance/attrs/attrs-composition",
-			"style": {
-				"navigationBarTitleText": "useAttrs"
-			}
-		},
-		{
-			"path": "pages/component-instance/data/data-options",
-			"style": {
-				"navigationBarTitleText": "$data"
-			}
-		},
-		{
-			"path": "pages/component-instance/data/data-composition",
-			"style": {
-				"navigationBarTitleText": "data 组合式 API"
-			}
-		},
-		{
-			"path": "pages/component-instance/props/props-options",
-			"style": {
-				"navigationBarTitleText": "$props"
-			}
-		},
-		{
-			"path": "pages/component-instance/props/props-composition",
-			"style": {
-				"navigationBarTitleText": "defineProps"
-			}
-		},
-		{
-			"path": "pages/component-instance/el/el-options",
-			"style": {
-				"navigationBarTitleText": "$el 选项式 API"
-			}
-		},
-		{
-			"path": "pages/component-instance/el/el-composition",
-			"style": {
-				"navigationBarTitleText": "$el 组合式 API"
-			}
-		},
-		{
-			"path": "pages/component-instance/options/options-options",
-			"style": {
-				"navigationBarTitleText": "$options"
-			}
-		},
-		{
-			"path": "pages/component-instance/options/options-composition",
-			"style": {
-				"navigationBarTitleText": "defineOptions"
-			}
-		},
-		{
-			"path": "pages/component-instance/parent/parent-options",
-			"style": {
-				"navigationBarTitleText": "$parent 选项式 API"
-			}
-		},
-		{
-			"path": "pages/component-instance/parent/parent-composition",
-			"style": {
-				"navigationBarTitleText": "$parent 组合式 API"
-			}
-		},
-		// #ifndef WEB
-		{
-			"path": "pages/component-instance/root/root-options",
-			"style": {
-				"navigationBarTitleText": "$root 选项式 API"
-			}
-		},
-		{
-			"path": "pages/component-instance/root/root-composition",
-			"style": {
-				"navigationBarTitleText": "$root 组合式 API"
-			}
-		},
-		// #endif
-		// #ifndef APP-IOS || MP
-		{
-			"path": "pages/directive/v-html/v-html-options",
-			"style": {
-				"navigationBarTitleText": "v-html 选项式 API"
-			}
-		},
-		{
-			"path": "pages/directive/v-html/v-html-composition",
-			"style": {
-				"navigationBarTitleText": "v-html 组合式 API"
-			}
-		},
-		// #endif 
-		{
-			"path": "pages/directive/v-show/v-show-options",
-			"style": {
-				"navigationBarTitleText": "v-show 选项式 API"
-			}
-		},
-		{
-			"path": "pages/directive/v-show/v-show-composition",
-			"style": {
-				"navigationBarTitleText": "v-show 组合式 API"
-			}
-		},
-		{
-			"path": "pages/directive/v-if/v-if-options",
-			"style": {
-				"navigationBarTitleText": "v-if 选项式 API"
-			}
-		},
-		{
-			"path": "pages/directive/v-if/v-if-composition",
-			"style": {
-				"navigationBarTitleText": "v-if 组合式 API"
-			}
-		},
-		{
-			"path": "pages/directive/v-for/v-for-options",
-			"style": {
-				"navigationBarTitleText": "v-for 选项式 API"
-			}
-		},
-		{
-			"path": "pages/directive/v-for/v-for-composition",
-			"style": {
-				"navigationBarTitleText": "v-for 组合式 API"
-			}
-		},
-		{
-			"path": "pages/directive/v-on/v-on-options",
-			"style": {
-				"navigationBarTitleText": "v-on 选项式 API"
-			}
-		},
-		{
-			"path": "pages/directive/v-on/v-on-composition",
-			"style": {
-				"navigationBarTitleText": "v-on 组合式 API"
-			}
-		},
-		// #ifndef MP
-		{
-			"path": "pages/directive/v-pre/v-pre",
-			"style": {
-				"navigationBarTitleText": "v-pre"
-			}
-		},
-		{
-			"path": "pages/directive/v-once/v-once-options",
-			"style": {
-				"navigationBarTitleText": "v-once 选项式 API"
-			}
-		},
-		{
-			"path": "pages/directive/v-once/v-once-composition",
-			"style": {
-				"navigationBarTitleText": "v-once 组合式 API"
-			}
-		},
-		{
-			"path": "pages/directive/v-memo/v-memo-options",
-			"style": {
-				"navigationBarTitleText": "v-memo 选项式 API"
-			}
-		},
-		{
-			"path": "pages/directive/v-memo/v-memo-composition",
-			"style": {
-				"navigationBarTitleText": "v-memo 组合式 API"
-			}
-		},
-		// #endif
-		// #ifdef WEB
-		{
-			"path": "pages/directive/v-text/v-text-options",
-			"style": {
-				"navigationBarTitleText": "v-text 选项式 API"
-			}
-		},
-		{
-			"path": "pages/directive/v-text/v-text-composition",
-			"style": {
-				"navigationBarTitleText": "v-text 组合式 API"
-			}
-		},
-		// #endif
-		{
-			"path": "pages/directive/v-bind/v-bind-options",
-			"style": {
-				"navigationBarTitleText": "v-bind 选项式 API"
-			}
-		},
-		{
-			"path": "pages/directive/v-bind/v-bind-composition",
-			"style": {
-				"navigationBarTitleText": "v-bind 组合式 API"
-			}
-		},
-		{
-			"path": "pages/directive/v-model/v-model-options",
-			"style": {
-				"navigationBarTitleText": "v-model"
-			}
-		},
-		// #ifndef MP
-		{
-			"path": "pages/directive/v-model/v-model-composition",
-			"style": {
-				"navigationBarTitleText": "defineModel"
-			}
-		},
-		// #endif
-		{
-			"path": "pages/directive/v-slot/v-slot-options",
-			"style": {
-				"navigationBarTitleText": "v-slot"
-			}
-		},
-		{
-			"path": "pages/directive/v-slot/v-slot-composition",
-			"style": {
-				"navigationBarTitleText": "defineSlots"
-			}
-		},
-		{
-			"path": "pages/component-instance/slots/slots-options",
-			"style": {
-				"navigationBarTitleText": "$slots"
-			}
-		},
-		{
-			"path": "pages/component-instance/slots/slots-composition",
-			"style": {
-				"navigationBarTitleText": "$slots"
-			}
-		},
-		{
-			"path": "pages/component-instance/refs/refs-options",
-			"style": {
-				"navigationBarTitleText": "$refs 选项式 API"
-			}
-		},
-		{
-			"path": "pages/component-instance/refs/refs-composition",
-			"style": {
-				"navigationBarTitleText": "$refs 组合式 API"
-			}
-		},
-		{
-			"path": "pages/component-instance/emit-function/emit-function-options",
-			"style": {
-				"navigationBarTitleText": "$emit() 选项式 API"
-			}
-		},
-		{
-			"path": "pages/component-instance/emit-function/emit-function-composition",
-			"style": {
-				"navigationBarTitleText": "defineEmits 组合式 API"
-			}
-		},
-		{
-			"path": "pages/component-instance/force-update/force-update-options",
-			"style": {
-				"navigationBarTitleText": "$forceUpdate 选项式 API"
-			}
-		},
-		{
-			"path": "pages/component-instance/force-update/force-update-composition",
-			"style": {
-				"navigationBarTitleText": "$forceUpdate 组合式 API"
-			}
-		},
-		{
-			"path": "pages/component-instance/nextTick/nextTick-options",
-			"style": {
-				"navigationBarTitleText": "$nextTick"
-			}
-		},
-		{
-			"path": "pages/component-instance/nextTick/nextTick-composition",
-			"style": {
-				"navigationBarTitleText": "nextTick"
-			}
-		},
-		{
-			"path": "pages/component-instance/methods/call-method-uni-element-options",
-			"style": {
-				"navigationBarTitleText": "call-method-uni-element 选项式 API"
-			}
-		},
-		{
-			"path": "pages/component-instance/methods/call-method-uni-element-composition",
-			"style": {
-				"navigationBarTitleText": "call-method-uni-element 组合式 API"
-			}
-		},
-		{
-			"path": "pages/component-instance/methods/call-method-easycom-options",
-			"style": {
-				"navigationBarTitleText": "call-method-easycom 选项式 API"
-			}
-		},
-		{
-			"path": "pages/component-instance/methods/call-method-easycom-composition",
-			"style": {
-				"navigationBarTitleText": "call-method-easycom 组合式 API"
-			}
-		},
-		{
-			"path": "pages/component-instance/methods/call-method-easycom-uni-modules-options",
-			"style": {
-				"navigationBarTitleText": "call-method-easycom-uni-modules 选项式 API"
-			}
-		},
-		{
-			"path": "pages/component-instance/methods/call-method-easycom-uni-modules-composition",
-			"style": {
-				"navigationBarTitleText": "call-method-easycom-uni-modules 组合式 API"
-			}
-		},
-		{
-			"path": "pages/component-instance/methods/call-method-other-options",
-			"style": {
-				"navigationBarTitleText": "call-method-other 选项式 API"
-			}
-		},
-		{
-			"path": "pages/component-instance/methods/call-method-other-composition",
-			"style": {
-				"navigationBarTitleText": "call-method-other 组合式 API"
-			}
-		},
-		{
-			"path": "pages/component-instance/methods/call-method-define-expose",
-			"style": {
-				"navigationBarTitleText": "call-method-define-expose"
-			}
-		},
-		{
-			"path": "pages/component-instance/provide/provide-options-1",
-			"style": {
-				"navigationBarTitleText": "provide 选项式 API 字面量"
-			}
-		},
-		{
-			"path": "pages/component-instance/provide/provide-options-2",
-			"style": {
-				"navigationBarTitleText": "provide 选项式 API 函数"
-			}
-		},
-		{
-			"path": "pages/component-instance/provide/provide-composition",
-			"style": {
-				"navigationBarTitleText": "provide 组合式 API"
-			}
-		},
-		{
-			"path": "pages/component-instance/setup-function/setup-function",
-			"style": {
-				"navigationBarTitleText": "setup()"
-			}
-		},
-		{
-			"path": "pages/component-instance/define-expose/define-expose",
-			"style": {
-				"navigationBarTitleText": "defineExpose"
-			}
-		},
-		// #ifndef MP
-		{
-			"path": "pages/component-instance/circular-reference/circular-reference-options",
-			"style": {
-				"navigationBarTitleText": "循环引用 选项式 API"
-			}
-		},
-		{
-			"path": "pages/component-instance/circular-reference/circular-reference-composition",
-			"style": {
-				"navigationBarTitleText": "循环引用 组合式 API"
-			}
-		},
-		// #endif
-		// #ifdef APP
-		{
-			"path": "pages/component-instance/mixins/mixins-app",
-			"style": {
-				"navigationBarTitleText": "mixins"
-			}
-		},
-		{
-			"path": "pages/component-instance/mixins/mixins-app-page-namesake",
-			"style": {
-				"navigationBarTitleText": "mixins page namesake"
-			}
-		},
-		// #endif
-		// #ifdef WEB
-		{
-			"path": "pages/component-instance/mixins/mixins-web",
-			"style": {
-				"navigationBarTitleText": "mixins"
-			}
-		},
-		// #endif
-		// #ifdef MP
-		{
-			"path": "pages/component-instance/mp-instance/mp-instance",
-			"style": {
-				"navigationBarTitleText": "mp-instance"
-			}
-		},
-		// #endif
-		{
-			"path": "pages/reactivity/core/ref/ref",
-			"style": {
-				"navigationBarTitleText": "ref"
-			}
-		},
-		{
-			"path": "pages/reactivity/core/computed/computed-options",
-			"style": {
-				"navigationBarTitleText": "computed 选项式 API"
-			}
-		},
-		{
-			"path": "pages/reactivity/core/computed/computed-composition",
-			"style": {
-				"navigationBarTitleText": "computed 组合式 API"
-			}
-		},
-		{
-			"path": "pages/reactivity/core/reactive/reactive",
-			"style": {
-				"navigationBarTitleText": "reactive"
-			}
-		},
-		{
-			"path": "pages/reactivity/core/readonly/readonly",
-			"style": {
-				"navigationBarTitleText": "readonly"
-			}
-		},
-		{
-			"path": "pages/reactivity/core/watch/watch-options",
-			"style": {
-				"navigationBarTitleText": "watch 选项式 API"
-			}
-		},
-		{
-			"path": "pages/reactivity/core/watch/watch-composition",
-			"style": {
-				"navigationBarTitleText": "watch 组合式 API"
-			}
-		},
-		{
-			"path": "pages/reactivity/core/watch-effect/watch-effect",
-			"style": {
-				"navigationBarTitleText": "watchEffect"
-			}
-		},
-		{
-			"path": "pages/reactivity/core/watch-post-effect/watch-post-effect",
-			"style": {
-				"navigationBarTitleText": "watchPostEffect"
-			}
-		},
-		{
-			"path": "pages/reactivity/core/watch-sync-effect/watch-sync-effect",
-			"style": {
-				"navigationBarTitleText": "watchSyncEffect"
-			}
-		},
-		{
-			"path": "pages/reactivity/utilities/is-proxy/is-proxy",
-			"style": {
-				"navigationBarTitleText": "isProxy"
-			}
-		},
-		{
-			"path": "pages/reactivity/utilities/is-reactive/is-reactive",
-			"style": {
-				"navigationBarTitleText": "isReactive"
-			}
-		},
-		{
-			"path": "pages/reactivity/utilities/is-readonly/is-readonly",
-			"style": {
-				"navigationBarTitleText": "isReadonly"
-			}
-		},
-		{
-			"path": "pages/reactivity/utilities/is-ref/is-ref",
-			"style": {
-				"navigationBarTitleText": "isRef"
-			}
-		},
-		{
-			"path": "pages/reactivity/utilities/un-ref/un-ref",
-			"style": {
-				"navigationBarTitleText": "unRef"
-			}
-		},
-		{
-			"path": "pages/reactivity/utilities/to-ref/to-ref",
-			"style": {
-				"navigationBarTitleText": "toRef"
-			}
-		},
-		{
-			"path": "pages/reactivity/utilities/to-refs/to-refs",
-			"style": {
-				"navigationBarTitleText": "toRefs"
-			}
-		},
-		{
-			"path": "pages/reactivity/utilities/to-value/to-value",
-			"style": {
-				"navigationBarTitleText": "toValue"
-			}
-		},
-		{
-			"path": "pages/reactivity/advanced/shallow-ref/shallow-ref",
-			"style": {
-				"navigationBarTitleText": "shallowRef"
-			}
-		},
-		{
-			"path": "pages/reactivity/advanced/trigger-ref/trigger-ref",
-			"style": {
-				"navigationBarTitleText": "triggerRef"
-			}
-		},
-		{
-			"path": "pages/reactivity/advanced/custom-ref/custom-ref",
-			"style": {
-				"navigationBarTitleText": "customRef"
-			}
-		},
-		{
-			"path": "pages/reactivity/advanced/shallow-reactive/shallow-reactive",
-			"style": {
-				"navigationBarTitleText": "shallowReactive"
-			}
-		},
-		{
-			"path": "pages/reactivity/advanced/shallow-readonly/shallow-readonly",
-			"style": {
-				"navigationBarTitleText": "shallowReadonly"
-			}
-		},
-		{
-			"path": "pages/reactivity/advanced/to-raw/to-raw",
-			"style": {
-				"navigationBarTitleText": "toRaw"
-			}
-		},
-		{
-			"path": "pages/reactivity/advanced/mark-raw/mark-raw",
-			"style": {
-				"navigationBarTitleText": "markRaw"
-			}
-		},
-		{
-			"path": "pages/reactivity/advanced/effect-scope/effect-scope",
-			"style": {
-				"navigationBarTitleText": "effectScope"
-			}
-		},
-		{
-			"path": "pages/reactivity/advanced/get-current-scope/get-current-scope",
-			"style": {
-				"navigationBarTitleText": "getCurrentScope"
-			}
-		},
-		{
-			"path": "pages/reactivity/advanced/on-scope-dispose/on-scope-dispose",
-			"style": {
-				"navigationBarTitleText": "onScopeDispose"
-			}
-		},
-		{
-			"path": "pages/lifecycle/page/page-composition",
-			"style": {
-				"navigationBarTitleText": "page-lifecycle 组合式 API",
-				"enablePullDownRefresh": true
-			}
-		},
-		{
-			"path": "pages/lifecycle/page/page-options",
-			"style": {
-				"navigationBarTitleText": "page-lifecycle 选项式 API",
-				"enablePullDownRefresh": true
-			}
-		},
-		{
-			"path": "pages/lifecycle/page/onBackPress/on-back-press-options",
-			"style": {
-				"navigationBarTitleText": "onBackPress 选项式 API"
-			}
-		},
-		{
-			"path": "pages/lifecycle/page/onBackPress/on-back-press-child-options",
-			"style": {
-				"navigationBarTitleText": "onBackPress 选项式 API"
-			}
-		},
-		{
-			"path": "pages/lifecycle/page/onBackPress/on-back-press-composition",
-			"style": {
-				"navigationBarTitleText": "onBackPress 组合式 API"
-			}
-		},
-		{
-			"path": "pages/lifecycle/page/onBackPress/on-back-press-child-composition",
-			"style": {
-				"navigationBarTitleText": "onBackPress 组合式 API"
-			}
-		},
-		// #ifndef MP
-		{
-			"path": "pages/lifecycle/component/component-options",
-			"style": {
-				"navigationBarTitleText": "component-lifecycle 选项式 API",
-				"enablePullDownRefresh": true
-			}
-		},
-		{
-			"path": "pages/lifecycle/component/component-composition",
-			"style": {
-				"navigationBarTitleText": "component-lifecycle 组合式 API",
-				"enablePullDownRefresh": true
-			}
-		},
-		{
-			"path": "pages/built-in/component/keep-alive/keep-alive-options",
-			"style": {
-				"navigationBarTitleText": "keep-alive 选项式 API"
-			}
-		},
-		{
-			"path": "pages/built-in/component/keep-alive/keep-alive-composition",
-			"style": {
-				"navigationBarTitleText": "keep-alive 组合式 API"
-			}
-		},
-		{
-			"path": "pages/built-in/component/teleport/teleport-options",
-			"style": {
-				"navigationBarTitleText": "teleport 选项式 API",
-				"enablePullDownRefresh": false
-			}
-		},
-		{
-			"path": "pages/built-in/component/teleport/teleport-composition",
-			"style": {
-				"navigationBarTitleText": "teleport 组合式 API",
-				"enablePullDownRefresh": false
-			}
-		},
-		// #endif
-		{
-			"path": "pages/built-in/special-elements/slots/slots-composition",
-			"style": {
-				"navigationBarTitleText": "slots 组合式 API"
-			}
-		},
-		{
-			"path": "pages/built-in/special-elements/slots/slots-options",
-			"style": {
-				"navigationBarTitleText": "slots 选项式 API"
-			}
-		},
-		{
-			"path": "pages/built-in/special-elements/template/template-options",
-			"style": {
-				"navigationBarTitleText": "template 选项式 API"
-			}
-		},
-		{
-			"path": "pages/built-in/special-elements/template/template-composition",
-			"style": {
-				"navigationBarTitleText": "template 组合式 API"
-			}
-		},
-		{
-			"path": "pages/built-in/special-elements/template/template-map-style-options",
-			"style": {
-				"navigationBarTitleText": "template-map-style 选项式 API"
-			}
-		},
-		{
-			"path": "pages/built-in/special-elements/template/template-map-style-composition",
-			"style": {
-				"navigationBarTitleText": "template-map-style 组合式 API"
-			}
-		},
-		// #ifndef MP
-		{
-			"path": "pages/built-in/special-elements/component/component-options",
-			"style": {
-				"navigationBarTitleText": "component 选项式 API"
-			}
-		},
-		{
-			"path": "pages/built-in/special-elements/component/component-composition",
-			"style": {
-				"navigationBarTitleText": "component 组合式 API"
-			}
-		},
-		{
-			"path": "pages/render-function/render/render-options",
-			"style": {
-				"navigationBarTitleText": "render 选项式 API"
-			}
-		},
-		{
-			"path": "pages/render-function/render/render-composition",
-			"style": {
-				"navigationBarTitleText": "render 组合式 API"
-			}
-		},
-		{
-			"path": "pages/render-function/mergeProps/mergeProps-options",
-			"style": {
-				"navigationBarTitleText": "mergeProps 选项式 API"
-			}
-		},
-		{
-			"path": "pages/render-function/mergeProps/mergeProps-composition",
-			"style": {
-				"navigationBarTitleText": "mergeProps 组合式 API"
-			}
-		},
-		{
-			"path": "pages/render-function/cloneVNode/cloneVNode-options",
-			"style": {
-				"navigationBarTitleText": "cloneVNode 选项式 API"
-			}
-		},
-		{
-			"path": "pages/render-function/cloneVNode/cloneVNode-composition",
-			"style": {
-				"navigationBarTitleText": "cloneVNode 组合式 API"
-			}
-		},
-		{
-			"path": "pages/render-function/isVNode/isVNode-options",
-			"style": {
-				"navigationBarTitleText": "isVNode 选项式 API"
-			}
-		},
-		{
-			"path": "pages/render-function/isVNode/isVNode-composition",
-			"style": {
-				"navigationBarTitleText": "isVNode 组合式 API"
-			}
-		},
-		{
-			"path": "pages/render-function/resolveComponent/resolveComponent-options",
-			"style": {
-				"navigationBarTitleText": "resolveComponent 选项式 API"
-			}
-		},
-		{
-			"path": "pages/render-function/resolveComponent/resolveComponent-composition",
-			"style": {
-				"navigationBarTitleText": "resolveComponent 组合式 API"
-			}
-		},
-		{
-			"path": "pages/render-function/withDirectives/withDirectives-options",
-			"style": {
-				"navigationBarTitleText": "withDirectives 选项式 API"
-			}
-		},
-		{
-			"path": "pages/render-function/withDirectives/withDirectives-composition",
-			"style": {
-				"navigationBarTitleText": "resolveComponent 组合式 API"
-			}
-		},
-		{
-			"path": "pages/render-function/withModifiers/withModifiers-options",
-			"style": {
-				"navigationBarTitleText": "withModifiers 选项式 API"
-			}
-		},
-		{
-			"path": "pages/render-function/withModifiers/withModifiers-composition",
-			"style": {
-				"navigationBarTitleText": "withModifiers 组合式 API"
-			}
-		},
-		// #endif
-		{
-			"path": "pages/examples/unrecognized-component/unrecognized-component",
-			"style": {
-				"navigationBarTitleText": "unrecognized-component"
-			}
-		},
-		{
-			"path": "pages/examples/nested-component-communication/nested-component-communication-options",
-			"style": {
-				"navigationBarTitleText": "嵌套组件通信 选项式 API"
-			}
-		},
-		{
-			"path": "pages/examples/nested-component-communication/nested-component-communication-composition",
-			"style": {
-				"navigationBarTitleText": "嵌套组件通信 组合式 API"
-			}
-		},
-		{
-			"path": "pages/examples/set-custom-child-component-root-node-class/set-custom-child-component-root-node-class-options",
-			"style": {
-				"navigationBarTitleText": "自定义组件中使用 class 定制另一个自定义组件根节点样式 选项式 API"
-			}
-		},
-		{
-			"path": "pages/examples/set-custom-child-component-root-node-class/set-custom-child-component-root-node-class-composition",
-			"style": {
-				"navigationBarTitleText": "自定义组件中使用 class 定制另一个自定义组件根节点样式 组合式 API"
-			}
-		},
-		{
-			"path": "pages/examples/multiple-style-script/multiple-style-script",
-			"style": {
-				"navigationBarTitleText": "多个 style 和 script"
-			}
-		},
-		{
-			"path": "pages/type/type",
-			"style": {
-				"navigationBarTitleText": "",
-				"enablePullDownRefresh": false
-			}
-		},
-		{
-			"path": "pages/error/runtime-error/runtime-error-options",
-			"style": {
-				"navigationBarTitleText": "runtime error 选项式 API"
-			}
-		},
-		{
-			"path": "pages/error/runtime-error/runtime-error-composition",
-			"style": {
-				"navigationBarTitleText": "runtime error 组合式 API"
-			}
-		},
-		{
-			"path": "pages/error/throw-error/throw-error-options",
-			"style": {
-				"navigationBarTitleText": "throw error 选项式 API"
-			}
-		},
-		{
-			"path": "pages/error/throw-error/throw-error-composition",
-			"style": {
-				"navigationBarTitleText": "throw error 组合式 API"
-			}
-		}
-	],
-	"globalStyle": {
-		"pageOrientation": "portrait",
-		"navigationBarTitleText": "Hello UVUE",
-		"navigationBarTextStyle": "white",
-		"navigationBarBackgroundColor": "#007AFF",
-		"backgroundColor": "#F8F8F8",
-		"backgroundColorTop": "#F4F5F6",
-		"backgroundColorBottom": "#F4F5F6",
-		"h5": {
-			"maxWidth": 1190,
-			"navigationBarTextStyle": "white",
-			"navigationBarBackgroundColor": "#007AFF"
-		}
-	},
-	"easycom": {
-		"custom": {
-			"custom-(.*)": "@/components/custom-$1.uvue"
-		}
-	},
-	"uniIdRouter": {},
+	// pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.net.cn/collocation/pages.html
+	"entryPagePath": "entryPagePath",
+	// 模式配置，仅开发期间生效
 	"condition": {
-		"current": 0,
+		"current": 0, // 当前激活的模式（list 的索引项）
 		"list": [{
-			"name": "",
-			"path": "",
-			"query": ""
-		}]
+				"name": "welcome", //模式名称
+				"path": "pages/welcome", // 启动页面，必选
+				"query": "interval=4000&autoplay=false" // 启动参数，在页面的onLoad函数里面得到。
+			},
+			{
+				"name": "index",
+				"path": "pages/tabBar/index",
+				"query": ""
+			}
+		]
+	},
+	// I18n "navigationBarTitleText": "%index.title%"
+	// 设置页面路径及窗口表现 style 覆盖 globalStyle
+	"pages": [{
+		"path": "pages/welcome",
+		"style": {
+			"navigationBarTitleText": "欢迎页",
+			"navigationStyle": "custom",
+			"enablePullDownRefresh": false
+		},
+		"needLogin": false
+	}, {
+		"path": "pages/tabBar/index",
+		"style": {
+			"navigationBarTitleText": "首页",
+			"navigationStyle": "custom",
+			"enablePullDownRefresh": false
+		},
+		"needLogin": false
+	}, {
+		"path": "pages/tabBar/my",
+		"style": {
+			"navigationBarTitleText": "我的",
+			"navigationStyle": "custom",
+			"enablePullDownRefresh": false
+		},
+		"needLogin": false
+	}],
+	"subPackages": [],
+	// 设置底部 tab 的表现	
+	"tabBar": {
+		"height": "60px",
+		"fontSize": "10px",
+		"iconWidth": "24px",
+		"spacing": "3px",
+		"color": "@tabBarColor", // tab 上的文字默认颜色
+		"selectedColor": "@tabBarSelectedColor", // tab 上的文字选中时的颜色
+		"borderStyle": "@tabBarBorderStyle", // tabbar 上边框的颜色
+		"backgroundColor": "@tabBarBackgroundColor", // tab 的背景色
+		"blurEffect": "light", // 高斯模糊效果
+		"position": "bottom", // 可选值 bottom、top
+		// "iconfontSrc": "", // list设置 iconfont 属性时，需要指定字体文件路径
+		// "backgroundImage": "", // 设置背景图片，优先级高于 backgroundColor
+		// "backgroundRepeat": "", // 设置标题栏的背景图平铺方式
+		// "redDotColor": "", // tabbar上红点颜色
+		"list": [{
+				// "iconfont": {"text": "", "selectedText": "", "fontSize": "", "color": "", "selectedColor": ""},
+				"pagePath": "pages/tabBar/index",
+				"iconPath": "@tabBarComponentIconPath",
+				"selectedIconPath": "@tabBarComponentSelectedIconPath",
+				"text": "首页",
+				"visible": true
+			},
+			{
+				"pagePath": "pages/tabBar/my",
+				"iconPath": "@tabBarAPIIconPath",
+				"selectedIconPath": "@tabBarAPISelectedIconPath",
+				"text": "我的",
+				"visible": true
+			}
+		]
+	},
+	// 分包预下载规则
+	"preloadRule": {
+		"pages/tabBar/my": {
+			"network": "all",
+			"packages": ["__APP__"]
+		}
+	},
+	// 自动跳转相关配置
+	"uniIdRouter": {
+		"loginPage": "pages/auth/login", // 登录页面路径
+		"needLogin": [
+			"pages/my/.*" // 需要登录才可访问的页面列表，可以使用正则语法
+		],
+		"resToLogin": true // 自动解析云对象及clientDB的错误码，如果是客户端token不正确或token过期则自动跳转配置的登录页面，配置为false则关闭此行为，默认true
+	},
+	// 组件自动引入规则
+	"easycom": {
+		"autoscan": true
+		// "custom": true,
+	},
+	// 设置默认页面的窗口表现
+	"globalStyle": {
+		"pageOrientation": "portrait", // 横屏配置，屏幕旋转设置，仅支持 auto / portrait / landscape
+
+		"navigationBarTitleText": "CCNET", // 导航栏标题文字内容
+		"navigationBarTextStyle": "@navigationBarTextStyle", // 导航栏标题颜色及状态栏前景颜色，仅支持 black/white
+		"navigationBarBackgroundColor": "@navigationBarBackgroundColor", // 导航栏背景颜色（同状态栏背景色）
+		"navigationStyle": "default", // 导航栏样式，仅支持 default/custom。custom即取消默认的原生导航栏
+
+		"backgroundColor": "@backgroundColor",
+		"backgroundColorContent": "@backgroundColorContent",
+		"backgroundTextStyle": "@backgroundTextStyle",
+		"backgroundColorTop": "@backgroundColorTop", // 顶部窗口的背景色（bounce回弹区域）
+		"backgroundColorBottom": "@backgroundColorBottom", // 底部窗口的背景色（bounce回弹区域）
+
+		"enablePullDownRefresh": false, // 是否开启下拉刷新
+		"onReachBottomDistance": 50, // 页面上拉触底事件触发时距页面底部距离，单位只支持px
+
+		// "titleImage": "" // 导航栏图片地址（替换当前文字标题），支付宝小程序内必须使用https的图片链接地址
+		// "transparentTitle": "" // 导航栏整体（前景、背景）透明设置。支持 always 一直透明 / auto 滑动自适应 / none 不透明
+		// "titlePenetrate": "" // 导航栏点击穿透 'YES' | 'NO'
+
+		// "pageOrientation": "" // 横屏配置，屏幕旋转设置，仅支持 auto / portrait / landscape
+
+		// "hideStatusBar": "" // 是否隐藏系统顶部状态栏
+		// "hideBottomNavigationIndicator": "" // 是否隐藏系统底部导航栏
+
+		// "animationType": "" // 窗口显示的动画效果 'slide-in-right' | 'slide-in-left' | 'slide-in-top' | 'slide-in-bottom' | 'fade-in' | 'zoom-out' | 'zoom-fade-out' | 'pop-in'
+		// "animationDuration": 300 // 窗口显示动画的持续时间，单位为 ms
+
+		// "allowsBounceVertical": "" // 是否允许向下拉拽。默认 YES。如果需要下拉刷新，值必须为YES
+
+		// "renderingMode": "" // 同层渲染，webrtc(实时音视频) 无法正常时尝试配置 seperated 强制关掉同层
+
+		// "rpxCalcMaxDeviceWidth": 300 // rpx 计算所支持的最大设备宽度，单位 px
+		// "rpxCalcBaseDeviceWidth": 300 // rpx 计算使用的基准设备宽度，设备实际宽度超出 rpx 计算所支持的最大设备宽度时将按基准宽度计算，单位 px
+		// "rpxCalcIncludeWidth": 300 // rpx 计算特殊处理的值，始终按实际的设备宽度计算，单位 rpx
+
+		// "dynamicRpx": false // 动态 rpx，屏幕大小变化会重新渲染 rpx
+
+		"usingComponents": {
+			"van-config-provider": "/wxcomponents/vant/config-provider/index",
+			"van-transition": "/wxcomponents/vant/transition/index",
+			"van-loading": "/wxcomponents/vant/loading/index",
+			"van-row": "/wxcomponents/vant/row/index",
+			"van-col": "/wxcomponents/vant/col/index",
+			"van-cell": "/wxcomponents/vant/cell/index",
+			"van-cell-group": "/wxcomponents/vant/cell-group/index",
+			"van-popup": "/wxcomponents/vant/popup/index",
+			"van-button": "/wxcomponents/vant/button/index",
+			"van-icon": "/wxcomponents/vant/icon/index",
+			"van-image": "/wxcomponents/vant/image/index",
+			"van-field": "/wxcomponents/vant/field/index",
+			"van-toast": "/wxcomponents/vant/toast/index",
+			"van-nav-bar": "/wxcomponents/vant/nav-bar/index",
+			"van-tabbar": "/wxcomponents/vant/tabbar/index",
+			"van-tabbar-item": "/wxcomponents/vant/tabbar-item/index",
+			"van-sidebar": "/wxcomponents/vant/sidebar/index",
+			"van-sidebar-item": "/wxcomponents/vant/sidebar-item/index",
+			"van-notice-bar": "/wxcomponents/vant/notice-bar/index"
+		}
 	}
 }

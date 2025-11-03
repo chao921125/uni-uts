@@ -1,32 +1,166 @@
 {
-    "name" : "uni-uts",
-    "appid" : "__UNI__BA6ADB5",
-    "description" : "",
-    "versionName" : "1.0.0",
-    "versionCode" : "100",
-    "uni-app-x" : {
-        "singleThread" : true
-    },
-    "mp-weixin" : {
-        "appid" : "wxa52bb659b38d1ae2",
-        "setting" : {
-            "urlCheck" : false,
-            "postcss" : true,
-            "minified" : true
-        },
-        "usingComponents" : true
-    },
-    "mp-alipay" : {
-        "usingComponents" : true
-    },
-    "mp-baidu" : {
-        "usingComponents" : true
-    },
-    "mp-toutiao" : {
-        "usingComponents" : true
-    },
-    "uniStatistics" : {
-        "enable" : false
-    },
-    "vueVersion" : "3"
+	"name": "Hello uni-app x",
+	"appid": "__UNI__BA6ADB5",
+	"description": "",
+	"versionName": "1.9.7",
+	"versionCode": 10907,
+	"uni-app-x": {},
+	"vueVersion": "3",
+	"mp-weixin": {
+		"darkmode": true,
+		"appid": "",
+		"setting": {
+			"urlCheck": false
+		},
+		"usingComponents": true,
+		"resizable": true,
+		"frameset": true,
+		"libVersion": "3.7.1",
+		"requiredPrivateInfos": [
+			"getLocation",
+			"onLocationChange",
+			"startLocationUpdateBackground"
+		],
+		"permission": {
+			"scope.userLocation": {
+				"desc": "你的位置信息将用于小程序位置接口的效果展示"
+			}
+		},
+		"unipush": {
+			"enable": true
+		}
+	},
+	"app": {
+		"distribute": {
+			"modules": {
+				"uni-payment": {
+					"alipay": {},
+					"wxpay": {
+						"android": {},
+						"ios": {
+							"appid": "",
+							"universalLink": ""
+						}
+					}
+				},
+				"uni-location": {
+					"system": {},
+					"tencent": {}
+				},
+				"uni-ad": {
+					"gdt": {}
+				},
+				"uni-push": {},
+				"uni-map": {
+					"tencent": {}
+				}
+			},
+			"icons": {
+				"ios": {
+					"appstore": "package/icon1024.png"
+				},
+				"android": {
+					"xxhdpi": "package/icon144.png",
+					"xxxhdpi": "package/icon192.png"
+				}
+			}
+		}
+	},
+	"app-harmony": {
+		"distribute": {
+			"bundleName": "io.dcloud.uniappx",
+			"modules": {
+				"uni-payment": {
+					"alipay": {},
+					"wxpay": {}
+				},
+				"uni-location": {
+					"system": {}
+				},
+				"uni-push": {},
+				"uni-map": {
+					"tencent": {}
+				},
+				"uni-verify": {},
+				"uni-facialVerify": {},
+				"uni-oauth": {
+					"huawei": {}
+				}
+			},
+			"icons": {
+				"foreground": "package/D-1024.png",
+				"background": "package/background-white.png"
+			},
+			"splashScreens": {
+				"startWindowIcon": "package/icon256.png"
+			}
+		}
+	},
+	"web": {
+		"darkmode": true,
+		"router": {
+			"base": "/web/",
+			"mode": ""
+		},
+		"sdkConfigs": {
+			"maps": {
+				"tencent": {
+					"key": ""
+				}
+			}
+		},
+		"unipush": {
+			"enable": true
+		}
+	},
+	"app-android": {
+		"distribute": {
+			"modules": {
+				"uni-payment": {
+					"alipay": {},
+					"wxpay": {}
+				},
+				"uni-location": {
+					"system": {},
+					"tencent": {}
+				},
+				"uni-push": {},
+				"uni-map": {
+					"tencent": {}
+				}
+			},
+			"icons": {
+				"xxhdpi": "",
+				"xxxhdpi": ""
+			},
+			"splashScreens": {
+				"default": {}
+			}
+		}
+	},
+	"app-ios": {
+		"distribute": {
+			"modules": {
+				"uni-payment": {
+					"alipay": {},
+					"wxpay": {
+						"appid": "",
+						"universalLink": ""
+					}
+				},
+				"uni-location": {
+					"system": {},
+					"tencent": {}
+				},
+				"uni-push": {},
+				"uni-map": {
+					"tencent": {}
+				}
+			},
+			"icons": {
+				"appstore": ""
+			},
+			"splashScreens": {}
+		}
+	}
 }

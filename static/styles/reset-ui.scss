@@ -1,0 +1,26 @@
+.uni-forms-item {
+	.uni-forms-item__content {
+		display: flex;
+		display: -webkit-flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: flex-start;
+	}
+	.uni-easyinput {
+		.uni-easyinput__content {
+			border: none !important;
+			input {
+				padding-left: 0 !important;
+			}
+		}
+	}
+}
+.uni-easyinput {
+	.uni-easyinput__content {
+		display: flex;
+		display: -webkit-flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: space-between;
+	}
+}

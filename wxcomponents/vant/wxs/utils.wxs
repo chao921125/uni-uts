@@ -1,7 +1,10 @@
-var bem = require('./bem.wxs').bem;
-var memoize = require('./memoize.wxs').memoize;
+/* eslint-disable */
+var bem = require('./bem.wxs');
+var memoize = require('./memoize.wxs');
+var addUnit = require('./add-unit.wxs');
 
 module.exports = {
   bem: memoize(bem),
-  memoize: memoize
+  memoize: memoize,
+  addUnit: addUnit
 };

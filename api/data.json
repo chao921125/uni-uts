@@ -1,0 +1,256 @@
+{
+    "websiteType": [{
+        "key": "all",
+        "label": "推荐",
+        "isRecommend": true,
+        "child": [{
+            "icon": "https://www.bing.com/favicon.ico",
+            "name": "必应搜索（推荐）",
+            "url": "https://www.bing.com/"
+        }, {
+            "icon": "https://yastatic.net/s3/home-static/_/90/9034470dfcb0bea0db29a281007b8a38.png",
+            "name": "Yandex（推荐）",
+            "url": "https://yandex.com/"
+        }, {
+            "icon": "https://www.baidu.com/favicon.ico",
+            "name": "百度搜索",
+            "url": "https://www.baidu.com/"
+        }, {
+            "icon": "https://www.google.com/images/branding/googleg/1x/googleg_standard_color_128dp.png",
+            "name": "Google",
+            "url": "https://www.google.com/"
+        }, {
+            "icon": "https://ailogo.qq.com/favicon.ico",
+            "name": "AI LOGO 设计 腾讯出品",
+            "url": "https://ailogo.qq.com/guide/brandname"
+        }, {
+            "icon": "https://www.logosc.cn/img/share/logosc.jpg?v=1",
+            "name": "AI LOGO 设计 小智",
+            "url": "https://www.logosc.cn/"
+        }, {
+            "icon": "https://uploads-ssl.webflow.com/636852831cdb71260df1f862/636852cafc2139a1a5e64346_Favicon.png",
+            "name": "AI聊天 forefront",
+            "url": "https://www.forefront.ai/"
+        }]
+    }, {
+        "key": "ai",
+        "label": "AI",
+        "isRecommend": false,
+        "child": [{
+            "icon": "https://chat.openai.com/images/chatgpt-share-og.png",
+            "name": "文字 - CHatGPT（地表最强）",
+            "url": "https://chat.openai.com/auth/login"
+        }, {
+            "icon": "https://www.anthropic.com/images/icons/apple-touch-icon.png",
+            "name": "文字 - Anthropic",
+            "url": "https://www.anthropic.com/"
+        }, {
+            "icon": "https://www.perplexity.ai/static/icons/favicon-32x32.png",
+            "name": "文字 - Perplexity",
+            "url": "https://www.perplexity.ai/"
+        }, {
+            "icon": "https://www.midjourney.com//apple-touch-icon.png?v=1",
+            "name": "图片 - Midjourney",
+            "url": "https://www.midjourney.com/"
+        }, {
+            "icon": "https://images.openai.com/blob/a9c10400-3e5e-4190-81ee-7fcc07a1709b/dall-e-2-poster.jpg",
+            "name": "图片 - DALL·E 2",
+            "url": "https://openai.com/dall-e-2"
+        }, {
+            "icon": "https://images.squarespace-cdn.com/content/v1/6213c340453c3f502425776e/cfbf5bc5-47d4-4f4a-b133-23bd12a7d7c2/favicon.ico?format=100w",
+            "name": "图片 - stability",
+            "url": "https://stability.ai/"
+        }, {
+            "icon": "https://civitai.com/images/splash/apple-splash-2048-2732.jpg",
+            "name": "图片 - civitai",
+            "url": "https://civitai.com/"
+        }, {
+            "icon": "https://promptbase.com/assets/img/logo/logo_50_webp.webp",
+            "name": "提示词 - promptbase",
+            "url": "https://promptbase.com/"
+        }, {
+            "icon": "https://learningprompt.wiki/img/logo.svg",
+            "name": "提示词 - learningprompt",
+            "url": "https://learningprompt.wiki/"
+        }, {
+            "icon": "https://prompthero.com/og-image.jpg",
+            "name": "提示词 - prompthero",
+            "url": "https://prompthero.com/"
+        }]
+    }, {
+        "key": "office",
+        "label": "办公工具",
+        "isRecommend": false,
+        "child": [{
+            "icon": "https://cn.office-converter.com/favicon.ico",
+            "name": "转换 - 很齐全的一个转换网站",
+            "url": "https://cn.office-converter.com/"
+        }, {
+            "icon": "https://wormhole.app/favicon.ico",
+            "name": "分享 - 临时的一个分享工具",
+            "url": "https://wormhole.app/"
+        }]
+    }, {
+        "key": "dev",
+        "label": "编程开发",
+        "isRecommend": false,
+        "child": [{
+            "icon": "https://juejin.cn/favicon.ico",
+            "name": "社区 - 掘金",
+            "url": "https://juejin.cn/"
+        }, {
+            "icon": "https://segmentfault.com/favicon.ico",
+            "name": "社区 - segmentfault",
+            "url": "https://segmentfault.com/"
+        }, {
+            "icon": "https://stackoverflow.com/favicon.ico",
+            "name": "社区 - stackoverflow",
+            "url": "https://stackoverflow.com/"
+        }, {
+            "icon": "https://www.producthunt.com/favicon.ico",
+            "name": "社区 - producthunt",
+            "url": "https://www.producthunt.com/"
+        }, {
+            "icon": "https://github.com/favicon.ico",
+            "name": "源码 - github",
+            "url": "https://github.com/"
+        }, {
+            "icon": "https://www.notion.so/zh-cnfavicon.ico",
+            "name": "源码 - notion",
+            "url": "https://www.notion.so/zh-cn/"
+        }, {
+            "icon": "https://codepen.io/favicon.ico",
+            "name": "源码 - 托管及运行 codepen",
+            "url": "https://codepen.io/"
+        }, {
+            "icon": "https://coding.net/favicon.ico",
+            "name": "源码 - 托管及运行 coding",
+            "url": "https://coding.net/"
+        }, {
+            "icon": "https://gitee.com/favicon.ico",
+            "name": "源码 - gitee",
+            "url": "https://gitee.com/"
+        }, {
+            "icon": "https://www.ipip.net/favicon.ico",
+            "name": "其他 - ipip",
+            "url": "https://www.ipip.net/"
+        }]
+    }, {
+        "key": "source",
+        "label": "素材资源",
+        "isRecommend": false,
+        "child": [{
+            "icon": "https://unsplash.com/favicon.ico",
+            "name": "图片 - unsplash",
+            "url": "https://unsplash.com/"
+        }, {
+            "icon": "https://www.iconfont.cn/favicon.ico",
+            "name": "图标 - iconfont",
+            "url": "https://www.iconfont.cn/"
+        }]
+    }, {
+        "key": "life",
+        "label": "生活小帮手",
+        "isRecommend": false,
+        "child": [{
+            "icon": "https://www.114best.com/favicon.ico",
+            "name": "手机号查询",
+            "url": "https://www.114best.com/"
+        }, {
+            "icon": "https://typhoon.slt.zj.gov.cn/favicon.ico",
+            "name": "台风路径",
+            "url": "https://typhoon.slt.zj.gov.cn/"
+        }, {
+            "icon": "https://www.speedtest.net/favicon.ico",
+            "name": "网速测速",
+            "url": "https://www.speedtest.net/"
+        }, {
+            "icon": "https://zoom.earth/favicon.ico",
+            "name": "卫星地图",
+            "url": "https://zoom.earth/"
+        }]
+    }, {
+        "key": "power",
+        "label": "法律保护",
+        "isRecommend": false,
+        "child": [{
+            "icon": "https://wenshu.court.gov.cn/favicon.ico",
+            "name": "中国裁判文书",
+            "url": "https://wenshu.court.gov.cn/"
+        }, {
+            "icon": "https://cont.12315.cn/favicon.ico",
+            "name": "中国合同范文",
+            "url": "https://cont.12315.cn/"
+        }]
+    }, {
+        "key": "view",
+        "label": "导航",
+        "isRecommend": false,
+        "child": [{
+            "icon": "https://lanrenao.com/favicon.ico",
+            "name": "综合性的导航网站 - 懒人",
+            "url": "https://lanrenao.com/"
+        }, {
+            "icon": "https://www.shandiandh.com/favicon.ico",
+            "name": "综合性的导航网站 - 闪电",
+            "url": "https://www.shandiandh.com/"
+        }, {
+            "icon": "http://byr.wiki/favicon.ico",
+            "name": "综合性的导航网站 - 邮人",
+            "url": "http://byr.wiki/"
+        }, {
+            "icon": "http://123.meibp.com/favicon.ico",
+            "name": "综合性的导航网站 - 小站",
+            "url": "http://123.meibp.com/"
+        }, {
+            "icon": "https://www.moulem.com/favicon.ico",
+            "name": "综合性的导航网站 - 柠檬",
+            "url": "https://www.moulem.com/"
+        }, {
+            "icon": "https://www.sjsdh.cn/favicon.ico",
+            "name": "综合性的导航网站 - 搜奇",
+            "url": "https://www.sjsdh.cn/"
+        }, {
+            "icon": "https://ailongmiao.com/favicon.ico",
+            "name": "综合性的导航网站 - 龙猫",
+            "url": "https://ailongmiao.com/"
+        }, {
+            "icon": "http://ilxdh.com/favicon.ico",
+            "name": "综合性的导航网站 - 个人",
+            "url": "http://ilxdh.com/"
+        }, {
+            "icon": "http://guozhivip.com/favicon.ico",
+            "name": "综合性的导航网站 - 果汁",
+            "url": "http://guozhivip.com/"
+        }, {
+            "icon": "https://www.bidianer.com/favicon.ico",
+            "name": "综合性的导航网站 - 啥啥",
+            "url": "https://www.bidianer.com/"
+        }, {
+            "icon": "https://webjike.com/favicon.ico",
+            "name": "综合性的导航网站 - 呆呆",
+            "url": "https://webjike.com/"
+        }, {
+            "icon": "https://paidaohang.org/favicon.ico",
+            "name": "综合性的导航网站 - 派导航",
+            "url": "https://paidaohang.org/"
+        }, {
+            "icon": "https://www.zhansousou.com/favicon.ico",
+            "name": "综合性的导航网站 - 站搜搜",
+            "url": "https://www.zhansousou.com/"
+        }, {
+            "icon": "https://0x3.com/favicon.ico",
+            "name": "综合性的导航网站 - 万花筒",
+            "url": "https://0x3.com/"
+        }]
+    }, {
+        "key": "blank",
+        "label": "净土",
+        "isRecommend": false,
+        "child": [{
+            "icon": "none",
+            "name": "不要点我",
+            "url": "大傻子"
+        }]
+    }]
+}

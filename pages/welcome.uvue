@@ -1,0 +1,13 @@
+<template>
+	<view>
+		欢迎页
+	</view>
+</template>
+
+<script lang="uts" setup>
+	
+</script>
+
+<style>
+
+</style>

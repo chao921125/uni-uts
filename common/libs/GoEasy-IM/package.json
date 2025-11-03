@@ -1,0 +1,18 @@
+{
+    "id": "GoEasy-IM",
+    "name": "GoEasy IM聊天和即时通讯",
+    "version": "2.3.0",
+    "description": "GoEasy IM聊天即时通讯，消息多端同步漫游，通知栏厂商推送，发送图片/语音/视频和自定义消息",
+    "keywords": [
+        "im",
+        "聊天",
+        "即时通信",
+        "即时通讯"
+    ],
+    "dcloudext": {
+        "category": [
+            "JS SDK",
+            "通用 SDK"
+        ]
+    }
+}

@@ -1,22 +1,26 @@
 export const basic = Behavior({
     methods: {
-        $emit(...args) {
-            this.triggerEvent(...args);
+        $emit(name, detail, options) {
+            this.triggerEvent(name, detail, options);
         },
-        getRect(selector, all) {
-            return new Promise(resolve => {
-                wx.createSelectorQuery()
-                    .in(this)[all ? 'selectAll' : 'select'](selector)
-                    .boundingClientRect(rect => {
-                    if (all && Array.isArray(rect) && rect.length) {
-                        resolve(rect);
-                    }
-                    if (!all && rect) {
-                        resolve(rect);
-                    }
-                })
-                    .exec();
+        set(data) {
+            this.setData(data);
+            return new Promise((resolve) => wx.nextTick(resolve));
+        },
+        // high performance setData
+        setView(data, callback) {
+            const target = {};
+            let hasChange = false;
+            Object.keys(data).forEach((key) => {
+                if (data[key] !== this.data[key]) {
+                    target[key] = data[key];
+                    hasChange = true;
+                }
             });
-        }
-    }
+            if (hasChange) {
+                return this.setData(target, callback);
+            }
+            return callback && callback();
+        },
+    },
 });
