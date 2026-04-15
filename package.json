@@ -1,20 +1,25 @@
 {
-	"id": "hello-uniapp-x",
-	"name": "hello-uniapp-x",
-	"displayName": "hello-uniapp-x",
-	"version": "1.0.32",
-	"description": "演示 uni-app x 框架的组件、接口、模板",
+	"id": "CCNET",
+	"name": "CCNET",
+	"displayName": "CCNET",
+	"version": "0.0.1",
+	"description": "CCNET",
 	"scripts": {
 		"check-commit": "node ./git-hooks/check-commit.cjs"
 	},
-	"repository": "https://gitcode.net/dcloud/hello-uni-app-x",
+	"repository": "https://github.com/chao921125/uni-uts.git",
 	"keywords": [
 		"uni-app-x",
-		"uni-app2.0",
+		"CCNET",
+		"CC NET",
 		"示例工程"
 	],
-	"author": "",
+	"author": "CCNET",
 	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/chao921125/uni-uts/issues"
+	},
+	"homepage": "https://github.com/chao921125/uni-uts#readme",
 	"dependencies": {},
 	"engines": {
 		"HBuilderX": "^3.99",
