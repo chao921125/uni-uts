@@ -1,113 +1,112 @@
-const PLUGIN_ID = 'wx013447465d3aa024'
-let plugin = null
-let meshMgr = null
-let provMgr = null
-let proxyMgr = null
-let netMgr = null
+const PLUGIN_ID = "wx013447465d3aa024";
+let plugin = null;
+let meshMgr = null;
+let provMgr = null;
+let proxyMgr = null;
+let netMgr = null;
 
 /* ========== 内部通用 ========== */
-const sleep = ms => new Promise(r => setTimeout(r, ms))
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
-const retry = (fn, max = 3, gap = 500) =>
-  fn().catch(err => (max > 0 ? sleep(gap).then(() => retry(fn, max - 1, gap)) : Promise.reject(err)))
+const retry = (fn, max = 3, gap = 500) => fn().catch((err) => (max > 0 ? sleep(gap).then(() => retry(fn, max - 1, gap)) : Promise.reject(err)));
 
 /* ========== 初始化 ========== */
 function initPlugin() {
-  if (plugin) return Promise.resolve(plugin)
-  return new Promise((resolve, reject) => {
-    plugin = requirePlugin(PLUGIN_ID)
-    if (!plugin) return reject(new Error('插件加载失败'))
-    resolve(plugin)
-  })
+	if (plugin) return Promise.resolve(plugin);
+	return new Promise((resolve, reject) => {
+		plugin = requirePlugin(PLUGIN_ID);
+		if (!plugin) return reject(new Error("插件加载失败"));
+		resolve(plugin);
+	});
 }
 
 async function initManagers() {
-  await initPlugin()
-  meshMgr = plugin.meshBLEManager
-  provMgr = plugin.provisioningManager
-  proxyMgr = plugin.proxyClientManager
-  netMgr = plugin.meshNetworkManager
+	await initPlugin();
+	meshMgr = plugin.meshBLEManager;
+	provMgr = plugin.provisioningManager;
+	proxyMgr = plugin.proxyClientManager;
+	netMgr = plugin.meshNetworkManager;
 }
 
 /* ========== 1. 扫描设备 ========== */
 export function startScan(timeout = 10 * 1000) {
-  return new Promise(async (resolve, reject) => {
-    await initManagers()
-    const list = []
-    const onFound = res => list.push(res.device)
-    meshMgr.onMeshDeviceFound(onFound)
-    meshMgr.startScanMeshDevice()
-    setTimeout(() => {
-      meshMgr.stopScanMeshDevice()
-      meshMgr.offMeshDeviceFound(onFound)
-      resolve(list)
-    }, timeout)
-  })
+	return new Promise(async (resolve, reject) => {
+		await initManagers();
+		const list = [];
+		const onFound = (res) => list.push(res.device);
+		meshMgr.onMeshDeviceFound(onFound);
+		meshMgr.startScanMeshDevice();
+		setTimeout(() => {
+			meshMgr.stopScanMeshDevice();
+			meshMgr.offMeshDeviceFound(onFound);
+			resolve(list);
+		}, timeout);
+	});
 }
 
 /* ========== 2. 创建 / 导入 网络 ========== */
-export async function createNetwork(netName = 'default') {
-  await initManagers()
-  return retry(() => plugin.createMeshNetwork(netName))
+export async function createNetwork(netName = "default") {
+	await initManagers();
+	return retry(() => plugin.createMeshNetwork(netName));
 }
 
 export async function importNetwork(encryptData) {
-  await initManagers()
-  return retry(() => plugin.importMeshNetworks(encryptData))
+	await initManagers();
+	return retry(() => plugin.importMeshNetworks(encryptData));
 }
 
 export async function exportNetwork() {
-  await initManagers()
-  return retry(() => plugin.exportMeshNetworks())
+	await initManagers();
+	return retry(() => plugin.exportMeshNetworks());
 }
 
 export async function getNetworks() {
-  await initManagers()
-  return retry(() => plugin.getMeshNetworks())
+	await initManagers();
+	return retry(() => plugin.getMeshNetworks());
 }
 
 /* ========== 3. 配网 ========== */
 export async function provision(device, netKeyIndex = 0) {
-  await initManagers()
-  return retry(() => provMgr.provision(device, netKeyIndex))
+	await initManagers();
+	return retry(() => provMgr.provision(device, netKeyIndex));
 }
 
 export async function batchProvision(devices, netKeyIndex = 0) {
-  await initManagers()
-  return retry(() => provMgr.batchProvision(devices, netKeyIndex))
+	await initManagers();
+	return retry(() => provMgr.batchProvision(devices, netKeyIndex));
 }
 
 /* ========== 4. 代理通信 ========== */
 export async function sendMessage(nodeAddr, opcode, params, appKeyIndex = 0) {
-  await initManagers()
-  // 先确认周围有代理节点
-  const hasProxy = await retry(() => proxyMgr.hasProxyServer())
-  if (!hasProxy) throw new Error('附近无可用代理节点')
-  // 绑定 AppKey 到模型（如未绑定过）
-  await retry(() => proxyMgr.addAppKeyToNode(nodeAddr, appKeyIndex))
-  await retry(() => proxyMgr.bindAppKeyToModel(nodeAddr, 0x1000, appKeyIndex)) // 0x1000=通用ONOFF模型
-  // 发送消息
-  return retry(() => proxyMgr.sendMeshMessage(nodeAddr, opcode, params))
+	await initManagers();
+	// 先确认周围有代理节点
+	const hasProxy = await retry(() => proxyMgr.hasProxyServer());
+	if (!hasProxy) throw new Error("附近无可用代理节点");
+	// 绑定 AppKey 到模型（如未绑定过）
+	await retry(() => proxyMgr.addAppKeyToNode(nodeAddr, appKeyIndex));
+	await retry(() => proxyMgr.bindAppKeyToModel(nodeAddr, 0x1000, appKeyIndex)); // 0x1000=通用ONOFF模型
+	// 发送消息
+	return retry(() => proxyMgr.sendMeshMessage(nodeAddr, opcode, params));
 }
 
 /* ========== 5. 群组管理 ========== */
 export async function createGroup(addrName) {
-  await initManagers()
-  return retry(() => netMgr.createGroup(addrName))
+	await initManagers();
+	return retry(() => netMgr.createGroup(addrName));
 }
 
 export async function getGroups() {
-  await initManagers()
-  return retry(() => netMgr.getGroups())
+	await initManagers();
+	return retry(() => netMgr.getGroups());
 }
 
 /* ========== 6. 统一错误码 ========== */
 export const ERR = {
-  PLUGIN_NOT_FOUND: 10001,
-  SCAN_TIMEOUT: 10002,
-  PROV_FAIL: 10003,
-  PROXY_NOT_FOUND: 10004
-}
+	PLUGIN_NOT_FOUND: 10001,
+	SCAN_TIMEOUT: 10002,
+	PROV_FAIL: 10003,
+	PROXY_NOT_FOUND: 10004,
+};
 // use demo
 // import * as Mesh from '../../utils/mesh-tool.js'
 

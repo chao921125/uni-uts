@@ -5,7 +5,7 @@
  * @see [uni.getDeviceInfo](https://uniapp.dcloud.net.cn/api/system/getDeviceInfo.html)
  */
 export function getDeviceInfo() {
-	if (uni.getDeviceInfo || uni.canIUse('getDeviceInfo')) {
+	if (uni.getDeviceInfo || uni.canIUse("getDeviceInfo")) {
 		return uni.getDeviceInfo();
 	} else {
 		return uni.getSystemInfoSync();
@@ -18,7 +18,7 @@ export function getDeviceInfo() {
  * @see [uni.getWindowInfo](https://uniapp.dcloud.net.cn/api/system/getWindowInfo.html)
  */
 export function getWindowInfo() {
-	if (uni.getWindowInfo || uni.canIUse('getWindowInfo')) {
+	if (uni.getWindowInfo || uni.canIUse("getWindowInfo")) {
 		return uni.getWindowInfo();
 	} else {
 		return uni.getSystemInfoSync();
@@ -31,37 +31,36 @@ export function getWindowInfo() {
  * @see [uni.getAppBaseInfo](https://uniapp.dcloud.net.cn/api/system/getAppBaseInfo.html)
  */
 export function getAppBaseInfo() {
-	if (uni.getAppBaseInfo || uni.canIUse('getAppBaseInfo')) {
+	if (uni.getAppBaseInfo || uni.canIUse("getAppBaseInfo")) {
 		return uni.getAppBaseInfo();
 	} else {
 		return uni.getSystemInfoSync();
 	}
 }
 
-
 // #ifndef APP-NVUE
 // 计算版本
 export function compareVersion(v1, v2) {
-	v1 = v1.split('.')
-	v2 = v2.split('.')
-	const len = Math.max(v1.length, v2.length)
+	v1 = v1.split(".");
+	v2 = v2.split(".");
+	const len = Math.max(v1.length, v2.length);
 	while (v1.length < len) {
-		v1.push('0')
+		v1.push("0");
 	}
 	while (v2.length < len) {
-		v2.push('0')
+		v2.push("0");
 	}
 	for (let i = 0; i < len; i++) {
-		const num1 = parseInt(v1[i], 10)
-		const num2 = parseInt(v2[i], 10)
+		const num1 = parseInt(v1[i], 10);
+		const num2 = parseInt(v2[i], 10);
 
 		if (num1 > num2) {
-			return 1
+			return 1;
 		} else if (num1 < num2) {
-			return -1
+			return -1;
 		}
 	}
-	return 0
+	return 0;
 }
 // const systemInfo = uni.getSystemInfoSync();
 
@@ -74,26 +73,25 @@ function gte(version) {
 	const { platform } = getDeviceInfo();
 	let { SDKVersion } = getAppBaseInfo();
 	// #ifdef MP-ALIPAY
-	SDKVersion = my.SDKVersion
+	SDKVersion = my.SDKVersion;
 	// #endif
 	// #ifdef MP-WEIXIN
-	return platform !== 'mac' && compareVersion(SDKVersion, version) >= 0;
+	return platform !== "mac" && compareVersion(SDKVersion, version) >= 0;
 	// #endif
 	return compareVersion(SDKVersion, version) >= 0;
 }
 
-
 export function canIUseCanvas2d() {
 	// #ifdef MP-WEIXIN
-	return gte('2.9.0');
+	return gte("2.9.0");
 	// #endif
 	// #ifdef MP-ALIPAY
-	return gte('2.7.0');
+	return gte("2.7.0");
 	// #endif
 	// #ifdef MP-TOUTIAO
-	return gte('1.78.0');
+	return gte("1.78.0");
 	// #endif
-	return false
+	return false;
 }
 
 export function convertTouchesToArray(touches) {
@@ -102,7 +100,7 @@ export function convertTouchesToArray(touches) {
 		return touches;
 	}
 	// 如果touches是一个对象，则转换为数组
-	if (typeof touches === 'object' && touches !== null) {
+	if (typeof touches === "object" && touches !== null) {
 		return Object.values(touches);
 	}
 	// 对于其他类型，直接返回它
@@ -110,7 +108,7 @@ export function convertTouchesToArray(touches) {
 }
 
 export function wrapTouch(event) {
-	event.touches = convertTouchesToArray(event.touches)
+	event.touches = convertTouchesToArray(event.touches);
 	for (let i = 0; i < event.touches.length; ++i) {
 		const touch = event.touches[i];
 		touch.offsetX = touch.x;
@@ -125,61 +123,71 @@ export const devicePixelRatio = getWindowInfo().pixelRatio;
 export function base64ToPath(base64) {
 	return new Promise((resolve, reject) => {
 		const [, format, bodyData] = /data:image\/(\w+);base64,(.*)/.exec(base64) || [];
-		const bitmap = new plus.nativeObj.Bitmap('bitmap' + Date.now())
-		bitmap.loadBase64Data(base64, () => {
-			if (!format) {
-				reject(new Error('ERROR_BASE64SRC_PARSE'))
-			}
-			const time = new Date().getTime();
-			const filePath = `_doc/uniapp_temp/${time}.${format}`
+		const bitmap = new plus.nativeObj.Bitmap("bitmap" + Date.now());
+		bitmap.loadBase64Data(
+			base64,
+			() => {
+				if (!format) {
+					reject(new Error("ERROR_BASE64SRC_PARSE"));
+				}
+				const time = new Date().getTime();
+				const filePath = `_doc/uniapp_temp/${time}.${format}`;
 
-			bitmap.save(filePath, {},
-				() => {
-					bitmap.clear()
-					resolve(filePath)
-				},
-				(error) => {
-					bitmap.clear()
-					console.error(`${JSON.stringify(error)}`)
-					reject(error)
-				})
-		}, (error) => {
-			bitmap.clear()
-			console.error(`${JSON.stringify(error)}`)
-			reject(error)
-		})
-	})
+				bitmap.save(
+					filePath,
+					{},
+					() => {
+						bitmap.clear();
+						resolve(filePath);
+					},
+					(error) => {
+						bitmap.clear();
+						console.error(`${JSON.stringify(error)}`);
+						reject(error);
+					},
+				);
+			},
+			(error) => {
+				bitmap.clear();
+				console.error(`${JSON.stringify(error)}`);
+				reject(error);
+			},
+		);
+	});
 }
 // #endif
-
 
 export function sleep(time) {
 	return new Promise((resolve) => {
 		setTimeout(() => {
-			resolve(true)
-		}, time)
-	})
+			resolve(true);
+		}, time);
+	});
 }
-
 
 export function getRect(selector, context, node) {
 	return new Promise((resolve, reject) => {
 		const dom = uni.createSelectorQuery().in(context).select(selector);
 		const result = (rect) => {
 			if (rect) {
-				resolve(rect)
+				resolve(rect);
 			} else {
-				reject()
+				reject();
 			}
-		}
+		};
 		if (!node) {
-			dom.boundingClientRect(result).exec()
+			dom.boundingClientRect(result).exec();
 		} else {
-			dom.fields({
-				node: true,
-				size: true,
-				rect: true
-			}, result).exec()
+			dom
+				.fields(
+					{
+						node: true,
+						size: true,
+						rect: true,
+					},
+					result,
+				)
+				.exec();
 		}
 	});
-};
+}

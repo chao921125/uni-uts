@@ -579,14 +579,30 @@ var QRCode;
 			}
 			for (var row = 0; row < moduleCount; row++) {
 				for (var col = 0; col < moduleCount - 6; col++) {
-					if (qrCode.isDark(row, col) && !qrCode.isDark(row, col + 1) && qrCode.isDark(row, col + 2) && qrCode.isDark(row, col + 3) && qrCode.isDark(row, col + 4) && !qrCode.isDark(row, col + 5) && qrCode.isDark(row, col + 6)) {
+					if (
+						qrCode.isDark(row, col) &&
+						!qrCode.isDark(row, col + 1) &&
+						qrCode.isDark(row, col + 2) &&
+						qrCode.isDark(row, col + 3) &&
+						qrCode.isDark(row, col + 4) &&
+						!qrCode.isDark(row, col + 5) &&
+						qrCode.isDark(row, col + 6)
+					) {
 						lostPoint += 40;
 					}
 				}
 			}
 			for (var col = 0; col < moduleCount; col++) {
 				for (var row = 0; row < moduleCount - 6; row++) {
-					if (qrCode.isDark(row, col) && !qrCode.isDark(row + 1, col) && qrCode.isDark(row + 2, col) && qrCode.isDark(row + 3, col) && qrCode.isDark(row + 4, col) && !qrCode.isDark(row + 5, col) && qrCode.isDark(row + 6, col)) {
+					if (
+						qrCode.isDark(row, col) &&
+						!qrCode.isDark(row + 1, col) &&
+						qrCode.isDark(row + 2, col) &&
+						qrCode.isDark(row + 3, col) &&
+						qrCode.isDark(row + 4, col) &&
+						!qrCode.isDark(row + 5, col) &&
+						qrCode.isDark(row + 6, col)
+					) {
 						lostPoint += 40;
 					}
 				}

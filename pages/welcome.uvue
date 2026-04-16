@@ -1,13 +1,175 @@
 <template>
-	<view>
-		欢迎页
+	<view class="welcome-container">
+		<!-- 全屏背景图 -->
+		<image class="bg-image" src="" mode="aspectFill" />
+
+		<!-- 圆形倒计时/跳过按钮 -->
+		<view class="skip-wrapper" @click="handleSkip">
+			<!-- 倒计时圆环 -->
+			<view class="circle-box" v-if="!canSkip">
+				<view class="circle-bg"></view>
+				<view class="circle-progress" :style="progressStyle"></view>
+				<text class="count-text">{{ countdown }}</text>
+			</view>
+			<!-- 跳过按钮 -->
+			<view class="skip-text" v-else>
+				<text>跳过</text>
+			</view>
+		</view>
 	</view>
 </template>
 
 <script lang="uts" setup>
-	
+	import { ref } from 'vue'
+	// 响应式数据
+	const countdown = ref<number>(5)
+	const canSkip = ref<boolean>(false)
+
+	// 定时器
+	let intervalTimer : number | null = null
+	let timeoutTimer : number | null = null
+
+	// 圆环进度计算 (5秒倒计时，从满到空)
+	const progressStyle = computed(() => {
+		const percent = countdown.value / 5
+		const deg = percent * 360
+		return {
+			background: `conic-gradient(rgba(255, 255, 255, 0.9) ${deg}deg, transparent ${deg}deg)`
+		}
+	})
+
+	// 开始倒计时
+	const startCountdown = () => {
+		intervalTimer = setInterval(() => {
+			countdown.value--
+
+			if (countdown.value <= 0) {
+				clearInterval(intervalTimer!)
+				intervalTimer = null
+				canSkip.value = true
+
+				// 展示"跳过"2秒后自动进入首页
+				timeoutTimer = setTimeout(() => {
+					goToHome()
+				}, 2000)
+			}
+		}, 1000)
+	}
+
+	// 点击跳过
+	const handleSkip = () => {
+		clearTimers()
+		goToHome()
+	}
+
+	// 进入首页
+	const goToHome = () => {
+		// uni.redirectTo({
+		// 	url: '/pages/index/index'
+		// })
+	}
+
+	// 清除定时器
+	const clearTimers = () => {
+		if (intervalTimer != null) {
+			clearInterval(intervalTimer)
+			intervalTimer = null
+		}
+		if (timeoutTimer != null) {
+			clearTimeout(timeoutTimer)
+			timeoutTimer = null
+		}
+	}
+
+	// 生命周期
+	onReady(() => {
+		startCountdown()
+	})
+
+	onUnload(() => {
+		clearTimers()
+	})
 </script>
 
-<style>
+<style lang="scss">
+	// 变量
+	$circle-size: 52px;
+	$border-width: 3px;
+	$btn-top: 100px;
+	$btn-right: 24px;
 
+	.welcome-container {
+		position: relative;
+		width: 100%;
+		height: 100vh;
+
+		.bg-image {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+		}
+
+		.skip-wrapper {
+			position: absolute;
+			top: calc($btn-top + constant(safe-area-inset-top));
+			top: calc($btn-top + env(safe-area-inset-top));
+			right: $btn-right;
+
+			// 倒计时圆环容器
+			.circle-box {
+				position: relative;
+				width: $circle-size;
+				height: $circle-size;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+
+				// 透明背景圆
+				.circle-bg {
+					position: absolute;
+					inset: 0;
+					border-radius: 50%;
+					background: rgba(0, 0, 0, 0.25);
+					backdrop-filter: blur(2px);
+				}
+
+				// 进度圆环
+				.circle-progress {
+					position: absolute;
+					inset: 0;
+					border-radius: 50%;
+					// 镂空圆环效果
+					mask: radial-gradient(transparent calc(50% - #{$border-width}),
+						#000 calc(50% - #{$border-width}));
+					-webkit-mask: radial-gradient(transparent calc(50% - #{$border-width}),
+						#000 calc(50% - #{$border-width}));
+				}
+
+				// 倒计时数字
+				.count-text {
+					position: relative;
+					z-index: 1;
+					color: #fff;
+					font-size: 15px;
+					font-weight: 600;
+				}
+			}
+
+			// 跳过按钮
+			.skip-text {
+				padding: 8px 18px;
+				background: rgba(0, 0, 0, 0.35);
+				backdrop-filter: blur(4px);
+				border-radius: 20px;
+
+				text {
+					color: #fff;
+					font-size: 14px;
+					font-weight: 500;
+				}
+			}
+		}
+	}
 </style>

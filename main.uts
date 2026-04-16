@@ -1,11 +1,30 @@
-import App from "./App";
+import App from "./App.uvue";
 import { createSSRApp } from "vue";
-// import PageHead from "./components/page-head.vue" //全局引用 page-head 组件
+// import { uniStat } from "@/uni_modules/uni-stat/plugin.uts";
+
+
+// 统计配置
+// const uniStatOptions = {
+// 	enable: process.env.NODE_ENV == 'production',
+// 	debug: false,
+// 	collectItems: {
+// 		uniStatPageLog: true
+// 	},
+// }
 
 export function createApp() {
 	const app = createSSRApp(App);
 	// app.component("page-head", PageHead) //全局注册 page-head 组件，每个页面将可以直接使用该组件
-
+	// #ifdef APP-ANDROID || APP-IOS || WEB || MP-WEIXIN || APP-HARMONY
+	// app.use(uniStat, uniStatOptions)
+	// #endif
+	// app.mixin({
+	//   onReady() {
+	//     setTimeout(() => {
+	//       console.log((this as BasePage).$nativePage!.getDomJson())
+	//     }, 100)
+	//   }
+	// })
 	return {
 		app
 	}

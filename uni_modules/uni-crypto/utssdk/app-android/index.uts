@@ -1,0 +1,579 @@
+/**
+ * app-android/index.uts
+ * uni-crypto 插件 Android 平台实现
+ * 通过 Kotlin JNI 桥接类调用 C 语言编译的 so 库
+ * 由于 utssdk 的 app 端不支持返回对象，无法直接实现`crypto.sm4.encrypt(xxx)`，所以这里仅返回函数，然后在 uni_modules/uni-crypto/index.uts 中包装成 crypto 对象，与 web 保持一致。
+ */
+
+// 导入接口类型定义
+import { 
+  GetVersionResult, 
+  SM3HashResult,
+  SM4EncryptResult,
+  SM4DecryptResult,
+  SM4CbcEncryptResult,
+  SM4CbcDecryptResult,
+  SM3HmacResult,
+  SHA256HashResult,
+  MD5HashResult,
+  AESEncryptResult,
+  AESDecryptResult,
+  AESGcmEncryptResult,
+  AESGcmDecryptResult,
+  EchoResult
+} from '../interface.uts'
+
+// 从 Kotlin 桥接类导入
+import { GmSSLBridge } from 'com.dcloud.gmssl'
+
+// 桥接类实例（单例模式）
+let bridge: GmSSLBridge | null = null
+
+/**
+ * 获取桥接类实例
+ * 使用懒加载模式，只在第一次调用时创建实例
+ * @returns GmSSLBridge 实例
+ */
+function getBridge(): GmSSLBridge {
+  if (bridge == null) {
+    bridge = new GmSSLBridge()
+  }
+  return bridge!
+}
+
+/**
+ * SM3 哈希计算
+ * 调用 Kotlin 桥接方法 sm3HashWithData，最终调用 C 函数 sm3Hash(data)
+ * @param data 要哈希的数据（hex 字符串）
+ * @returns 返回哈希结果对象
+ */
+export function sm3Hash(data: string): SM3HashResult {
+  try {
+    const hash = getBridge().sm3HashWithData(data)
+
+    if (hash == null) {
+      console.log('[uni-crypto Android] sm3Hash: null')
+      return {
+        result: '',
+        errorMsg: 'Hash result is null'
+      }
+    }
+
+    const hashValue: string = hash!
+    console.log('[uni-crypto Android] sm3Hash:', hashValue)
+
+    if (hashValue.length == 0) {
+      return {
+        result: '',
+        errorMsg: 'Hash result is empty'
+      }
+    }
+
+    return {
+      result: hashValue,
+      errorMsg: ''
+    }
+  } catch (e) {
+    console.error('[uni-crypto Android] sm3Hash 错误:', e)
+    return {
+      result: '',
+      errorMsg: `Error: ${e.toString()}`
+    }
+  }
+}
+
+/**
+ * SM4 加密
+ * 调用 Kotlin 桥接方法 sm4EncryptWithKey，最终调用 C 函数 sm4Encrypt(key, data)
+ * @param key 加密密钥（hex 字符串，32字符=16字节）
+ * @param data 待加密数据（hex 字符串，32字符=16字节）
+ * @returns 返回加密结果对象
+ */
+export function sm4Encrypt(key: string, data: string): SM4EncryptResult {
+  try {
+    const encrypted = getBridge().sm4EncryptWithKey(key, data)
+
+    if (encrypted == null) {
+      console.log('[uni-crypto Android] sm4Encrypt: null')
+      return {
+        encrypted: '',
+        errorMsg: 'Encrypt result is null'
+      }
+    }
+
+    const encryptedValue: string = encrypted!
+    console.log('[uni-crypto Android] sm4Encrypt:', encryptedValue)
+
+    if (encryptedValue.length == 0) {
+      return {
+        encrypted: '',
+        errorMsg: 'Encrypt result is empty'
+      }
+    }
+
+    return {
+      encrypted: encryptedValue,
+      errorMsg: ''
+    }
+  } catch (e) {
+    console.error('[uni-crypto Android] sm4Encrypt 错误:', e)
+    return {
+      encrypted: '',
+      errorMsg: `Error: ${e.toString()}`
+    }
+  }
+}
+
+/**
+ * SM4 解密
+ * 调用 Kotlin 桥接方法 sm4DecryptWithKey，最终调用 C 函数 sm4Decrypt(key, encrypted)
+ * @param key 解密密钥（hex 字符串，32字符=16字节）
+ * @param encrypted 加密数据（hex 字符串，32字符=16字节）
+ * @returns 返回解密结果对象
+ */
+export function sm4Decrypt(key: string, encrypted: string): SM4DecryptResult {
+  try {
+    const decrypted = getBridge().sm4DecryptWithKey(key, encrypted)
+
+    if (decrypted == null) {
+      console.log('[uni-crypto Android] sm4Decrypt: null')
+      return {
+        decrypted: '',
+        errorMsg: 'Decrypt result is null'
+      }
+    }
+
+    const decryptedValue: string = decrypted!
+    console.log('[uni-crypto Android] sm4Decrypt:', decryptedValue)
+
+    if (decryptedValue.length == 0) {
+      return {
+        decrypted: '',
+        errorMsg: 'Decrypt result is empty'
+      }
+    }
+
+    return {
+      decrypted: decryptedValue,
+      errorMsg: ''
+    }
+  } catch (e) {
+    console.error('[uni-crypto Android] sm4Decrypt 错误:', e)
+    return {
+      decrypted: '',
+      errorMsg: `Error: ${e.toString()}`
+    }
+  }
+}
+
+// ==================== SM4-CBC ====================
+
+export function sm4CbcEncrypt(key: string, iv: string, data: string): SM4CbcEncryptResult {
+  try {
+    const encrypted = getBridge().sm4CbcEncryptWithKey(key, iv, data)
+    
+    if (encrypted == null) {
+      return {
+        encrypted: '',
+        errorMsg: 'Encrypt result is null'
+      }
+    }
+    
+    const encryptedValue: string = encrypted!
+    console.log('[uni-crypto Android] sm4CbcEncrypt:', encryptedValue)
+    
+    return {
+      encrypted: encryptedValue,
+      errorMsg: ''
+    }
+  } catch (e) {
+    console.error('[uni-crypto Android] sm4CbcEncrypt 错误:', e)
+    return {
+      encrypted: '',
+      errorMsg: `Error: ${e.toString()}`
+    }
+  }
+}
+
+export function sm4CbcDecrypt(key: string, iv: string, encrypted: string): SM4CbcDecryptResult {
+  try {
+    const decrypted = getBridge().sm4CbcDecryptWithKey(key, iv, encrypted)
+    
+    if (decrypted == null) {
+      return {
+        decrypted: '',
+        errorMsg: 'Decrypt result is null'
+      }
+    }
+    
+    const decryptedValue: string = decrypted!
+    console.log('[uni-crypto Android] sm4CbcDecrypt:', decryptedValue)
+    
+    return {
+      decrypted: decryptedValue,
+      errorMsg: ''
+    }
+  } catch (e) {
+    console.error('[uni-crypto Android] sm4CbcDecrypt 错误:', e)
+    return {
+      decrypted: '',
+      errorMsg: `Error: ${e.toString()}`
+    }
+  }
+}
+
+// ==================== SM2 ====================
+
+export function sm2KeyGenerate(): string {
+  try {
+    const keyPairJson = getBridge().sm2KeyGenerate()
+    
+    if (keyPairJson == null) {
+      console.error('[uni-crypto Android] sm2KeyGenerate: null')
+      return ''
+    }
+    
+    const keyPair: string = keyPairJson!
+    console.log('[uni-crypto Android] sm2KeyGenerate:', keyPair.substring(0, 80))
+    
+    return keyPair
+  } catch (e) {
+    console.error('[uni-crypto Android] sm2KeyGenerate 错误:', e)
+    return ''
+  }
+}
+
+export function sm2Encrypt(publicKey: string, plaintext: string): string {
+  try {
+    const encrypted = getBridge().sm2EncryptWithPublicKey(publicKey, plaintext)
+    
+    if (encrypted == null) {
+      console.error('[uni-crypto Android] sm2Encrypt: null')
+      return ''
+    }
+    
+    const encryptedValue: string = encrypted!
+    console.log('[uni-crypto Android] sm2Encrypt:', encryptedValue.substring(0, 80))
+    
+    return encryptedValue
+  } catch (e) {
+    console.error('[uni-crypto Android] sm2Encrypt 错误:', e)
+    return ''
+  }
+}
+
+export function sm2Decrypt(privateKey: string, ciphertext: string): string {
+  try {
+    const decrypted = getBridge().sm2DecryptWithPrivateKey(privateKey, ciphertext)
+    
+    if (decrypted == null) {
+      console.error('[uni-crypto Android] sm2Decrypt: null')
+      return ''
+    }
+    
+    const decryptedValue: string = decrypted!
+    console.log('[uni-crypto Android] sm2Decrypt:', decryptedValue)
+    
+    return decryptedValue
+  } catch (e) {
+    console.error('[uni-crypto Android] sm2Decrypt 错误:', e)
+    return ''
+  }
+}
+
+export function sm2Sign(privateKey: string, message: string): string {
+  try {
+    const signature = getBridge().sm2SignWithPrivateKey(privateKey, message)
+    
+    if (signature == null) {
+      console.error('[uni-crypto Android] sm2Sign: null')
+      return ''
+    }
+    
+    const signatureValue: string = signature!
+    console.log('[uni-crypto Android] sm2Sign:', signatureValue.substring(0, 80))
+    
+    return signatureValue
+  } catch (e) {
+    console.error('[uni-crypto Android] sm2Sign 错误:', e)
+    return ''
+  }
+}
+
+export function sm2Verify(publicKey: string, message: string, signature: string): boolean {
+  try {
+    const verifyResult = getBridge().sm2VerifyWithPublicKey(publicKey, message, signature)
+    
+    if (verifyResult == null) {
+      console.error('[uni-crypto Android] sm2Verify: null')
+      return false
+    }
+    
+    const result: string = verifyResult!
+    console.log('[uni-crypto Android] sm2Verify:', result)
+
+    return result == '1'
+  } catch (e) {
+    console.error('[uni-crypto Android] sm2Verify 错误:', e)
+    return false
+  }
+}
+
+// ==================== SM3-HMAC ====================
+
+export function sm3Hmac(key: string, data: string): SM3HmacResult {
+  try {
+    const mac = getBridge().sm3HmacWithKey(key, data)
+    
+    if (mac == null) {
+      return {
+        mac: '',
+        errorMsg: 'HMAC result is null'
+      }
+    }
+    
+    const macValue: string = mac!
+    console.log('[uni-crypto Android] sm3Hmac:', macValue)
+    
+    return {
+      mac: macValue,
+      errorMsg: ''
+    }
+  } catch (e) {
+    console.error('[uni-crypto Android] sm3Hmac 错误:', e)
+    return {
+      mac: '',
+      errorMsg: `Error: ${e.toString()}`
+    }
+  }
+}
+
+// ==================== SHA-256 ====================
+
+export function sha256Hash(data: string): SHA256HashResult {
+  try {
+    const hash = getBridge().sha256HashWithData(data)
+    
+    if (hash == null) {
+      return {
+        result: '',
+        errorMsg: 'Hash result is null'
+      }
+    }
+    
+    const hashValue: string = hash!
+    console.log('[uni-crypto Android] sha256Hash:', hashValue)
+    
+    return {
+      result: hashValue,
+      errorMsg: ''
+    }
+  } catch (e) {
+    console.error('[uni-crypto Android] sha256Hash 错误:', e)
+    return {
+      result: '',
+      errorMsg: `Error: ${e.toString()}`
+    }
+  }
+}
+
+// ==================== MD5 ====================
+
+export function md5Hash(data: string): MD5HashResult {
+  try {
+    const hash = getBridge().md5HashWithData(data)
+    
+    if (hash == null) {
+      return {
+        result: '',
+        errorMsg: 'Hash result is null'
+      }
+    }
+    
+    const hashValue: string = hash!
+    console.log('[uni-crypto Android] md5Hash:', hashValue)
+    
+    return {
+      result: hashValue,
+      errorMsg: ''
+    }
+  } catch (e) {
+    console.error('[uni-crypto Android] md5Hash 错误:', e)
+    return {
+      result: '',
+      errorMsg: `Error: ${e.toString()}`
+    }
+  }
+}
+
+// ==================== AES ====================
+
+export function aesEncrypt(key: string, data: string): AESEncryptResult {
+  try {
+    const encrypted = getBridge().aesEncryptWithKey(key, data)
+    
+    if (encrypted == null) {
+      return {
+        encrypted: '',
+        errorMsg: 'Encrypt result is null'
+      }
+    }
+    
+    const encryptedValue: string = encrypted!
+    console.log('[uni-crypto Android] aesEncrypt:', encryptedValue)
+    
+    return {
+      encrypted: encryptedValue,
+      errorMsg: ''
+    }
+  } catch (e) {
+    console.error('[uni-crypto Android] aesEncrypt 错误:', e)
+    return {
+      encrypted: '',
+      errorMsg: `Error: ${e.toString()}`
+    }
+  }
+}
+
+export function aesDecrypt(key: string, encrypted: string): AESDecryptResult {
+  try {
+    const decrypted = getBridge().aesDecryptWithKey(key, encrypted)
+    
+    if (decrypted == null) {
+      return {
+        decrypted: '',
+        errorMsg: 'Decrypt result is null'
+      }
+    }
+    
+    const decryptedValue: string = decrypted!
+    console.log('[uni-crypto Android] aesDecrypt:', decryptedValue)
+    
+    return {
+      decrypted: decryptedValue,
+      errorMsg: ''
+    }
+  } catch (e) {
+    console.error('[uni-crypto Android] aesDecrypt 错误:', e)
+    return {
+      decrypted: '',
+      errorMsg: `Error: ${e.toString()}`
+    }
+  }
+}
+
+export function aesCbcEncrypt(key: string, iv: string, data: string): AESEncryptResult {
+  try {
+    const encrypted = getBridge().aesCbcEncryptWithKey(key, iv, data)
+    
+    if (encrypted == null) {
+      return {
+        encrypted: '',
+        errorMsg: 'Encrypt result is null'
+      }
+    }
+    
+    const encryptedValue: string = encrypted!
+    console.log('[uni-crypto Android] aesCbcEncrypt:', encryptedValue)
+    
+    return {
+      encrypted: encryptedValue,
+      errorMsg: ''
+    }
+  } catch (e) {
+    console.error('[uni-crypto Android] aesCbcEncrypt 错误:', e)
+    return {
+      encrypted: '',
+      errorMsg: `Error: ${e.toString()}`
+    }
+  }
+}
+
+export function aesCbcDecrypt(key: string, iv: string, encrypted: string): AESDecryptResult {
+  try {
+    const decrypted = getBridge().aesCbcDecryptWithKey(key, iv, encrypted)
+    
+    if (decrypted == null) {
+      return {
+        decrypted: '',
+        errorMsg: 'Decrypt result is null'
+      }
+    }
+    
+    const decryptedValue: string = decrypted!
+    console.log('[uni-crypto Android] aesCbcDecrypt:', decryptedValue)
+    
+    return {
+      decrypted: decryptedValue,
+      errorMsg: ''
+    }
+  } catch (e) {
+    console.error('[uni-crypto Android] aesCbcDecrypt 错误:', e)
+    return {
+      decrypted: '',
+      errorMsg: `Error: ${e.toString()}`
+    }
+  }
+}
+
+export function aesGcmEncrypt(key: string, iv: string, aad: string, data: string): AESGcmEncryptResult {
+  try {
+    let aadValue: string | null = null
+    if (aad.length > 0) {
+      aadValue = aad
+    }
+    const encrypted = getBridge().aesGcmEncryptWithKey(key, iv, aadValue, data)
+    
+    if (encrypted == null) {
+      return {
+        encrypted: '',
+        errorMsg: 'Encrypt result is null'
+      }
+    }
+    
+    const encryptedValue: string = encrypted!
+    console.log('[uni-crypto Android] aesGcmEncrypt:', encryptedValue)
+    
+    return {
+      encrypted: encryptedValue,
+      errorMsg: ''
+    }
+  } catch (e) {
+    console.error('[uni-crypto Android] aesGcmEncrypt 错误:', e)
+    return {
+      encrypted: '',
+      errorMsg: `Error: ${e.toString()}`
+    }
+  }
+}
+
+export function aesGcmDecrypt(key: string, iv: string, aad: string, encrypted: string): AESGcmDecryptResult {
+  try {
+    let aadValue: string | null = null
+    if (aad.length > 0) {
+      aadValue = aad
+    }
+    const decrypted = getBridge().aesGcmDecryptWithKey(key, iv, aadValue, encrypted)
+    
+    if (decrypted == null) {
+      return {
+        decrypted: '',
+        errorMsg: 'Decrypt result is null'
+      }
+    }
+    
+    const decryptedValue: string = decrypted!
+    console.log('[uni-crypto Android] aesGcmDecrypt:', decryptedValue)
+    
+    return {
+      decrypted: decryptedValue,
+      errorMsg: ''
+    }
+  } catch (e) {
+    console.error('[uni-crypto Android] aesGcmDecrypt 错误:', e)
+    return {
+      decrypted: '',
+      errorMsg: `Error: ${e.toString()}`
+    }
+  }
+}

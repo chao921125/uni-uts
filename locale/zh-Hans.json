@@ -18,7 +18,7 @@
 	"index.application-language": "应用语言",
 	"index.language-change-confirm": "应用此设置将重启App",
 	"api.message": "提示",
-  "schema.name": "姓名",
+	"schema.name": "姓名",
 	"schema.add": "新增",
 	"schema.add-success": "新增成功"
 }

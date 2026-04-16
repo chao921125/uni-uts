@@ -1,22 +1,13 @@
 <template>
 	<view>
-		
+		Index
 	</view>
 </template>
 
-<script>
-	export default {
-		data() {
-			return {
-				
-			}
-		},
-		methods: {
-			
-		}
-	}
+<script lang="uts" setup>
+	
 </script>
 
-<style>
+<style lang="scss">
 
 </style>

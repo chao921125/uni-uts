@@ -1,10 +1,9 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh">
 	<head>
-		<meta charset="UTF-8">
-		<meta name="viewport"
-			content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
-		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
 		<title></title>
 		<style type="text/css">
 			html,
@@ -28,24 +27,24 @@
 		<script>
 			let chart = null;
 			let cache = [];
-			console.log = function(...agrs) {
-				postMessage(agrs)
-			}
+			console.log = function (...agrs) {
+				postMessage(agrs);
+			};
 			function emit(event, data) {
-				let dataStr = JSON.stringify(data, stringify)
+				let dataStr = JSON.stringify(data, stringify);
 				postMessage({
 					event,
-					data: dataStr
-				})
-				cache = []
+					data: dataStr,
+				});
+				cache = [];
 			}
 			function postMessage(data) {
 				uni.postMessage({
-					data
+					data,
 				});
 			}
 			function stringify(key, value) {
-				if (typeof value === 'object' && value !== null) {
+				if (typeof value === "object" && value !== null) {
 					if (cache.indexOf(value) !== -1) {
 						return;
 					}
@@ -54,25 +53,25 @@
 				return value;
 			}
 			function parse(name, callback, options) {
-				const optionNameReg = /[\w]+\.setOption\(([\w]+\.)?([\w]+)\)/
+				const optionNameReg = /[\w]+\.setOption\(([\w]+\.)?([\w]+)\)/;
 				if (optionNameReg.test(callback)) {
-					const optionNames = callback.match(optionNameReg)
-					if(optionNames[1]) {
-						const _this = optionNames[1].split('.')[0]
-						window[_this] = {}
-						window[_this][optionNames[2]] = options
-						return optionNames[2]
+					const optionNames = callback.match(optionNameReg);
+					if (optionNames[1]) {
+						const _this = optionNames[1].split(".")[0];
+						window[_this] = {};
+						window[_this][optionNames[2]] = options;
+						return optionNames[2];
 					} else {
-						return null
+						return null;
 					}
 				}
-				return null
+				return null;
 			}
 			function init(callback, options, opts = {}, theme = null) {
-				if(!chart) {
-					chart = echarts.init(document.getElementById('limeChart'), theme, opts)
-					if(options) {
-						chart.setOption(options)
+				if (!chart) {
+					chart = echarts.init(document.getElementById("limeChart"), theme, opts);
+					if (options) {
+						chart.setOption(options);
 					}
 					// const name = parse('a', callback, options)
 					// console.log('options::', callback)
@@ -81,47 +80,48 @@
 					// if(a) {a(chart)}
 				}
 			}
-			
+
 			function setChart(callback, options) {
-				if(!callback) return
-				if(chart && callback && options) {
-					var r = null
-					const name = parse('r', callback, options)
-					if(name) this[name] = options
-					eval(`r = ${callback};`)
-					if(r) {r(chart)}
+				if (!callback) return;
+				if (chart && callback && options) {
+					var r = null;
+					const name = parse("r", callback, options);
+					if (name) this[name] = options;
+					eval(`r = ${callback};`);
+					if (r) {
+						r(chart);
+					}
 				}
 			}
 			function setOption(data) {
-				if (chart) chart.setOption(data[0], data[1])
+				if (chart) chart.setOption(data[0], data[1]);
 			}
 			function showLoading(data) {
-				if (chart) chart.showLoading(data[0], data[1])
+				if (chart) chart.showLoading(data[0], data[1]);
 			}
-			
+
 			function hideLoading() {
-				if (chart) chart.hideLoading()
+				if (chart) chart.hideLoading();
 			}
-			
+
 			function clear() {
-				if (chart) chart.clear()
-			
+				if (chart) chart.clear();
 			}
-			
+
 			function dispose() {
-				if (chart) chart.dispose()
+				if (chart) chart.dispose();
 			}
 			function resize(size) {
-				if (chart) chart.resize(size)
+				if (chart) chart.resize(size);
 			}
-			
+
 			function canvasToTempFilePath(opt = {}) {
 				if (chart) {
-				  const src = chart.getDataURL(opt)
-				  postMessage({
-					  file: true,
-					  data: src
-				  })
+					const src = chart.getDataURL(opt);
+					postMessage({
+						file: true,
+						data: src,
+					});
 				}
 			}
 		</script>

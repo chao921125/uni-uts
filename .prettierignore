@@ -1,0 +1,19 @@
+# 依赖
+uni_modules/
+node_modules/
+
+# 配置文件
+.eslintrc-auto-import.json
+auto-imports.d.ts
+components.d.ts
+
+# 其他
+*.min.js
+*.min.css
+*.zip
+docs/
+public/
+typings/
+dist/
+build/
+unpackage/

@@ -11,7 +11,9 @@
 #### 1. 在[插件市场](https://ext.dcloud.net.cn/plugin?id=21932)导入本组件
 
 #### 2. 在具体页面中使用
+
 #### vue2示例 :
+
 ```js
 <template>
 	<view>
@@ -24,7 +26,7 @@
 		data() {
 			return {
 				// 支持echarts所有图表,您只需替换此处option即可展示任意图表
-				option: { 
+				option: {
 					xAxis: {
 						type: 'category',
 						data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
@@ -41,7 +43,7 @@
 		},
 		methods: {
 			// 组件挂载后初始化echarts实例 (也可在请求数据后初始化)
-			initEchart() { 
+			initEchart() {
 				this.$refs.echartRef.init(this.option);
 			},
 			// 异步更新数据或配置
@@ -64,6 +66,7 @@
 ```
 
 #### vue3示例 :
+
 ```js
 <template>
 	<view>
@@ -94,7 +97,7 @@
 	};
 
 	// 组件挂载后初始化echarts实例 (也可在请求数据后初始化)
-	function initEchart() { 
+	function initEchart() {
 		echartRef.value.init(option);
 	}
 
@@ -116,28 +119,32 @@
 ```
 
 ## 组件属性
+
 ```js
-<e-chart ref="echartRef" @ready="initEchart" width="100%" :height="600" :disable-scroll="false"/> 
+<e-chart ref="echartRef" @ready="initEchart" width="100%" :height="600" :disable-scroll="false"/>
 ```
-| 属性 | 类型 | 说明 | 必填 | 默认值 |
-| ---- | ---- | ---- | ---- | ---- |
-| width | Number,String | 图表宽度(数字默认rpx,字符串时需写完整单位如`300px`)  | 否 | '100%' |
-| height | Number,String | 图表高度(数字默认rpx,字符串时需写完整单位如`300px`) | 否 | 600 |
-| disableScroll | Boolean | 在图表区域内触摸移动时,是否禁止页面滚动 | 否 | false |
+
+| 属性          | 类型          | 说明                                                | 必填 | 默认值 |
+| ------------- | ------------- | --------------------------------------------------- | ---- | ------ |
+| width         | Number,String | 图表宽度(数字默认rpx,字符串时需写完整单位如`300px`) | 否   | '100%' |
+| height        | Number,String | 图表高度(数字默认rpx,字符串时需写完整单位如`300px`) | 否   | 600    |
+| disableScroll | Boolean       | 在图表区域内触摸移动时,是否禁止页面滚动             | 否   | false  |
 
 ## 图表实例
+
 图表init之后会返回实例对象echartObj, 也可以通过ref直接获取  
 实例对象支持的方法与[官方的echartsInstance](https://echarts.apache.org/zh/api.html#echartsInstance.showLoading)一致
+
 ```
 async initEchart() {
   // 组件挂载后初始化echarts实例 (await之后可获取echartObj对象)
   const { echartObj } = await this.$refs.echartRef.init(this.option); // vue2
   // const { echartObj } = await echartRef.value.init(option); // vue3
-  
+
   // 也可以直接通过ref获取
   const echartObj = this.$refs.echartRef.echartObj; // vue2
   // const echartObj = echartRef.value.echartObj; // vue3
-  
+
   // 调用实例方法
   echartObj.showLoading(); // 显示加载动画效果
   echartObj.hideLoading(); // 隐藏加载动画效果
@@ -147,7 +154,9 @@ async initEchart() {
 ```
 
 ## 图表事件
+
 touch事件支持返回点中图表元素的信息, 如`seriesIndex, dataIndex, componentIndex, value`等
+
 ```js
 <e-chart ref="echartRef" />
 
@@ -179,9 +188,11 @@ async initEchart() {
 ```
 
 ## 横屏全屏
+
 1.3.0版本开始提供切换横屏, 切换全屏的示例, 建议下载参考
 
 ## 保存图片
+
 ```js
 methods: {
 	// 图表canvas转图片,并保存到相册 (具体可参考示例)
@@ -224,35 +235,43 @@ methods: {
 ## 常见问题
 
 #### 1. 小程序如何减少打包体积
+
 使用[ECharts在线定制的echarts.min.js](https://echarts.apache.org/zh/builder.html)替换`/components/e-chart/echarts.min.js`即可  
 注: vite不支持require, 所以vite+vue3无法通过在线定制减少打包体积, 应采用分包策略减少主包大小
 
 #### 2. 小程序如何减少主包大小
+
 1. [使用分包](https://developers.weixin.qq.com/miniprogram/dev/framework/subpackages/basic.html)
 2. 把`/uni_modules/e-chart/`目录下的`components`文件夹拷贝到子包
 3. 使用组件的时候需显式导入组件: `import EChart from '../components/e-chart/e-chart.vue';`  
-可下载示例,里面的vue3示例是采用分包的,建议参考
+   可下载示例,里面的vue3示例是采用分包的,建议参考
 
 #### 3. 如何替换echarts版本
-1. vue2使用的是`echarts.min.js`, 是CJS规范, 直接[在线定制](https://echarts.apache.org/zh/builder.html)选择版本替换即可  
+
+1. vue2使用的是`echarts.min.js`, 是CJS规范, 直接[在线定制](https://echarts.apache.org/zh/builder.html)选择版本替换即可
 2. vue3使用的是`echarts.esm.min.js`, 是[ESM规范](https://uniapp.dcloud.net.cn/tutorial/migration-to-vue3.html#%E5%8F%AA%E6%94%AF%E6%8C%81%E4%BD%BF%E7%94%A8-es6-%E6%A8%A1%E5%9D%97%E8%A7%84%E8%8C%83). 首先在任意目录`npm install echarts`, 找到`/node_modules/echarts/dist/echarts.esm.min.js`替换即可
 
 #### 4. 组件层级太高,遮住了fixed元素
+
 真机正常，一定要以真机为准
 
 #### 5. 示例运行不了
+
 1. 示例不是cli创建的, 应在HBuilderX运行
 2. 检查manifest.json的vue版本是否正确, 不可选vue3版本去编译vue2示例
 3. 试试关闭开发工具的ES6转ES5, 尤其是支付宝小程序
 
 #### 6. ECharts官网配置正常,拷贝到具体项目就不生效
+
 1. 确保`echarts.min.js`是完整的,检查[在线定制](https://echarts.apache.org/zh/builder.html)是否漏掉资源, 可临时替换为示例的`echarts.min.js`
 2. 编译为其他平台看看是否正常，比如H5 或 微信小程序
 3. 在示例项目运行相关配置看看是否正常
 4. 运行到真机看看是否正常
 
 #### 7. 为什么不使用props传递option
+
 props不支持传递function属性, 所以设计为通过ref设置option
 
 #### 8. 为什么不使用npm安装的echarts
+
 尽管npm安装的echarts支持按需引入，减少打包体积，但node_modules终究是无法移到子包的

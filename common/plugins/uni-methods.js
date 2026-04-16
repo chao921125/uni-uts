@@ -21,9 +21,9 @@ export default {
 	openAppAuth: function () {
 		// 打开系统权限管理
 		uni.openAppAuthorizeSetting({
-		  success (res) {
-		    console.log(res)
-		  }
+			success(res) {
+				console.log(res);
+			},
 		});
 	},
 	toast: function (text, duration, success) {

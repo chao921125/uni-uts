@@ -1,0 +1,111 @@
+{
+  "id": "lime-echart",
+  "displayName": "lime-echart echarts图表",
+  "version": "2.0.7",
+  "description": "lime-echart 为 UniApp 和 UniAppX 提供 ECharts 图表兼容支持, 使 ECharts 图表能在H5、小程序、App中运行",
+  "keywords": [
+    "echarts",
+    "canvas",
+    "图表",
+    "可视化"
+],
+  "repository": "https://gitee.com/liangei/lime-echart",
+  "engines": {
+    "HBuilderX": "^3.6.4",
+    "uni-app": "^4.65",
+    "uni-app-x": "^4.71"
+  },
+  "dcloudext": {
+    "sale": {
+      "regular": {
+        "price": "0.00"
+      },
+      "sourcecode": {
+        "price": "0.00"
+      }
+    },
+    "contact": {
+      "qq": ""
+    },
+    "declaration": {
+      "ads": "无",
+      "data": "无",
+      "permissions": "无"
+    },
+    "npmurl": "",
+    "type": "component-vue",
+    "darkmode": "x",
+    "i18n": "x",
+    "widescreen": "x"
+  },
+  "uni_modules": {
+    "dependencies": [],
+    "encrypt": [],
+    "platforms": {
+      "cloud": {
+        "tcb": "x",
+        "aliyun": "x",
+        "alipay": "x"
+      },
+      "client": {
+        "uni-app": {
+          "vue": {
+            "vue2": "√",
+            "vue3": "√"
+          },
+          "web": {
+            "safari": "√",
+            "chrome": "√"
+          },
+          "app": {
+            "vue": "√",
+            "nvue": "√",
+            "android": {
+                "extVersion": "",
+                "minVersion": "21"
+            },
+            "ios": "√",
+            "harmony": "√"
+          },
+          "mp": {
+            "weixin": "√",
+            "alipay": "√",
+            "toutiao": "√",
+            "baidu": "√",
+            "kuaishou": "√",
+            "jd": "√",
+            "harmony": "-",
+            "qq": "√",
+            "lark": "√",
+            "xhs": "-"
+          },
+          "quickapp": {
+            "huawei": "-",
+            "union": "-"
+          }
+        },
+        "uni-app-x": {
+          "web": {
+            "safari": "√",
+            "chrome": "√"
+          },
+          "app": {
+            "android": {
+                "extVersion": "",
+                "minVersion": "21"
+            },
+            "ios": "√",
+            "harmony": "√"
+          },
+          "mp": {
+            "weixin": "√"
+          }
+        }
+      }
+    }
+  },
+  "dependencies": {
+    "echarts": "^5.4.1",
+    "zrender": "^5.4.3"
+  }
+}

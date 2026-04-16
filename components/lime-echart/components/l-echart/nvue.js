@@ -1,15 +1,15 @@
 export class Echarts {
-	eventMap = new Map()
+	eventMap = new Map();
 	constructor(webview) {
-		this.webview = webview
-		this.options = null
+		this.webview = webview;
+		this.options = null;
 	}
 	setOption() {
-		this.options = arguments
+		this.options = arguments;
 		this.webview.evalJs(`setOption(${JSON.stringify(arguments)})`);
 	}
 	getOption() {
-		return this.options
+		return this.options;
 	}
 	showLoading() {
 		this.webview.evalJs(`showLoading(${JSON.stringify(arguments)})`);
@@ -24,32 +24,32 @@ export class Echarts {
 		this.webview.evalJs(`dispose()`);
 	}
 	resize(size) {
-		if(size) {
+		if (size) {
 			this.webview.evalJs(`resize(${JSON.stringify(size)})`);
 		} else {
 			this.webview.evalJs(`resize()`);
 		}
 	}
 	on(type, ...args) {
-		const query = args[0]
-		const useQuery = query && typeof query != 'function'
-		const param = useQuery ? [type, query] : [type]
-		const key = `${type}${useQuery ? JSON.stringify(query): '' }`
-		const callback = useQuery ? args[1]: args[0]
-		if(typeof callback == 'function'){
-			this.eventMap.set(key, callback)
+		const query = args[0];
+		const useQuery = query && typeof query != "function";
+		const param = useQuery ? [type, query] : [type];
+		const key = `${type}${useQuery ? JSON.stringify(query) : ""}`;
+		const callback = useQuery ? args[1] : args[0];
+		if (typeof callback == "function") {
+			this.eventMap.set(key, callback);
 		}
 		this.webview.evalJs(`on(${JSON.stringify(param)})`);
-		console.warn('nvue 暂不支持事件')
+		console.warn("nvue 暂不支持事件");
 	}
-	dispatchAction(type, options){
-		const handler = this.eventMap.get(type)
-		if(handler){
-			handler(options)
+	dispatchAction(type, options) {
+		const handler = this.eventMap.get(type);
+		if (handler) {
+			handler(options);
 		}
 	}
 	// 不让报错 无实际作用
 	isDisposed() {
-		return !!this.webview
+		return !!this.webview;
 	}
 }

@@ -1,0 +1,993 @@
+//#ifndef APP
+	import crypto from '@/uni_modules/uni-crypto'
+	export default crypto
+	export type {
+		AlgorithmParams,
+		SM2Options,
+		SM3Options,
+		SM4EncryptOptions,
+		SM4DecryptOptions,
+		CryptoKey,
+		CryptoKeyPair
+	} from './interface'
+//#endif
+
+//#ifdef APP
+	// 导入 iOS/Android 端函数，注意只能是 `@/uni_modules/uni-crypto`不能是`@/uni_modules/uni-crypto/xxx`
+	// iOS 和 Android 端都导出相同的函数接口，所以可以统一导入
+	import {
+		sm3Hash,
+		sm4Encrypt as sm4EncryptNative,
+		sm4Decrypt as sm4DecryptNative,
+		sm4CbcEncrypt as sm4CbcEncryptNative,
+		sm4CbcDecrypt as sm4CbcDecryptNative,
+		sm3Hmac,
+		sha256Hash,
+		md5Hash,
+		aesEncrypt as aesEncryptNative,
+		aesDecrypt as aesDecryptNative,
+		aesCbcEncrypt as aesCbcEncryptNative,
+		aesCbcDecrypt as aesCbcDecryptNative,
+		aesGcmEncrypt as aesGcmEncryptNative,
+		aesGcmDecrypt as aesGcmDecryptNative,
+		sm2KeyGenerate as sm2KeyGenerateNative,
+		sm2Encrypt as sm2EncryptNative,
+		sm2Decrypt as sm2DecryptNative,
+		sm2Sign as sm2SignNative,
+		sm2Verify as sm2VerifyNative
+	} from '@/uni_modules/uni-crypto'
+
+	// 导入类型定义 注意，不能去 utssdk 里面获取
+	import type {
+		UniCrypto,
+		SubtleCrypto,
+		CryptoKey as CryptoKeyInterface,
+		CryptoKeyPair,
+		SM2,
+		SM2KeyPairHex,
+		SM3,
+		SM4,
+		AlgorithmParams,
+		KeyData,
+		ExportKeyResult,
+		SM2Options,
+		SM3Options,
+		SM4EncryptOptions,
+		SM4DecryptOptions,
+		GetRandomOption,
+		GetRandomValues
+	} from './interface'
+
+	// 重新导出类型供外部使用
+	export type { AlgorithmParams } from './interface'
+
+	// 类型别名定义
+	type SM2KeyPairJson = {
+		privateKey?: string | null
+		publicKey?: string | null
+	}
+
+	// 工具类：包含所有加密相关的工具函数
+	class CryptoUtils {
+		// 字符串转 hex
+		static stringToHex(str: string): string {
+			const encoder = new TextEncoder()
+			const bytes = encoder.encode(str)
+			let hex = ''
+			for (let i = 0; i < bytes.length; i++) {
+				const hexStr = bytes[i].toString(16)
+				hex += hexStr.length == 1 ? '0' + hexStr : hexStr
+			}
+			return hex
+		}
+
+		// hex 转字符串
+		static hexToString(hex: string): string {
+			const bytes = new Uint8Array(hex.length / 2)
+			for (let i = 0; i < hex.length; i += 2) {
+				bytes[i / 2] = parseInt(hex.substring(i, i + 2), 16)
+			}
+			// 使用 TextDecoder 正确处理 UTF-8 多字节字符
+			const decoder = new TextDecoder()
+			return decoder.decode(bytes)
+		}
+
+		// ArrayBuffer 转 hex
+		static arrayBufferToHex(buffer: ArrayBuffer): string {
+			const bytes = new Uint8Array(buffer)
+			let hex = ''
+			for (let i = 0; i < bytes.length; i++) {
+				const hexStr = bytes[i].toString(16)
+				hex += hexStr.length == 1 ? '0' + hexStr : hexStr
+			}
+			return hex
+		}
+
+		// PKCS7 Padding (hex 格式)
+		// blockSize: 块大小（字节数），例如 16
+		static addPKCS7Padding(hexData: string, blockSize: number): string {
+			const dataLength = hexData.length / 2  // hex 字符串长度除以 2 = 字节数
+			const paddingLength = blockSize - (dataLength % blockSize)
+
+			// 将 padding 值转为两位 hex 字符串
+			const paddingHex = paddingLength.toString(16).padStart(2, '0')
+
+			// 添加 paddingLength 个 paddingHex
+			let result = hexData
+			for (let i = 0; i < paddingLength; i++) {
+				result += paddingHex
+			}
+
+			return result
+		}
+
+		// 移除 PKCS7 Padding (hex 格式)
+		static removePKCS7Padding(hexData: string): string {
+			if (hexData.length < 2) {
+				return hexData
+			}
+
+			// 读取最后一个字节（最后两个 hex 字符）
+			const lastByte = parseInt(hexData.substring(hexData.length - 2), 16)
+
+			// 验证 padding 是否有效
+			if (lastByte == 0 || lastByte > 16) {
+				return hexData
+			}
+
+			// 验证所有 padding 字节是否都等于 paddingLength
+			const paddingStartPos = hexData.length - (lastByte * 2)
+			for (let i = paddingStartPos; i < hexData.length; i += 2) {
+				const byte = parseInt(hexData.substring(i, i + 2), 16)
+				if (byte != lastByte) {
+					return hexData  // padding 无效，返回原始数据
+				}
+			}
+
+			// 移除 padding
+			return hexData.substring(0, paddingStartPos)
+		}
+
+		// hex 转 ArrayBuffer
+		static hexToArrayBuffer(hex: string): ArrayBuffer {
+			const bytes = new Uint8Array(hex.length / 2)
+			for (let i = 0; i < hex.length; i += 2) {
+				bytes[i / 2] = parseInt(hex.substring(i, i + 2), 16)
+			}
+			return bytes.buffer as ArrayBuffer
+		}
+	}
+
+	// CryptoKey 实现类 - 用于 Android 平台的类型兼容
+	export class CryptoKeyImpl {
+		type: string
+		extractable: boolean
+		algorithm: AlgorithmParams
+		usages: string[]
+		_keyData?: string
+
+		constructor(type: string, extractable: boolean, algorithm: AlgorithmParams, usages: string[], keyData: string) {
+			this.type = type
+			this.extractable = extractable
+			this.algorithm = algorithm
+			this.usages = usages
+			this._keyData = keyData
+		}
+	}
+
+	// SubtleCrypto 实现类
+	class SubtleCryptoImpl {
+		async digest(algorithm: string, data: ArrayBuffer | Uint8Array): Promise<ArrayBuffer> {
+			const dataArray = data instanceof ArrayBuffer ? new Uint8Array(data) : data
+			const dataHex = CryptoUtils.arrayBufferToHex(dataArray.buffer as ArrayBuffer)
+
+			try {
+				let resultHex: string
+
+				if (algorithm == 'SHA-256') {
+					const result = sha256Hash(dataHex)
+					if (result.errorMsg.length > 0) {
+						throw new Error(result.errorMsg)
+					}
+					resultHex = result.result
+				} else if (algorithm == 'MD5') {
+					const result = md5Hash(dataHex)
+					if (result.errorMsg.length > 0) {
+						throw new Error(result.errorMsg)
+					}
+					resultHex = result.result
+				} else {
+					throw new Error(`不支持的算法: ${algorithm}`)
+				}
+
+				if (resultHex.length == 0) {
+					throw new Error(`digest(${algorithm}) 返回空结果`)
+				}
+
+				return CryptoUtils.hexToArrayBuffer(resultHex)
+			} catch (e) {
+				console.error(`[uni-crypto APP] digest(${algorithm}) 错误:`, e)
+				throw e
+			}
+		}
+
+		async importKey(
+			format: string,
+			keyData: KeyData,
+			algorithm: AlgorithmParams,
+			extractable: boolean,
+			keyUsages: string[]
+		): Promise<CryptoKey> {
+			// 将密钥数据转换为 hex 字符串存储
+			let keyHex: string = ''
+			if (keyData instanceof ArrayBuffer) {
+				keyHex = CryptoUtils.arrayBufferToHex(keyData)
+			} else if (keyData instanceof Uint8Array) {
+				keyHex = CryptoUtils.arrayBufferToHex(keyData.buffer as ArrayBuffer)
+			} else if (typeof keyData == 'string') {
+				// 如果是字符串，假设已经是 hex 格式
+				keyHex = keyData
+			}
+
+			return new CryptoKeyImpl('secret', extractable, algorithm, keyUsages, keyHex)
+		}
+
+		async exportKey(format: string, key: CryptoKeyImpl): Promise<ExportKeyResult> {
+			// 检查密钥是否可导出
+			if (!key.extractable) {
+				throw new Error('Key is not extractable')
+			}
+
+			// 只支持 'raw' 格式导出
+			if (format != 'raw') {
+				throw new Error(`Unsupported export format: ${format}`)
+			}
+
+			// 从存储的 _keyData 中提取密钥
+			const keyHex = key._keyData ?? ''
+			if (keyHex.length == 0) {
+				throw new Error('No key data stored in CryptoKey')
+			}
+
+			// 返回 ArrayBuffer
+			return CryptoUtils.hexToArrayBuffer(keyHex)
+		}
+
+		async generateKey(
+			algorithm: AlgorithmParams,
+			extractable: boolean,
+			keyUsages: string[]
+		): Promise<CryptoKey | CryptoKeyPair> {
+			// 只支持 AES 密钥生成
+			const algoName = algorithm.name ?? ''
+
+			if (algoName == 'AES-GCM' || algoName == 'AES-CBC') {
+				// 从算法参数中获取密钥长度，默认 256 位
+				const length = algorithm.length ?? 256
+
+				// 验证密钥长度
+				if (length != 128 && length != 192 && length != 256) {
+					throw new Error(`Invalid AES key length: ${length}. Must be 128, 192, or 256`)
+				}
+
+				// 生成随机密钥字节
+				const keyBytes = length / 8
+				const keyArray = new Uint8Array(keyBytes)
+				RandomGenerator.getRandomValues(keyArray)
+
+				// 转换为 hex 字符串
+				const keyHex = CryptoUtils.arrayBufferToHex(keyArray.buffer as ArrayBuffer)
+
+				// 创建 CryptoKey 对象
+				return new CryptoKeyImpl('secret', extractable, algorithm, keyUsages, keyHex)
+			} else {
+				throw new Error(`Unsupported algorithm for key generation: ${algoName}`)
+			}
+		}
+
+		async encrypt(
+			algorithm: AlgorithmParams,
+			key: CryptoKeyImpl,
+			data: ArrayBuffer | Uint8Array
+		): Promise<ArrayBuffer> {
+			const dataArray = data instanceof ArrayBuffer ? new Uint8Array(data) : data
+			const dataHex = CryptoUtils.arrayBufferToHex(dataArray.buffer as ArrayBuffer)
+
+			try {
+				// 获取算法名称
+				let algoName: string = ''
+				if (algorithm.name != null) {
+					algoName = algorithm.name
+				} else if (key.algorithm.name != null) {
+					algoName = key.algorithm.name
+				}
+
+				if (algoName == 'AES-GCM') {
+					// 从 CryptoKey 中提取密钥数据
+				const keyHex = key._keyData ?? ''
+				if (keyHex.length == 0) {
+					throw new Error('No key data found in CryptoKey')
+				}
+					let iv = '000000000000000000000000'
+					let aad = ''
+					if (algorithm.iv != null) {
+						const ivData = algorithm.iv instanceof ArrayBuffer ? new Uint8Array(algorithm.iv) : algorithm.iv
+						iv = CryptoUtils.arrayBufferToHex(ivData.buffer as ArrayBuffer)
+					}
+					if (algorithm.additionalData != null) {
+						const aadData = algorithm.additionalData instanceof ArrayBuffer ? new Uint8Array(algorithm.additionalData) : algorithm.additionalData
+						aad = CryptoUtils.arrayBufferToHex(aadData.buffer as ArrayBuffer)
+					}
+
+					const result = aesGcmEncryptNative(keyHex, iv, aad, dataHex)
+					if (result.errorMsg.length > 0) {
+						throw new Error(result.errorMsg)
+					}
+
+					return CryptoUtils.hexToArrayBuffer(result.encrypted)
+				} else if (algoName == 'AES-CBC') {
+					// 从 CryptoKey 中提取密钥数据
+					const keyHex = key._keyData ?? ''
+					if (keyHex.length == 0) {
+						throw new Error('No key data found in CryptoKey')
+					}
+					let iv = '00000000000000000000000000000000'
+					if (algorithm.iv != null) {
+						const ivData = algorithm.iv instanceof ArrayBuffer ? new Uint8Array(algorithm.iv) : algorithm.iv
+						iv = CryptoUtils.arrayBufferToHex(ivData.buffer as ArrayBuffer)
+					}
+
+					const result = aesCbcEncryptNative(keyHex, iv, dataHex)
+					if (result.errorMsg.length > 0) {
+						throw new Error(result.errorMsg)
+					}
+
+					return CryptoUtils.hexToArrayBuffer(result.encrypted)
+				} else {
+					throw new Error(`不支持的加密算法: ${algoName}`)
+				}
+			} catch (e) {
+				console.error('[uni-crypto APP] encrypt 错误:', e)
+				throw e
+			}
+		}
+
+		async decrypt(
+			algorithm: AlgorithmParams,
+			key: CryptoKeyImpl,
+			data: ArrayBuffer | Uint8Array
+		): Promise<ArrayBuffer> {
+			const dataArray = data instanceof ArrayBuffer ? new Uint8Array(data) : data
+			const dataHex = CryptoUtils.arrayBufferToHex(dataArray.buffer as ArrayBuffer)
+
+			try {
+				// 获取算法名称
+				let algoName: string = ''
+				if (algorithm.name != null) {
+					algoName = algorithm.name
+				} else if (key.algorithm.name != null) {
+					algoName = key.algorithm.name
+				}
+
+				if (algoName == 'AES-GCM') {
+					// 从 CryptoKey 中提取密钥数据
+				const keyHex = key._keyData ?? ''
+				if (keyHex.length == 0) {
+					throw new Error('No key data found in CryptoKey')
+				}
+					let iv = '000000000000000000000000'
+					let aad = ''
+					if (algorithm.iv != null) {
+						const ivData = algorithm.iv instanceof ArrayBuffer ? new Uint8Array(algorithm.iv) : algorithm.iv
+						iv = CryptoUtils.arrayBufferToHex(ivData.buffer as ArrayBuffer)
+					}
+					if (algorithm.additionalData != null) {
+						const aadData = algorithm.additionalData instanceof ArrayBuffer ? new Uint8Array(algorithm.additionalData) : algorithm.additionalData
+						aad = CryptoUtils.arrayBufferToHex(aadData.buffer as ArrayBuffer)
+					}
+
+					const result = aesGcmDecryptNative(keyHex, iv, aad, dataHex)
+					if (result.errorMsg.length > 0) {
+						throw new Error(result.errorMsg)
+					}
+
+					return CryptoUtils.hexToArrayBuffer(result.decrypted)
+				} else if (algoName == 'AES-CBC') {
+					// 从 CryptoKey 中提取密钥数据
+				const keyHex = key._keyData ?? ''
+				if (keyHex.length == 0) {
+					throw new Error('No key data found in CryptoKey')
+				}
+					let iv = '00000000000000000000000000000000'
+					if (algorithm.iv != null) {
+						const ivData = algorithm.iv instanceof ArrayBuffer ? new Uint8Array(algorithm.iv) : algorithm.iv
+						iv = CryptoUtils.arrayBufferToHex(ivData.buffer as ArrayBuffer)
+					}
+
+					const result = aesCbcDecryptNative(keyHex, iv, dataHex)
+					if (result.errorMsg.length > 0) {
+						throw new Error(result.errorMsg)
+					}
+
+					return CryptoUtils.hexToArrayBuffer(result.decrypted)
+				} else {
+					throw new Error(`不支持的解密算法: ${algoName}`)
+				}
+			} catch (e) {
+				console.error('[uni-crypto APP] decrypt 错误:', e)
+				throw e
+			}
+		}
+
+		async sign(
+			algorithm: AlgorithmParams,
+			key: CryptoKeyImpl,
+			data: ArrayBuffer | Uint8Array
+		): Promise<ArrayBuffer> {
+			throw new Error('sign 暂未实现')
+		}
+
+		async verify(
+			algorithm: AlgorithmParams,
+			key: CryptoKeyImpl,
+			signature: ArrayBuffer | Uint8Array,
+			data: ArrayBuffer | Uint8Array
+		): Promise<boolean> {
+			throw new Error('verify 暂未实现')
+		}
+	}
+
+	/**
+	 * 从 DER 编码的私钥中提取纯 hex 格式私钥
+	 * DER 格式: 30 77 02 01 01 04 20 [32字节私钥] ...
+	 * 查找标记 "0420"，然后提取后面的64个字符（32字节）
+	 */
+	function extractPrivateKeyFromDER(derHex: string): string {
+		const marker = '0420'
+		const index = derHex.indexOf(marker)
+		if (index >= 0) {
+			const start = index + marker.length
+			return derHex.substring(start, start + 64)
+		}
+		// 如果找不到标记，返回原始数据（可能已经是纯hex格式）
+		return derHex
+	}
+
+	/**
+	 * 从 DER 编码的公钥中提取纯 hex 格式公钥
+	 * DER 格式: 30 59 30 13 ... 03 42 00 04 [64字节公钥x+y]
+	 * 查找标记 "0004"，然后提取后面的130个字符（包含"04"前缀）
+	 */
+	function extractPublicKeyFromDER(derHex: string): string {
+		const marker = '0004'
+		const index = derHex.indexOf(marker)
+		if (index >= 0) {
+			const start = index + 2  // 跳过 '00'，保留 '04' 前缀
+			return derHex.substring(start, start + 130)
+		}
+		// 如果找不到标记，返回原始数据（可能已经是纯hex格式）
+		return derHex
+	}
+
+	// 密钥缓存：用于保存纯 hex 到 DER 的映射
+	const keyCache = new Map<string, string>()
+
+	/**
+	 * 将纯 hex 格式公钥转换为 DER 格式
+	 * 如果输入已经是 DER 格式（长度>130），直接返回
+	 * 如果是纯 hex 格式（130字符），构造 DER 格式
+	 */
+	function convertPublicKeyToDER(hexKey: string): string {
+		// 检查缓存
+		const cached = keyCache.get(hexKey)
+		if (cached != null) {
+			return cached
+		}
+
+		// 如果已经是 DER 格式（长度大于130），直接返回
+		if (hexKey.length > 130) {
+			return hexKey
+		}
+
+		// 如果是130字符的纯hex，构造标准DER格式
+		// DER 格式: 30 59 30 13 06 07 2a 86 48 ce 3d 02 01 06 08 2a 81 1c cf 55 01 82 2d 03 42 00 [公钥]
+		if (hexKey.length == 130) {
+			const derPrefix = '3059301306072a8648ce3d020106082a811ccf5501822d034200'
+			return derPrefix + hexKey
+		}
+
+		// 其他情况直接返回原值
+		return hexKey
+	}
+
+	/**
+	 * 将纯 hex 格式私钥转换为 DER 格式
+	 * 如果输入已经是 DER 格式（长度>64），直接返回
+	 * 如果是纯 hex 格式（64字符），从缓存中查找完整DER
+	 */
+	function convertPrivateKeyToDER(hexKey: string): string {
+		// 去掉可能的前导 00
+		let normalizedKey = hexKey
+		if (hexKey.length == 66 && hexKey.startsWith('00')) {
+			normalizedKey = hexKey.substring(2)
+		}
+
+		// 检查缓存
+		const cached = keyCache.get(normalizedKey)
+		if (cached != null) {
+			return cached
+		}
+
+		// 如果已经是 DER 格式（长度大于64），直接返回
+		if (normalizedKey.length > 64) {
+			return normalizedKey
+		}
+
+		// 如果是64字符的纯hex但没有缓存，无法构造完整DER（缺少公钥信息）
+		// 返回原值，让底层尝试处理
+		return normalizedKey
+	}
+
+	// SM2 实现类
+	class SM2Impl {
+		generateKeyPairHex(): SM2KeyPairHex {
+			try {
+				const keyPairJson = sm2KeyGenerateNative()
+				if (keyPairJson.length == 0) {
+					throw new Error('SM2 密钥对生成返回空结果')
+				}
+
+			// 解析 JSON 格式的密钥对
+			// 注意：UTS 类型系统严格，在 Android 平台 JSON.parse 返回 UTSJSONObject 无法直接转换
+			// 使用手动字符串解析方式避免类型转换错误
+			try {
+				// 手动解析 JSON 字符串，避免使用 JSON.parse 的类型转换问题
+				const privateKeyMatch = keyPairJson.match(/"privateKey"\s*:\s*"([^"]+)"/)
+				const publicKeyMatch = keyPairJson.match(/"publicKey"\s*:\s*"([^"]+)"/)
+
+				const privateKeyDER: string = (privateKeyMatch != null && privateKeyMatch.length > 1) ? (privateKeyMatch[1] ?? '') : ''
+				const publicKeyDER: string = (publicKeyMatch != null && publicKeyMatch.length > 1) ? (publicKeyMatch[1] ?? '') : ''
+
+				if (privateKeyDER.length == 0 || publicKeyDER.length == 0) {
+					console.error('[uni-crypto APP] ❌ SM2 密钥对 JSON 解析失败: 无法提取密钥')
+					throw new Error('SM2 密钥对 JSON 解析失败: 无法提取密钥')
+				}
+
+				// 从 DER 格式提取纯 hex 格式密钥（与 Web 端保持一致）
+				const privateKey = extractPrivateKeyFromDER(privateKeyDER)
+				const publicKey = extractPublicKeyFromDER(publicKeyDER)
+
+				// 缓存纯 hex 到 DER 的映射，用于后续加密/解密操作
+				if (privateKey.length > 0 && privateKeyDER.length > 0) {
+					keyCache.set(privateKey, privateKeyDER)
+				}
+				if (publicKey.length > 0 && publicKeyDER.length > 0) {
+					keyCache.set(publicKey, publicKeyDER)
+				}
+
+				console.log(`[uni-crypto APP] ✅ SM2 密钥生成成功 - 公钥: ${publicKey.length}字符, 私钥: ${privateKey.length}字符`)
+				const result: SM2KeyPairHex = {
+					privateKey: privateKey,
+					publicKey: publicKey
+				}
+				return result
+			} catch (parseError) {
+				console.error('[uni-crypto APP] SM2 密钥对 JSON 解析失败:', parseError)
+				throw new Error('SM2 密钥对 JSON 解析失败')
+			}
+			} catch (e) {
+				console.error('[uni-crypto APP] sm2.generateKeyPairHex 错误:', e)
+				throw e
+			}
+		}
+
+		doEncrypt(msg: string, publicKey: string, cipherMode: number | null): string {
+			try {
+				// 注意：当前 C 实现固定使用 C1C3C2 模式（mode=1），cipherMode 参数保留以保持与 sm-crypto API 一致
+				// 将纯 hex 公钥转换为 DER 格式（底层 C 函数需要 DER 格式）
+				const derPublicKey = convertPublicKeyToDER(publicKey)
+
+				// 将消息转换为 hex
+				const msgHex = CryptoUtils.stringToHex(msg)
+
+				const encrypted = sm2EncryptNative(derPublicKey, msgHex)
+				if (encrypted.length == 0) {
+					console.error('[uni-crypto APP] ❌ SM2 加密失败: 返回空结果')
+					throw new Error('SM2 加密返回空结果')
+				}
+
+				console.log(`[uni-crypto APP] ✅ SM2 加密成功 - 密文长度: ${encrypted.length}字符`)
+				return encrypted
+			} catch (e) {
+				console.error('[uni-crypto APP] ❌ SM2 加密错误:', e)
+				throw e
+			}
+		}
+
+		doDecrypt(cipherText: string, privateKey: string, cipherMode: number | null): string {
+			try {
+				// 注意：当前 C 实现固定使用 C1C3C2 模式（mode=1），cipherMode 参数保留以保持与 sm-crypto API 一致
+				// 将纯 hex 私钥转换为 DER 格式（底层 C 函数需要 DER 格式）
+				const derPrivateKey = convertPrivateKeyToDER(privateKey)
+
+				const plaintextHex = sm2DecryptNative(derPrivateKey, cipherText)
+				if (plaintextHex.length == 0) {
+					throw new Error('SM2 解密返回空结果')
+				}
+
+				// 将 hex 转换回字符串
+				return CryptoUtils.hexToString(plaintextHex)
+			} catch (e) {
+				console.error('[uni-crypto APP] sm2.doDecrypt 错误:', e)
+				throw e
+			}
+		}
+
+		doSignature(msg: string, privateKey: string, ...args: (SM2Options | null)[]): string {
+			try {
+				const options = args.length > 0 ? args[0] : null
+
+				// 将纯 hex 私钥转换为 DER 格式（底层 C 函数需要 DER 格式）
+				const derPrivateKey = convertPrivateKeyToDER(privateKey)
+
+				// 将消息转换为 hex
+				let msgHex: string
+				if (options != null && options.inputEncoding == 'hex') {
+					msgHex = msg
+				} else {
+					msgHex = CryptoUtils.stringToHex(msg)
+				}
+
+				const signature = sm2SignNative(derPrivateKey, msgHex)
+				if (signature.length == 0) {
+					throw new Error('SM2 签名返回空结果')
+				}
+
+				return signature
+			} catch (e) {
+				console.error('[uni-crypto APP] sm2.doSignature 错误:', e)
+				throw e
+			}
+		}
+
+		doVerifySignature(msg: string, signHex: string, publicKey: string, ...args: (SM2Options | null)[]): boolean {
+			try {
+				const options = args.length > 0 ? args[0] : null
+
+				// 将纯 hex 公钥转换为 DER 格式（底层 C 函数需要 DER 格式）
+				const derPublicKey = convertPublicKeyToDER(publicKey)
+
+				// 将消息转换为 hex
+				let msgHex: string
+				if (options != null && options.inputEncoding == 'hex') {
+					msgHex = msg
+				} else {
+					msgHex = CryptoUtils.stringToHex(msg)
+				}
+
+				return sm2VerifyNative(derPublicKey, msgHex, signHex)
+			} catch (e) {
+				console.error('[uni-crypto APP] sm2.doVerifySignature 错误:', e)
+				return false
+			}
+		}
+	}
+
+	// SM3 实现类
+	class SM3Impl {
+		hash(msg: string, ...args: (SM3Options | null)[]): string {
+			try {
+				const options = args.length > 0 ? args[0] : null
+				let msgHex: string
+				if (options != null && options.inputEncoding == 'hex') {
+					msgHex = msg
+				} else {
+					msgHex = CryptoUtils.stringToHex(msg)
+				}
+
+				const result = sm3Hash(msgHex)
+				if (result.errorMsg.length > 0) {
+					throw new Error(result.errorMsg)
+				}
+
+				return result.result
+			} catch (e) {
+				console.error('[uni-crypto APP] sm3 错误:', e)
+				throw e
+			}
+		}
+
+		hmac(key: string, data: string): string {
+			try {
+				// 将字符串转换为 hex
+				const keyHex = CryptoUtils.stringToHex(key)
+				const dataHex = CryptoUtils.stringToHex(data)
+
+				const result = sm3Hmac(keyHex, dataHex)
+				if (result.errorMsg.length > 0) {
+					throw new Error(result.errorMsg)
+				}
+				return result.mac
+			} catch (e) {
+				console.error('[uni-crypto APP] sm3Hmac 错误:', e)
+				throw e
+			}
+		}
+	}
+
+	// SM4 实现类
+	class SM4Impl {
+		encrypt(msg: string, key: string, ...args: (SM4EncryptOptions | null)[]): string {
+			try {
+				const options = args.length > 0 ? args[0] : null
+				let msgHex: string
+				if (options != null && options.inputEncoding == 'hex') {
+					msgHex = msg
+				} else {
+					msgHex = CryptoUtils.stringToHex(msg)
+				}
+
+				console.log('[uni-crypto APP] sm4Encrypt 原始hex长度:', msgHex.length, 'hex:', msgHex)
+
+				// SM4 ECB 模式自动添加 PKCS7 padding
+				if (msgHex.length % 32 != 0) {
+					msgHex = CryptoUtils.addPKCS7Padding(msgHex, 16)
+					console.log('[uni-crypto APP] sm4Encrypt 添加padding后长度:', msgHex.length, 'hex:', msgHex)
+				}
+
+				// C 库的 ECB 模式只支持单块加密，需要手动处理多块
+				// 每块 16 字节 = 32 hex 字符
+				let encryptedHex = ''
+				for (let i = 0; i < msgHex.length; i += 32) {
+					const block = msgHex.substring(i, i + 32)
+					console.log('[uni-crypto APP] sm4Encrypt 处理块:', i / 32, 'hex:', block)
+					const result = sm4EncryptNative(key, block)
+					if (result.errorMsg.length > 0) {
+						throw new Error(result.errorMsg)
+					}
+					encryptedHex += result.encrypted
+				}
+
+				if (options != null && options.outputEncoding == 'base64') {
+					// 需要实现 hex 转 base64
+					return encryptedHex // 临时返回 hex
+				}
+				return encryptedHex
+			} catch (e) {
+				console.error('[uni-crypto APP] sm4.encrypt 错误:', e)
+				throw e
+			}
+		}
+
+		decrypt(cipherText: string, key: string, ...args: (SM4DecryptOptions | null)[]): string {
+			try {
+				const options = args.length > 0 ? args[0] : null
+				let cipherHex: string = cipherText
+				if (options != null && options.inputEncoding == 'base64') {
+					cipherHex = cipherText // 临时
+				}
+
+				// SM4 ECB 模式要求数据长度必须是 16 字节（32 字符 hex）的倍数
+				if (cipherHex.length % 32 != 0) {
+					throw new Error('SM4 ECB 模式要求密文长度必须是 16 字节的倍数')
+				}
+
+				// C 库的 ECB 模式只支持单块解密，需要手动处理多块
+				let decryptedHex = ''
+				for (let i = 0; i < cipherHex.length; i += 32) {
+					const block = cipherHex.substring(i, i + 32)
+					console.log('[uni-crypto APP] sm4Decrypt 处理块:', i / 32, 'hex:', block)
+					const result = sm4DecryptNative(key, block)
+					if (result.errorMsg.length > 0) {
+						throw new Error(result.errorMsg)
+					}
+					decryptedHex += result.decrypted
+				}
+
+				// 移除 PKCS7 padding
+				const unpaddedHex = CryptoUtils.removePKCS7Padding(decryptedHex)
+
+				if (options != null && options.outputEncoding == 'text') {
+					return CryptoUtils.hexToString(unpaddedHex)
+				}
+				return unpaddedHex
+			} catch (e) {
+				console.error('[uni-crypto APP] sm4.decrypt 错误:', e)
+				throw e
+			}
+		}
+
+		encryptCBC(msg: string, key: string, iv: string, ...args: (SM4EncryptOptions | null)[]): string {
+			try {
+				const options = args.length > 0 ? args[0] : null
+				let msgHex: string
+				if (options != null && options.inputEncoding == 'hex') {
+					msgHex = msg
+				} else {
+					msgHex = CryptoUtils.stringToHex(msg)
+				}
+
+				const result = sm4CbcEncryptNative(key, iv, msgHex)
+				if (result.errorMsg.length > 0) {
+					throw new Error(result.errorMsg)
+				}
+
+				if (options != null && options.outputEncoding == 'base64') {
+					return result.encrypted // 临时
+				}
+				return result.encrypted
+			} catch (e) {
+				console.error('[uni-crypto APP] sm4.encryptCBC 错误:', e)
+				throw e
+			}
+		}
+
+		decryptCBC(cipherText: string, key: string, iv: string, ...args: (SM4DecryptOptions | null)[]): string {
+			try {
+				const options = args.length > 0 ? args[0] : null
+				let cipherHex: string = cipherText
+				if (options != null && options.inputEncoding == 'base64') {
+					cipherHex = cipherText // 临时
+				}
+
+				const result = sm4CbcDecryptNative(key, iv, cipherHex)
+				if (result.errorMsg.length > 0) {
+					throw new Error(result.errorMsg)
+				}
+
+				if (options != null && options.outputEncoding == 'text') {
+					return CryptoUtils.hexToString(result.decrypted)
+				}
+				return result.decrypted
+			} catch (e) {
+				console.error('[uni-crypto APP] sm4.decryptCBC 错误:', e)
+				throw e
+			}
+		}
+	}
+
+	// 随机数生成器类
+	class RandomGenerator {
+		static getRandomValues(array: GetRandomOption): GetRandomOption {
+			// APP 平台可以使用系统提供的随机数生成器
+			// iOS: 应该调用 SecRandomCopyBytes
+			// Android: 应该调用 SecureRandom
+			// 这里简化实现，实际应该调用平台特定的随机数生成器
+			if (array instanceof Uint8Array) {
+				for (let i = 0; i < (array as Uint8Array).length; i++) {
+					(array as Uint8Array)[i] = Math.floor(Math.random() * 256)
+				}
+			} else if (array instanceof Int8Array) {
+				for (let i = 0; i < (array as Int8Array).length; i++) {
+					(array as Int8Array)[i] = Math.floor(Math.random() * 256)
+				}
+			} else if (array instanceof Uint16Array) {
+				for (let i = 0; i < (array as Uint16Array).length; i++) {
+					(array as Uint16Array)[i] = Math.floor(Math.random() * 65536)
+				}
+			} else if (array instanceof Int16Array) {
+				for (let i = 0; i < (array as Int16Array).length; i++) {
+					(array as Int16Array)[i] = Math.floor(Math.random() * 65536)
+				}
+			} else if (array instanceof Uint32Array) {
+				for (let i = 0; i < (array as Uint32Array).length; i++) {
+					(array as Uint32Array)[i] = Math.floor(Math.random() * 4294967296)
+				}
+			} else if (array instanceof Int32Array) {
+				for (let i = 0; i < (array as Int32Array).length; i++) {
+					(array as Int32Array)[i] = Math.floor(Math.random() * 4294967296)
+				}
+			}
+			return array
+		}
+	}
+
+	// AES 辅助类
+	class AESHelper {
+		static encrypt(key: string, data: string): string {
+			try {
+				// 将数据转换为 hex，密钥已经是 hex 格式
+				let dataHex = CryptoUtils.stringToHex(data)
+
+				console.log('[uni-crypto APP] aesEncrypt 原始hex长度:', dataHex.length, 'hex:', dataHex)
+
+				// AES ECB 模式自动添加 PKCS7 padding (16 字节块)
+				if (dataHex.length % 32 != 0) {
+					dataHex = CryptoUtils.addPKCS7Padding(dataHex, 16)
+					console.log('[uni-crypto APP] aesEncrypt 添加padding后长度:', dataHex.length, 'hex:', dataHex)
+				}
+
+				// C 库的 ECB 模式只支持单块加密，需要手动处理多块
+				let encryptedHex = ''
+				for (let i = 0; i < dataHex.length; i += 32) {
+					const block = dataHex.substring(i, i + 32)
+					console.log('[uni-crypto APP] aesEncrypt 处理块:', i / 32, 'hex:', block)
+					const result = aesEncryptNative(key, block)
+					if (result.errorMsg.length > 0) {
+						throw new Error(result.errorMsg)
+					}
+					encryptedHex += result.encrypted
+				}
+				return encryptedHex
+			} catch (e) {
+				console.error('[uni-crypto APP] aesEncrypt 错误:', e)
+				throw e
+			}
+		}
+
+		static decrypt(key: string, encrypted: string): string {
+			try {
+				// encrypted 已经是 hex 格式，需要按块处理
+				if (encrypted.length % 32 != 0) {
+					throw new Error('AES ECB 模式要求密文长度必须是 16 字节的倍数')
+				}
+
+				// C 库的 ECB 模式只支持单块解密，需要手动处理多块
+				let decryptedHex = ''
+				for (let i = 0; i < encrypted.length; i += 32) {
+					const block = encrypted.substring(i, i + 32)
+					console.log('[uni-crypto APP] aesDecrypt 处理块:', i / 32, 'hex:', block)
+					const result = aesDecryptNative(key, block)
+					if (result.errorMsg.length > 0) {
+						throw new Error(result.errorMsg)
+					}
+					decryptedHex += result.decrypted
+				}
+
+				// 移除 PKCS7 padding
+				const unpaddedHex = CryptoUtils.removePKCS7Padding(decryptedHex)
+
+				// 将解密后的 hex 转换为字符串
+				return CryptoUtils.hexToString(unpaddedHex)
+			} catch (e) {
+				console.error('[uni-crypto APP] aesDecrypt 错误:', e)
+				throw e
+			}
+		}
+	}
+
+	// 主导出类
+	class Crypto {
+		subtle: SubtleCryptoImpl
+		sm2: SM2Impl
+		sm4: SM4Impl
+		private sm3Impl: SM3Impl
+
+		constructor() {
+			this.subtle = new SubtleCryptoImpl()
+			this.sm2 = new SM2Impl()
+			this.sm4 = new SM4Impl()
+			this.sm3Impl = new SM3Impl()
+		}
+
+		sm3(msg: string, ...arg: (SM3Options | null)[]): string {
+			const options = arg.length > 0 ? arg[0] : null
+			return this.sm3Impl.hash(msg, options)
+		}
+
+		sm3Hmac(key: string, data: string): string {
+			return this.sm3Impl.hmac(key, data)
+		}
+
+		aesEncrypt(key: string, data: string): string {
+			return AESHelper.encrypt(key, data)
+		}
+
+		aesDecrypt(key: string, encrypted: string): string {
+			return AESHelper.decrypt(key, encrypted)
+		}
+
+		getRandomValues(array: GetRandomOption): GetRandomOption {
+			return RandomGenerator.getRandomValues(array)
+		}
+	}
+	
+	const crypto = new Crypto()
+	// const hash = crypto.sm3Hmac('testMsg', '123')
+	// console.error('crypto.sm3Hmac(testMsg)', hash)
+
+	// 导出 CryptoKeyImpl 作为 CryptoKey 供外部使用
+	export type CryptoKey = CryptoKeyImpl
+
+	export default crypto
+//#endif

@@ -1,0 +1,425 @@
+/**
+ * interface.uts
+ * uni-crypto 插件接口定义文件
+ * 与 Web Crypto API 和 sm-crypto npm 包保持一致的 API 设计
+ */
+
+// ==================== Web Crypto API 风格接口 ====================
+
+/**
+ * SubtleCrypto 接口 - 与 Web Crypto API 保持一致
+ * 支持 SHA-256, AES 等标准算法
+ */
+export interface SubtleCrypto {
+  /**
+   * 计算摘要（哈希）
+   * @param algorithm 算法名称，如 'SHA-256', 'SHA-384', 'SHA-512', 'MD5'
+   * @param data 输入数据（ArrayBuffer 或 TypedArray）
+   * @returns Promise<ArrayBuffer> 返回哈希结果的 ArrayBuffer
+   */
+  digest(algorithm: string, data: ArrayBuffer | Uint8Array): Promise<ArrayBuffer>
+
+  /**
+   * 导入密钥
+   * @param format 密钥格式：'raw' | 'pkcs8' | 'spki' | 'jwk'
+   * @param keyData 密钥数据
+   * @param algorithm 算法参数
+   * @param extractable 是否可导出
+   * @param keyUsages 密钥用途数组
+   * @returns Promise<CryptoKey> 返回 CryptoKey 对象
+   */
+  importKey(
+    format: string,
+    keyData: ArrayBuffer | Uint8Array | any,
+    algorithm: any,
+    extractable: boolean,
+    keyUsages: string[]
+  ): Promise<CryptoKey>
+
+  /**
+   * 导出密钥
+   * @param format 导出格式
+   * @param key 要导出的密钥
+   * @returns Promise<ArrayBuffer | any> 返回导出的密钥
+   */
+  exportKey(format: string, key: CryptoKey): Promise<ArrayBuffer | any>
+
+  /**
+   * 生成密钥
+   * @param algorithm 算法参数
+   * @param extractable 是否可导出
+   * @param keyUsages 密钥用途数组
+   * @returns Promise<CryptoKey | CryptoKeyPair> 返回密钥或密钥对
+   */
+  generateKey(
+    algorithm: any,
+    extractable: boolean,
+    keyUsages: string[]
+  ): Promise<CryptoKey | CryptoKeyPair>
+
+  /**
+   * 加密
+   * @param algorithm 算法参数
+   * @param key 加密密钥
+   * @param data 待加密数据
+   * @returns Promise<ArrayBuffer> 返回加密结果的 ArrayBuffer
+   */
+  encrypt(
+    algorithm: any,
+    key: CryptoKey,
+    data: ArrayBuffer | Uint8Array
+  ): Promise<ArrayBuffer>
+
+  /**
+   * 解密
+   * @param algorithm 算法参数
+   * @param key 解密密钥
+   * @param data 待解密数据
+   * @returns Promise<ArrayBuffer> 返回解密结果的 ArrayBuffer
+   */
+  decrypt(
+    algorithm: any,
+    key: CryptoKey,
+    data: ArrayBuffer | Uint8Array
+  ): Promise<ArrayBuffer>
+
+  /**
+   * 签名
+   * @param algorithm 算法参数
+   * @param key 签名密钥
+   * @param data 待签名数据
+   * @returns Promise<ArrayBuffer> 返回签名的 ArrayBuffer
+   */
+  sign(
+    algorithm: any,
+    key: CryptoKey,
+    data: ArrayBuffer | Uint8Array
+  ): Promise<ArrayBuffer>
+
+  /**
+   * 验证签名
+   * @param algorithm 算法参数
+   * @param key 验证密钥
+   * @param signature 签名数据
+   * @param data 原始数据
+   * @returns Promise<boolean> 返回验证结果
+   */
+  verify(
+    algorithm: any,
+    key: CryptoKey,
+    signature: ArrayBuffer | Uint8Array,
+    data: ArrayBuffer | Uint8Array
+  ): Promise<boolean>
+}
+
+/**
+ * CryptoKey 接口 - 与 Web Crypto API 保持一致
+ */
+export interface CryptoKey {
+  type: string
+  extractable: boolean
+  algorithm: any
+  usages: string[]
+}
+
+/**
+ * CryptoKeyPair 接口 - 与 Web Crypto API 保持一致
+ */
+export interface CryptoKeyPair {
+  publicKey: CryptoKey
+  privateKey: CryptoKey
+}
+
+// ==================== 国密算法接口（与 sm-crypto 保持一致） ====================
+
+/**
+ * SM2 密钥对（hex 格式）
+ */
+export interface SM2KeyPairHex {
+  publicKey: string  // 公钥（hex 字符串）
+  privateKey: string // 私钥（hex 字符串）
+}
+
+/**
+ * SM2 对象 - 与 sm-crypto 保持一致
+ */
+export interface SM2 {
+  /**
+   * 生成密钥对（hex 格式）
+   * @returns 返回密钥对对象 { publicKey, privateKey }
+   */
+  generateKeyPairHex(): SM2KeyPairHex
+
+  /**
+   * 加密
+   * @param msg 待加密消息（字符串）
+   * @param publicKey 公钥（hex 字符串）
+   * @param cipherMode 加密模式，默认为 1（C1C3C2）
+   * @returns 返回加密后的 hex 字符串
+   */
+  doEncrypt(msg: string, publicKey: string, cipherMode?: number): string
+
+  /**
+   * 解密
+   * @param cipherText 密文（hex 字符串）
+   * @param privateKey 私钥（hex 字符串）
+   * @param cipherMode 加密模式，默认为 1（C1C3C2）
+   * @returns 返回解密后的字符串
+   */
+  doDecrypt(cipherText: string, privateKey: string, cipherMode?: number): string
+
+  /**
+   * 签名
+   * @param msg 待签名消息（字符串）
+   * @param privateKey 私钥（hex 字符串）
+   * @param options 签名选项（可选）
+   * @returns 返回签名的 hex 字符串
+   */
+  doSignature(msg: string, privateKey: string, options?: any): string
+
+  /**
+   * 验证签名
+   * @param msg 原始消息（字符串）
+   * @param signHex 签名（hex 字符串）
+   * @param publicKey 公钥（hex 字符串）
+   * @param options 验证选项（可选）
+   * @returns 返回验证结果（boolean）
+   */
+  doVerifySignature(msg: string, signHex: string, publicKey: string, options?: any): boolean
+}
+
+/**
+ * SM3 选项类型
+ */
+export type SM3Options = {
+  inputEncoding?: 'text' | 'hex'
+}
+
+/**
+ * SM3 函数类型 - 与 sm-crypto 保持一致
+ * 注意：UTS 接口不支持可调用签名，所以使用类型别名
+ */
+export type SM3 = (msg: string, options?: SM3Options) => string
+
+/**
+ * SM4 加密选项类型
+ */
+export type SM4EncryptOptions = {
+  inputEncoding?: 'text' | 'hex'
+  outputEncoding?: 'hex' | 'base64'
+}
+
+/**
+ * SM4 解密选项类型
+ */
+export type SM4DecryptOptions = {
+  inputEncoding?: 'hex' | 'base64'
+  outputEncoding?: 'text' | 'hex'
+}
+
+/**
+ * SM4 对象 - 与 sm-crypto 保持一致
+ */
+export interface SM4 {
+  /**
+   * SM4 加密（ECB 模式）
+   * @param msg 待加密消息（字符串或 hex 字符串）
+   * @param key 密钥（hex 字符串，32 字符 = 16 字节）
+   * @param options 选项（可选，如 { inputEncoding: 'text', outputEncoding: 'hex' }）
+   * @returns 返回加密后的字符串
+   */
+  encrypt(
+    msg: string,
+    key: string,
+    options?: SM4EncryptOptions
+  ): string
+
+  /**
+   * SM4 解密（ECB 模式）
+   * @param cipherText 密文（hex 字符串或 base64 字符串）
+   * @param key 密钥（hex 字符串，32 字符 = 16 字节）
+   * @param options 选项（可选，如 { outputEncoding: 'text' | 'hex' }）
+   * @returns 返回解密后的字符串
+   */
+  decrypt(
+    cipherText: string,
+    key: string,
+    options?: SM4DecryptOptions
+  ): string
+
+  /**
+   * SM4-CBC 加密
+   * @param msg 待加密消息（字符串或 hex 字符串）
+   * @param key 密钥（hex 字符串，32 字符 = 16 字节）
+   * @param iv 初始化向量（hex 字符串，32 字符 = 16 字节）
+   * @param options 选项（可选）
+   * @returns 返回加密后的字符串
+   */
+  encryptCBC(
+    msg: string,
+    key: string,
+    iv: string,
+    options?: SM4EncryptOptions
+  ): string
+
+  /**
+   * SM4-CBC 解密
+   * @param cipherText 密文（hex 字符串或 base64 字符串）
+   * @param key 密钥（hex 字符串，32 字符 = 16 字节）
+   * @param iv 初始化向量（hex 字符串，32 字符 = 16 字节）
+   * @param options 选项（可选）
+   * @returns 返回解密后的字符串
+   */
+  decryptCBC(
+    cipherText: string,
+    key: string,
+    iv: string,
+    options?: SM4DecryptOptions
+  ): string
+}
+
+// ==================== iOS/Android 端 Result 类型定义 ====================
+
+/**
+ * 获取版本号结果
+ */
+export type GetVersionResult = {
+  version: string
+}
+
+/**
+ * SM3 哈希结果
+ */
+export type SM3HashResult = {
+  result: string
+  errorMsg: string
+}
+
+/**
+ * SM4 加密结果
+ */
+export type SM4EncryptResult = {
+  encrypted: string
+  errorMsg: string
+}
+
+/**
+ * SM4 解密结果
+ */
+export type SM4DecryptResult = {
+  decrypted: string
+  errorMsg: string
+}
+
+/**
+ * SM4-CBC 加密结果
+ */
+export type SM4CbcEncryptResult = {
+  encrypted: string
+  errorMsg: string
+}
+
+/**
+ * SM4-CBC 解密结果
+ */
+export type SM4CbcDecryptResult = {
+  decrypted: string
+  errorMsg: string
+}
+
+/**
+ * SM3-HMAC 结果
+ */
+export type SM3HmacResult = {
+  mac: string
+  errorMsg: string
+}
+
+/**
+ * SHA-256 哈希结果
+ */
+export type SHA256HashResult = {
+  result: string
+  errorMsg: string
+}
+
+/**
+ * MD5 哈希结果
+ */
+export type MD5HashResult = {
+  result: string
+  errorMsg: string
+}
+
+/**
+ * AES 加密结果
+ */
+export type AESEncryptResult = {
+  encrypted: string
+  errorMsg: string
+}
+
+/**
+ * AES 解密结果
+ */
+export type AESDecryptResult = {
+  decrypted: string
+  errorMsg: string
+}
+
+/**
+ * AES-GCM 加密结果
+ */
+export type AESGcmEncryptResult = {
+  encrypted: string
+  errorMsg: string
+}
+
+/**
+ * AES-GCM 解密结果
+ */
+export type AESGcmDecryptResult = {
+  decrypted: string
+  errorMsg: string
+}
+
+/**
+ * 回声结果
+ */
+export type EchoResult = {
+  message: string
+}
+
+// ==================== 导出接口 ====================
+
+/**
+ * 主导出对象
+ */
+export interface UniCrypto {
+  /**
+   * SubtleCrypto 对象 - 与 Web Crypto API 保持一致
+   */
+  subtle: SubtleCrypto
+
+  /**
+   * SM2 对象 - 与 sm-crypto 保持一致
+   */
+  sm2: SM2
+
+  /**
+   * SM3 函数 - 与 sm-crypto 保持一致
+   */
+  sm3: SM3
+
+  /**
+   * SM4 对象 - 与 sm-crypto 保持一致
+   */
+  sm4: SM4
+
+  /**
+   * 获取随机值 - 与 Web Crypto API 保持一致
+   * @param array 要填充的 TypedArray
+   * @returns 返回填充后的 TypedArray
+   */
+  getRandomValues<T extends Uint8Array | Int8Array | Uint16Array | Int16Array | Uint32Array | Int32Array>(array: T): T
+}
