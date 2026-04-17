@@ -1,3 +1,20 @@
+## 4.3.8（2026-04-16）
+fix: 修复栅格样式合并问题并增强折叠面板类型安全
+
+- 修正 up-col 组件样式合并逻辑，移除冗余的 deepMerge 调用，确保 customStyle 正确生效
+- 为 up-collapse-item 的 accordion 属性增加空值判断，避免未定义时触发类型断言异常
+- 在 up-collapse 组件中为 expanded 状态补充 as boolean 类型断言，提升 UTS 环境下的类型安全性
+- 新增 AI 调试与验证规范文档，明确 HBuilderX CLI 编译校验流程及提交前强制验证规则
+
+## 4.3.7（2026-04-16）
+fix: 修正 checkbox 事件传参顺序并清理冗余逻辑
+
+- 移除单元格分组组件中重复定义的 border 属性
+- 调整 change 事件触发时机至 v-model 更新后，确保状态同步
+- 为 change 事件补充第二参数，返回当前操作复选框的选中状态与 name 值
+- 简化复选框组件中 disabled 与 labelDisabled 的空值判断逻辑
+- 增加 borderBottom 属性读取前的非空校验，防止潜在报错
+
 ## 4.3.6（2026-04-16）
 fix: 修正 checkbox 事件传参顺序并清理冗余逻辑
 

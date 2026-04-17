@@ -3,14 +3,15 @@
 		<up-tabbar
 			:value="tabVal"
 			@change="onChangeTab"
-			:fixed="false"
-			:placeholder="false"
-			:safeAreaInsetBottom="false"
+			:zIndex="99999"
+			:fixed="true"
+			:safeAreaInsetBottom="true"
+			:placeholder="true"
 		>
-			<up-tabbar-item text="首页" icon="home" @click="onClickTab" ></up-tabbar-item>
-			<up-tabbar-item text="放映厅" icon="photo" @click="onClickTab" ></up-tabbar-item>
-			<up-tabbar-item text="直播" icon="play-right" @click="onClickTab" ></up-tabbar-item>
-			<up-tabbar-item text="我的" icon="account" @click="onClickTab" ></up-tabbar-item>
+			<up-tabbar-item text="首页" icon="home" badge="" @click="onClickTab" ></up-tabbar-item>
+			<up-tabbar-item text="放映厅" icon="photo" badge="" @click="onClickTab" ></up-tabbar-item>
+			<up-tabbar-item text="直播" icon="play-right" badge="" @click="onClickTab" ></up-tabbar-item>
+			<up-tabbar-item text="我的" icon="account" badge="" @click="onClickTab" ></up-tabbar-item>
 		</up-tabbar>
 	</view>
 </template>

@@ -1,6 +1,6 @@
 {
 	// pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.net.cn/collocation/pages.html
-	"entryPagePath": "pages/welcome",
+	"entryPagePath": "pages/tabBar/index",
 	// I18n "navigationBarTitleText": "%index.title%"
 	// 设置页面路径及窗口表现 style 覆盖 globalStyle
 	"pages": [{
