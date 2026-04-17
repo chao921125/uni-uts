@@ -12,12 +12,19 @@ import { createSSRApp } from "vue";
 // 	},
 // }
 
+// uview config
+import ultraUI from '@/uni_modules/uview-ultra/index.uts'
+
 export function createApp() {
 	const app = createSSRApp(App);
-	// app.component("page-head", PageHead) //全局注册 page-head 组件，每个页面将可以直接使用该组件
+
 	// #ifdef APP-ANDROID || APP-IOS || WEB || MP-WEIXIN || APP-HARMONY
 	// app.use(uniStat, uniStatOptions)
 	// #endif
+
+	// uview config
+	app.use(ultraUI)
+
 	// app.mixin({
 	//   onReady() {
 	//     setTimeout(() => {
@@ -25,6 +32,7 @@ export function createApp() {
 	//     }, 100)
 	//   }
 	// })
+
 	return {
 		app
 	}

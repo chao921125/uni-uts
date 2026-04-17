@@ -183,4 +183,8 @@
 	})
 </script>
 
-<style></style>
+<style lang="scss">
+	// uview config
+	@import "@/uni_modules/uview-ultra/index.scss";
+	@import "./static/styles/index.scss";
+</style>

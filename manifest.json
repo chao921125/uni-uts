@@ -26,7 +26,8 @@
 		},
 		"unipush": {
 			"enable": false
-		}
+		},
+		"mergeVirtualHostAttributes" : true
 	},
 	"app": {
 		"distribute": {
@@ -62,7 +63,8 @@
 					"xxxhdpi": "package/icon192.png"
 				}
 			}
-		}
+		},
+		"mergeVirtualHostAttributes" : true
 	},
 	"app-harmony": {
 		"distribute": {
@@ -92,7 +94,8 @@
 			"splashScreens": {
 				"startWindowIcon": "package/icon256.png"
 			}
-		}
+		},
+		"mergeVirtualHostAttributes" : true
 	},
 	"web": {
 		"darkmode": true,
@@ -109,7 +112,8 @@
 		},
 		"unipush": {
 			"enable": true
-		}
+		},
+		"mergeVirtualHostAttributes" : true
 	},
 	"app-android": {
 		"distribute": {
@@ -134,7 +138,8 @@
 			"splashScreens": {
 				"default": {}
 			}
-		}
+		},
+		"mergeVirtualHostAttributes" : true
 	},
 	"app-ios": {
 		"distribute": {
@@ -159,6 +164,7 @@
 				"appstore": ""
 			},
 			"splashScreens": {}
-		}
+		},
+		"mergeVirtualHostAttributes" : true
 	}
 }

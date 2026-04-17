@@ -1,144 +1,333 @@
-// 定制统一前缀
 $prefix: re;
 
-// @for $var from start |to,through| end
-// 从 0 开始 至 90 结束，间隔为10
-// $i: 50;
-// @while $i > 0 {
-//   .#{$prefix}-m-#{$i} { margin: #{$i}px; }
-//   .#{$prefix}-mt-#{$i} { margin-top: #{$i}px; }
-//   .#{$prefix}-mr-#{$i} { margin-right: #{$i}px; }
-//   .#{$prefix}-mb-#{$i} { margin-bottom: #{$i}px; }
-//   .#{$prefix}-ml-#{$i} { margin-left: #{$i}px; }
-
-//   .#{$prefix}-p-#{$i} { padding: #{$i}px; }
-//   .#{$prefix}-pt-#{$i} { padding-top: #{$i}px; }
-//   .#{$prefix}-pr-#{$i} { padding-right: #{$i}px; }
-//   .#{$prefix}-pb-#{$i} { padding-bottom: #{$i}px; }
-//   .#{$prefix}-pl-#{$i} { padding-left: #{$i}px; }
-//   $i: $i - 5;
-// }
-@for $i from 0 through 90 {
-	.#{$prefix}-z-index-#{$i} {
-		z-index: $i * 10;
-	}
+// 禁止用户选中
+@mixin unable-select {
+	user-select: none;
 }
 
-@for $i from 1 through 100 {
-	.#{$prefix}-p-#{$i} {
-		padding: #{$i}rpx;
-	}
-	.#{$prefix}-pl-#{$i} {
-		padding-left: #{$i}rpx;
-	}
-	.#{$prefix}-pr-#{$i} {
-		padding-right: #{$i}rpx;
-	}
-	.#{$prefix}-pt-#{$i} {
-		padding-top: #{$i}rpx;
-	}
-	.#{$prefix}-pb-#{$i} {
-		padding-bottom: #{$i}rpx;
-	}
-	.#{$prefix}-m-#{$i} {
-		margin: #{$i}rpx;
-	}
-	.#{$prefix}-ml-#{$i} {
-		margin-left: #{$i}rpx;
-	}
-	.#{$prefix}-mr-#{$i} {
-		margin-right: #{$i}rpx;
-	}
-	.#{$prefix}-mt-#{$i} {
-		margin-top: #{$i}rpx;
-	}
-	.#{$prefix}-mb-#{$i} {
-		margin-bottom: #{$i}rpx;
-	}
+// 填满父元素 position: relative | absolute;
+@mixin full {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
 }
 
-.#{$prefix}-flex {
-	display: flex;
-	display: -webkit-flex;
-}
-.#{$prefix}-flex-row {
-	@extend .#{$prefix}-flex;
-	flex-direction: row;
-}
-.#{$prefix}-flex-row-center {
-	@extend .#{$prefix}-flex-row;
-	align-items: center;
-	justify-content: center;
-}
-.#{$prefix}-flex-row-start {
-	@extend .#{$prefix}-flex-row;
-	align-items: flex-start;
-	justify-content: flex-start;
-}
-.#{$prefix}-flex-row-end {
-	@extend .#{$prefix}-flex-row;
-	align-items: flex-start;
-	justify-content: flex-end;
-}
-.#{$prefix}-flex-row-center-start {
-	@extend .#{$prefix}-flex-row;
-	align-items: center;
-	justify-content: flex-start;
-}
-.#{$prefix}-flex-row-between {
-	@extend .#{$prefix}-flex-row;
-	align-items: center;
-	justify-content: space-between;
-}
-.#{$prefix}-flex-row-reverse {
-	@extend .#{$prefix}-flex;
-	flex-direction: row-reverse;
-}
-.#{$prefix}-flex-row-reverse-start {
-	@extend .#{$prefix}-flex;
-	flex-direction: row-reverse;
-	align-items: flex-start;
-	justify-content: flex-start;
-}
-.#{$prefix}-flex-column {
-	@extend .#{$prefix}-flex;
-	flex-direction: column;
-}
-.#{$prefix}-flex-column-reverse {
-	@extend .#{$prefix}-flex;
-	flex-direction: column-reverse;
-}
-.#{$prefix}-flex-column-center {
-	@extend .#{$prefix}-flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-}
-
-%grid {
-	display: grid;
-	display: -ms-grid;
-	display: -moz-grid;
-}
-.#{$prefix}-grid {
-	@extend %grid;
-	grid-template-columns: repeat(auto-fit, 240px);
-	/*grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));*/
-	/*grid-template-rows: repeat(auto-fit, minmax(240px, 240px));*/
-	grid-gap: 1.2rem;
-	/*gap: 1.2rem;*/
-}
-
-%text-center {
+// 文字 居中 左 右
+@mixin text-center {
 	text-align: center;
 }
-
-.#{$prefix}-text-center {
-	@extend %text-center;
+@mixin text-left {
+	text-align: left;
+}
+@mixin text-right {
+	text-align: right;
 }
 
-.#{$prefix}-text-ellipsis {
+// 填充 宽高
+@mixin wh-full {
+	width: 100%;
+	height: 100%;
+}
+@mixin width-full {
+	width: 100%;
+}
+@mixin height-full {
+	height: 100%;
+}
+@mixin wh-fill {
+	width: 100vw;
+	height: 100vh;
+}
+@mixin width-fill {
+	width: 100vw;
+}
+@mixin height-fill {
+	height: 100vh;
+}
+
+// flex 垂直水平居中 两端对齐
+@mixin flex {
+	display: flex;
+}
+@mixin flex-col {
+	flex-direction: column;
+}
+
+// 将元素模拟成卡片外观
+@mixin card {
+	//border: 1px solid $color-border-white;
+	background: #fff;
+	border-radius: 4px;
+	font-size: 14px;
+	position: relative;
+}
+
+// 占位符
+.#{$prefix}-place {
+	width: 1px;
+	height: 1px;
+}
+
+// 元素展示隐藏
+.#{$prefix}-show {
+	display: initial;
+}
+.#{$prefix}-hidden {
+	display: none !important;
+}
+
+/**
+ * Flex 基础布局
+ */
+.#{$prefix}-flex {
+	@include flex;
+}
+.#{$prefix}-flex-auto {
+	@include flex;
+	flex: 1;
 	overflow: hidden;
-	white-space: nowrap;
-	text-overflow: ellipsis;
 }
+.#{$prefix}-flex-center {
+	@include flex;
+	justify-content: center;
+	align-items: center;
+}
+.#{$prefix}-flex-ch {
+	@include flex;
+	justify-content: center;
+}
+.#{$prefix}-flex-cv {
+	@include flex;
+	align-items: center;
+}
+.#{$prefix}-flex-between {
+	@include flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.#{$prefix}-flex-end {
+	@include flex;
+	justify-content: flex-end;
+	align-items: center;
+}
+.#{$prefix}-flex-reverse {
+	@include flex;
+	flex-direction: row-reverse;
+	align-items: center;
+}
+.#{$prefix}-flex-col {
+	@include flex;
+	@include flex-col;
+}
+.#{$prefix}-flex-col-center {
+	@include flex;
+	@include flex-col;
+	align-items: center;
+	justify-content: center;
+}
+
+/**
+ * 填充
+ */
+.#{$prefix}-fill {
+	@include wh-fill;
+}
+.#{$prefix}-full {
+	@include wh-full;
+}
+.#{$prefix}-auto-w {
+	width: auto;
+}
+.#{$prefix}-fill-w {
+	@include width-fill;
+}
+.#{$prefix}-fill-w-min {
+	min-width: 100vw;
+}
+.#{$prefix}-fill-w-max {
+	max-width: 100vh;
+}
+.#{$prefix}-full-w {
+	@include width-full;
+}
+.#{$prefix}-full-w-min {
+	min-width: 100%;
+}
+.#{$prefix}-full-w-max {
+	max-width: 100%;
+}
+.#{$prefix}-auto-h {
+	height: auto;
+}
+.#{$prefix}-fill-h {
+	@include height-fill;
+}
+.#{$prefix}-fill-h-min {
+	min-height: 100vh;
+}
+.#{$prefix}-fill-h-max {
+	max-height: 100vh;
+}
+.#{$prefix}-full-h {
+	@include height-full;
+}
+.#{$prefix}-full-h-min {
+	min-height: 100%;
+}
+.#{$prefix}-full-h-max {
+	max-height: 100%;
+}
+
+/**
+ * 文字
+ */
+.#{$prefix}-tc {
+	@include text-center;
+}
+.#{$prefix}-tl {
+	@include text-left;
+}
+.#{$prefix}-tr {
+	@include text-right;
+}
+
+/**
+ * 鼠标
+ */
+.#{$prefix}-c {
+	cursor: default;
+}
+.#{$prefix}-cp {
+	cursor: pointer;
+}
+.#{$prefix}-ch {
+	cursor: help;
+}
+.#{$prefix}-cm {
+	cursor: move;
+}
+
+/**
+ * 浮动
+ */
+.#{$prefix}-fl {
+	float: left;
+}
+.#{$prefix}-fr {
+	float: right;
+}
+.#{$prefix}-clearfix:before,
+.#{$prefix}-clearfix:after {
+	display: table;
+	content: "";
+}
+.#{$prefix}-clearfix:after {
+	clear: both;
+}
+
+/**
+ * 边距
+ */
+@for $i from 1 to 500 {
+	// 宽高
+	.#{$prefix}-wh-#{$i} {
+		width: #{$i}px;
+		height: #{$i}px;
+	}
+	.#{$prefix}-w-#{$i} {
+		width: #{$i}px;
+	}
+	.#{$prefix}-h-#{$i} {
+		height: #{$i}px;
+	}
+	// 外边距
+	.#{$prefix}-m-#{$i} {
+		margin: #{$i}px;
+	}
+	.#{$prefix}-my-#{$i} {
+		margin-top: #{$i}px;
+		margin-bottom: #{$i}px;
+	}
+	.#{$prefix}-mx-#{$i} {
+		margin-left: #{$i}px;
+		margin-right: #{$i}px;
+	}
+	.#{$prefix}-mt-#{$i} {
+		margin-top: #{$i}px;
+	}
+	.#{$prefix}-mr-#{$i} {
+		margin-right: #{$i}px;
+	}
+	.#{$prefix}-mb-#{$i} {
+		margin-bottom: #{$i}px;
+	}
+	.#{$prefix}-ml-#{$i} {
+		margin-left: #{$i}px;
+	}
+	// 内边距
+	.#{$prefix}-p-#{$i} {
+		padding: #{$i}px;
+	}
+	.#{$prefix}-py-#{$i} {
+		padding-top: #{$i}px;
+		padding-bottom: #{$i}px;
+	}
+	.#{$prefix}-px-#{$i} {
+		padding-left: #{$i}px;
+		padding-right: #{$i}px;
+	}
+	.#{$prefix}-pt-#{$i} {
+		padding-top: #{$i}px;
+	}
+	.#{$prefix}-pr-#{$i} {
+		padding-right: #{$i}px;
+	}
+	.#{$prefix}-pb-#{$i} {
+		padding-bottom: #{$i}px;
+	}
+	.#{$prefix}-pl-#{$i} {
+		padding-left: #{$i}px;
+	}
+}
+
+/**
+ * 定位
+ */
+.#{$prefix}-pf-t {
+	position: fixed;
+	top: 0;
+}
+.#{$prefix}-pf-b {
+	position: fixed;
+	bottom: 0;
+}
+.#{$prefix}-pf-l {
+	position: fixed;
+	left: 0;
+}
+.#{$prefix}-pf-r {
+	position: fixed;
+	right: 0;
+}
+.#{$prefix}-zi-max {
+	z-index: 99999;
+}
+.#{$prefix}-zi-min {
+	z-index: -1;
+}
+
+$zindexs: (0, 5, 9, 10, 15, 19, 20, 25, 29, 30, 35, 39, 40, 45, 49, 50, 55, 59, 60, 65, 69, 70, 75, 79, 80, 85, 89, 90, 95, 99, 100);
+@each $zindex in $zindexs {
+	.#{$prefix}-zi-#{$zindex} {
+		z-index: #{$zindex};
+	}
+}
+
+//@function scale-below($value, $base, $ratio: 1.618) {
+//	@while $value > $base {
+//		$value: math.div($value, $ratio);
+//	}
+//	@return $value;
+//}

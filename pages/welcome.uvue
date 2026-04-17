@@ -20,7 +20,7 @@
 </template>
 
 <script lang="uts" setup>
-	import { ref } from 'vue'
+	import { ref } from "vue";
 	// 响应式数据
 	const countdown = ref<number>(5)
 	const canSkip = ref<boolean>(false)
@@ -64,9 +64,9 @@
 
 	// 进入首页
 	const goToHome = () => {
-		// uni.redirectTo({
-		// 	url: '/pages/index/index'
-		// })
+		uni.switchTab({
+				url: "/pages/tabBar/index",
+			});
 	}
 
 	// 清除定时器
@@ -94,7 +94,7 @@
 <style lang="scss">
 	// 变量
 	$circle-size: 52px;
-	$border-width: 3px;
+	$border-width: 1px;
 	$btn-top: 100px;
 	$btn-right: 24px;
 

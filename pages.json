@@ -49,15 +49,10 @@
 		"fontSize": "10px",
 		"iconWidth": "24px",
 		"spacing": "3px",
-		"color": "@tabBarColor", // tab 上的文字默认颜色
-		"selectedColor": "@tabBarSelectedColor", // tab 上的文字选中时的颜色
 		"borderStyle": "@tabBarBorderStyle", // tabbar 上边框的颜色
 		"backgroundColor": "@tabBarBackgroundColor", // tab 的背景色
 		"position": "bottom", // 可选值 bottom、top
-		// "iconfontSrc": "", // list设置 iconfont 属性时，需要指定字体文件路径
-		// "backgroundImage": "", // 设置背景图片，优先级高于 backgroundColor
-		// "backgroundRepeat": "", // 设置标题栏的背景图平铺方式
-		// "redDotColor": "", // tabbar上红点颜色
+		"custom": true,
 		"list": [{
 				// "iconfont": {"text": "", "selectedText": "", "fontSize": "", "color": "", "selectedColor": ""},
 				"pagePath": "pages/tabBar/index",
@@ -90,8 +85,10 @@
 	},
 	// 组件自动引入规则
 	"easycom": {
-		"autoscan": true
-		// "custom": true,
+		"autoscan": true,
+		"custom": {
+			"^up-(.*)": "@/uni_modules/uview-ultra/components/up-$1/up-$1.uvue"
+		}
 	},
 	// 设置默认页面的窗口表现
 	"globalStyle": {

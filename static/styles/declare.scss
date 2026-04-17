@@ -1,0 +1,50 @@
+$re-color-primary: #409eff;
+$re-color-white: #ffffff;
+$re-color-white-ghost: #f8f8ff;
+$re-color-white-smoke: #f5f5f5;
+$re-color-black: #000000;
+$re-color-grey: #bebebe;
+$re-color-red: #ff0000;
+
+// 文本颜色
+$re-text-link: #5677fc;
+$re-text-default: #fff;
+$re-text-primary: #000;
+$re-text-success: #03c03c;
+$re-text-error: #e34234;
+$re-text-waring: #ff9933;
+$re-text-placeholder: #ccc;
+$re-text-prohibit: #8a8a8a;
+
+// 按钮颜色
+$re-btn-default: #fff;
+$re-btn-success: #03c03c;
+$re-btn-error: #e34234;
+$re-btn-waring: #ff9933;
+
+// 边框颜色
+$re-border-error: #e34234;
+$re-border-waring: #ff9933;
+
+// 可点击颜色
+$re-link-success: #03c03c;
+
+// 项目共有的宽高设定
+$re-header-height: 60px;
+$re-menu-width: 200px;
+$re-menu-height: calc(100vh - 60px);
+$re-menu-collapse-width: 64px;
+$re-menu-item-height: 50px;
+
+// 定位的值，只需要从这里取值或者修改
+$re-z-index-max: 99999;
+$re-z-index-min: -1;
+$re-z-index-1: 1000;
+$re-z-index-2: 2000;
+$re-z-index-3: 3000;
+$re-z-index-4: 4000;
+$re-z-index-5: 5000;
+$re-z-index-6: 6000;
+$re-z-index-7: 7000;
+$re-z-index-8: 8000;
+$re-z-index-9: 9000;
