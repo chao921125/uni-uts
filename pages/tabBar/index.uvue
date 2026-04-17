@@ -1,25 +1,19 @@
 <template>
 	<view class="re-fill">
-		<up-tabbar
-			:value="tabVal"
-			@change="onChangeTab"
-			:zIndex="99999"
-			:fixed="true"
-			:safeAreaInsetBottom="true"
-			:placeholder="true"
-		>
-			<up-tabbar-item text="首页" icon="home" badge="" @click="onClickTab" ></up-tabbar-item>
-			<up-tabbar-item text="放映厅" icon="photo" badge="" @click="onClickTab" ></up-tabbar-item>
-			<up-tabbar-item text="直播" icon="play-right" badge="" @click="onClickTab" ></up-tabbar-item>
-			<up-tabbar-item text="我的" icon="account" badge="" @click="onClickTab" ></up-tabbar-item>
+		<up-tabbar :value="tabVal" @change="onChangeTab" :zIndex="99999">
+			<up-tabbar-item name="home" text="首页" icon="/static/icons/tab/home.png" badge=""
+				@click="onClickTab"></up-tabbar-item>
+			<up-tabbar-item name="home1" text="放映厅" icon="photo" badge="" @click="onClickTab"></up-tabbar-item>
+			<up-tabbar-item name="home2" text="直播" icon="play-right" badge="" @click="onClickTab"></up-tabbar-item>
+			<up-tabbar-item name="my" text="我的" icon="account" badge="" @click="onClickTab"></up-tabbar-item>
 		</up-tabbar>
 	</view>
 </template>
 
 <script lang="uts" setup>
-	const tabVal = ref(0);
-	const onChangeTab = () => {}
-	const onClickTab = () => {}
+	const tabVal = ref("home");
+	const onChangeTab = () => { }
+	const onClickTab = () => { }
 </script>
 
 <style lang="scss">
