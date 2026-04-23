@@ -32,7 +32,7 @@
 		}
 	],
 	"subPackages": [{
-		"root": "pages/my",
+		"root": "pages-my",
 		"pages": [{
 			"path": "my",
 			"style": {
