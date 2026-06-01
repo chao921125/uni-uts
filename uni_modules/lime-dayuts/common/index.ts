@@ -18,6 +18,7 @@ function parseLocale(preset : any | null, object : DayutsLocale | null = null, i
 	let l : string | null = null
 	if (preset == null) return dayutsIntl.locale
 	if (typeof preset == 'string') {
+		
 		const presetLower = (preset as string).toLowerCase()
 		if (dayutsIntl.has(presetLower)) {
 			l = presetLower
@@ -83,9 +84,9 @@ function parseDate(cfg : DayutsConfig) : Date|null {
 	if (date instanceof Date) return date as Date
 	
 	try {
-		if (typeof date == 'string' && /^\d+$/.test(date as string)) {
-			return new Date(parseInt(`${date}`.padEnd(13, '0')))
-		}
+		// if (typeof date == 'string' && /^\d+$/.test(date as string)) {
+		// 	return new Date(parseInt(`${date}`.padEnd(13, '0')))
+		// }
 		if (typeof date == 'string' && !/Z$/i.test(date as string)) {
 			const d = date.match(REGEX_PARSE)
 			// #ifndef APP-ANDROID || APP-IOS

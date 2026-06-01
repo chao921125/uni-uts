@@ -14,7 +14,7 @@ export class Dates {
 	newDate(date : UTSJSONObject) : Dayuts;
 	newDate(date : Date) : Dayuts;
 	newDate(date : Dayuts) : Dayuts;
-	// #ifndef APP-ANDROID || APP-IOS || APP-HARMONY
+	// #ifndef UNI-APP-X && APP
 	newDate(date : any | null, format : string) : Dayuts;
 	newDate(date : any | null, format : string | null, locale : string | null) : Dayuts;
 	// #endif

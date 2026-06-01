@@ -1,6 +1,11 @@
 <template>
     <view class="up-table2" :class="border ? 'up-table-border' : ''">
+        <!-- #ifdef APP -->
+        <scroll-view scroll-x class="up-table2-scroll" :style="getScrollStyle()">
+        <!-- #endif -->
+        <!-- #ifndef APP -->
         <scroll-view scroll-x scroll-y class="up-table2-scroll" :style="getScrollStyle()">
+        <!-- #endif -->
             <view v-if="showHeader" class="up-table-row up-table-header-row">
                 <view
                     v-for="(col, colIndex) in columns"
@@ -786,6 +791,7 @@ export default {
     min-width: 80px;
     display: flex;
     flex-direction: row;
+    flex-shrink: 0;
     align-items: center;
     padding: 10px 8px;
     border-bottom: 1px solid #ebeef5;

@@ -4,6 +4,10 @@ import { dayuts } from "./index"
 // import { Dates } from "./dates"
 import { dayutsIntl } from './use'
 console.log('dayuts:::test::12')
+
+// console.log('dayjs', dayjs('2026').format('YYYY'))
+console.log('dayuts', dayuts('2026').format('YYYY'))
+
 // // console.log('format1', dayuts().format())
 // console.log('string number', dayuts(`${Date.now()}`))
 // console.log('2018-04-04', dayuts('2018-04-04T16:00:00.000Z'))

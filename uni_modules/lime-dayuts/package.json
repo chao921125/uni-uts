@@ -1,7 +1,7 @@
 {
   "id": "lime-dayuts",
   "displayName": "lime-dayuts dayjs 日期库",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "lime-dayuts 是dayjs的uts版，一个轻量的处理时间和日期的 UTS 库，几乎和dayjs保持一样的API",
   "keywords": [
     "lime-dayuts",
@@ -76,7 +76,8 @@
             "jd": "√",
             "harmony": "√",
             "qq": "√",
-            "lark": "√"
+            "lark": "√",
+            "xhs": "-"
           },
           "quickapp": {
             "huawei": "√",

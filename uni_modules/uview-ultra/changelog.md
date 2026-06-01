@@ -1,3 +1,121 @@
+## 4.3.22（2026-04-30）
+feat: 新增 subsection 禁用与动态颜色及 swiper 纵向滑动支持
+
+- up-subsection 新增 disabled 属性，禁用时拦截点击事件并应用置灰样式
+- up-subsection 新增 activeColorKeyName 与 inactiveColorKeyName，支持从列表数据动态读取颜色
+- up-swiper 新增 vertical 属性，支持配置轮播图滑动方向为纵向
+- up-transition 移除根节点 touchmove 事件监听，优化页面滚动交互体验
+
+## 4.3.21（2026-04-29）
+fix: 优化数字输入框清空与失焦边界校验逻辑
+
+- 输入过程中允许临时清空，不再立即回退至最小值
+- 将边界值修正与值变更触发逻辑统一移至失焦事件处理
+- 同步修复 .vue 与 .uvue 双端组件的输入交互逻辑
+
+## 4.3.20（2026-04-28）
+fix: 修复微信小程序中交叉观察器上下文触发 Vue 告警
+
+- 将交叉观察器创建方法的上下文参数替换为 this.$scope 优先回退至 this
+- 避免在微信小程序环境下传入组件代理实例时触发 Vue 的 keys 枚举告警
+- 补充组件样式文件末尾缺失的换行符
+
+## 4.3.19（2026-04-28）
+refactor: 重构 empty 组件并增强 tabbar-item 路由同步
+
+- 将 up-empty 迁移至 `<script setup>` 语法，使用 `computed` 与 `defineProps` 重构响应式逻辑
+- up-empty 图标提示文案全面接入 `t()` 国际化函数，移除硬编码文本并修正模板样式合并方式
+- up-tabbar-item 新增基于页面路由的激活状态同步机制，支持通过 `name` 路径自动匹配高亮
+- up-tabbar-item 引入定时器轮询路由变化，并完善组件挂载与卸载时的生命周期清理逻辑
+- up-grid-item 注释废弃的 `$upGridItem` 全局事件监听代码，移除冗余逻辑
+
+## 4.3.18（2026-04-27）
+refactor: 重构评分组件逻辑并增强数值与边界处理
+
+- 统一 Vue2/Vue3 的 activeIndex 初始化与监听逻辑，移除条件编译分支
+- 新增 normalizeActiveIndex 等辅助方法，安全解析 props 并限制数值范围
+- 引入 ensureRateMetrics 校验布局尺寸，避免 rateWidth 为 NaN 导致计算异常
+- 在触摸与点击事件处理前增加边界守卫，拦截无效坐标与未初始化状态
+- 规范化 emitEvent 输出值，确保 change 事件与双向绑定数据一致性
+- 调整示例页标题 DOM 结构，优化样式兼容性
+
+## 4.3.17（2026-04-26）
+feat: 新增 up-table2 高级表格组件及路由配置
+
+- 新增 up-table2 主组件及 tableRow 递归行组件，提供 Vue 与 UVue 双版本实现
+- 内置树形数据展开、单元格合并、列排序、数据过滤、行多选及固定列等高级功能
+- 优化表头固定与横向滚动交互，支持滚动阴影提示与斑马纹/高亮行样式
+- 更新页面路由配置与示例组件菜单，新增 Table2 演示入口并移除 Form 适配中标识
+- 补充表格组件演示所需的静态图标资源
+
+## 4.3.16（2026-04-24）
+fix: 优化 datetime-picker 同步逻辑并补充多组件类型定义
+
+- 重构 up-datetime-picker 列构建逻辑，抽离 buildColumns 方法
+- 新增 columnsEqual 对比函数，避免列数据未变化时重复渲染
+- 引入 syncColumnsAfterChange 延迟更新选中索引，修复列数据变更时的索引错位问题
+- 补充 album 组件 onPreview 事件与 stop 属性类型
+- 修正 radio 组件插槽定义，区分 icon 与 label 插槽
+- 新增 subsection 组件动态颜色字段键名及 disabled 属性类型
+- 补充 swiper 组件 vertical 纵向滑动属性类型
+
+## 4.3.15（2026-04-24）
+feat: 日历组件新增单月切换模式并修复日期计算逻辑
+
+- 新增 monthSwitch 属性，支持非滚动的单月切换交互模式
+- 头部组件新增年月切换按钮及禁用状态控制，适配新交互
+- 恢复并修正 month 组件的日期宽度计算与首行偏移样式逻辑
+- 修正默认日期判空条件及选中数组克隆方式，避免数据引用污染
+
+## 4.3.14（2026-04-22）
+refactor: 下拉菜单组件重构为 Vue3 script setup 语法
+
+- 将 Options API 全面替换为 Composition API 语法结构
+- 使用 defineProps/defineEmits/ref/computed/watch 替代原有选项式写法
+- 引入 useUltraUI 组合式函数管理父子实例通信，移除 $parent 直接调用
+- 模板绑定统一改为 props.xxx 访问，并适配 $up.addUnit 工具方法
+- 增加 Vue2/Vue3 条件编译以兼容 v-model 属性与事件触发逻辑
+- 通过 defineExpose 显式暴露 init/close/setActive 等核心方法
+
+## 4.3.13（2026-04-21）
+refactor: 将 up-divider 组件重构为 setup 语法
+
+- 模板样式绑定调整为调用全局 $up.addStyle 方法
+- 脚本逻辑由 Options API 迁移至 <script setup> 组合式语法
+- 使用 defineProps 内联声明属性并对接默认配置，移除原有 mixin 依赖
+- 计算属性与事件处理函数改为直接声明，清理冗余注释
+
+## 4.3.12（2026-04-20）
+fix: 修复 NVUE 环境下折叠面板高度计算异常
+
+- 优化 APP-NVUE 条件下 getComponentRect 回调的返回值处理逻辑
+- 增加空值保护并显式将 height 设为 auto，避免布局渲染异常
+
+## 4.3.11（2026-04-20）
+feat: up-album 新增 stop 属性与 preview 事件
+
+- 新增 stop 布尔属性，支持在触发内置预览时阻止点击事件冒泡
+- 新增 preview 事件，当关闭内置预览时向外抛出图片列表与当前索引
+- 重构 onPreviewTap 方法，统一接收事件对象并拆分内置与自定义预览逻辑
+- 同步更新多端文件的默认配置、Props 定义与 Emits 声明
+
+## 4.3.10（2026-04-19）
+refactor: 迁移 count-to 至 setup 语法并增强 picker 滚动稳定性及datetime-picker快速滚动优化
+
+- 将 count-to 组件全面迁移至组合式 API，合并动画帧与计数逻辑以提升可维护性
+- 为 datetime-picker 新增安全取值与类型转换辅助函数，解决快速滚动时的越界与空值异常
+- 优化日期边界计算与正则解析逻辑，增加非法日期兜底、范围校验及 NaN 防护
+- 完善 show 状态监听与 close 交互逻辑，确保输入框模式下的面板显隐状态严格同步
+
+## 4.3.9（2026-04-17）
+refactor: 将 up-copy 与 up-count-down 迁移至 script setup 语法
+
+- 将组件逻辑从 Options API 迁移至 <script setup lang="uts"> 组合式 API
+- 使用 defineProps 与 defineEmits 替代原有配置，移除 mixin 混入依赖
+- 采用 ref 管理内部状态，配合 watch 与生命周期钩子处理副作用与清理
+- 通过 defineExpose 显式暴露倒计时控制方法，规范外部调用接口
+- 调整倒计时递归函数声明方式以兼容 app-android 平台，并统一接入默认配置
+
 ## 4.3.8（2026-04-16）
 fix: 修复栅格样式合并问题并增强折叠面板类型安全
 
